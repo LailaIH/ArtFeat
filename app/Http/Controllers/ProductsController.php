@@ -1,0 +1,117 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use App\Models\Section;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class ProductsController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+        public function index()
+    {
+        $products = Product::all();
+        return view('products.index', compact('products'));
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $sections = Section::all();
+        return view('products.create', compact('sections'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'stock_quantity' => 'required|integer',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_online' => 'required|boolean',
+            'section_id' => 'required|exists:sections,id', // Validate the section_id exists in the sections table
+        ]);
+
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
+        // Handle image upload if provided
+        if ($request->hasFile('img')) {
+            $imagePath = $request->file('img')->store('products', 'public');
+            $validatedData['img'] = '/storage/' . $imagePath;
+        }
+
+        // Associate the section with the product
+        $section = Section::findOrFail($validatedData['section_id']);
+        $product = new Product($validatedData);
+        $product->user_id = $userId;
+        $product->section()->associate($section);
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', 'Product created successfully!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
