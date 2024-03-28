@@ -38,38 +38,20 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
                     <div class="container">
-                        <h1>Users List</h1>
+                        <h1>Carts List</h1>
 
-                        @if ($nonArtists->isEmpty())
-                            <p>No Sections found.</p>
+                        @if ($carts->isEmpty())
+                            <p>No Carts.</p>
                         @else
-                            <div class=" mt-3 table-container">
-                                <table id="productTable" class="table small-table-text">
-                                    <thead>
-                                    <tr style="white-space: nowrap; font-size: 12px;">
 
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Is Ban</th>
-                                        <th>Type</th>
-                                        <th>Points</th>
+                        <div class="list-group">
+                            @foreach($usersWithCarts as $user)
+                            <br>
+                            <a href="{{route('carts.show',$user)}}" class="list-group-item list-group-item-action">Show Cart of {{$user->name}}</a>
+                            @endforeach
+                        </div>
 
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach ($nonArtists  as $nonArtist )
-                                        <tr>
-
-                                            <td>{{ $nonArtist->name }}</td>
-                                            <td>{{ $nonArtist->email }}</td>
-                                            <td>{{ $nonArtist->is_ban ? 'Yes' : 'No' }} - <b class="text-blue">Change</b></td>
-                                            <td>{{ $nonArtist->is_Artist ? 'Yes' : 'No' }} - <b class="text-blue">Change</b></td>
-
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                           
                         @endif
                     </div>
                 </div>
@@ -78,12 +60,7 @@
         </div>
     </main>
 
-
-
-
-
-
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             var table = $('#productTable').DataTable();
 
@@ -96,7 +73,7 @@
                 table.column(1).search(this.value).draw();
             });
         });
-    </script>
+    </script> -->
 
 @endsection
 

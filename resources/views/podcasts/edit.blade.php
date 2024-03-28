@@ -26,50 +26,79 @@
         <!-- Main page content-->
         <div class="container mt-n5">
 
+
+
+
+
             <div class="card">
 
                 <div class="card-body">
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Edit Section</h1>
+                    <h1>Edit Podcast</h1>
 
             
 
-                    <form class="form-group" method="POST" action="{{ route('sections.update', ['id'=>$section['id']]) }}">
+                    <form class="row g-3" method="POST" action="{{ route('podcasts.update', ['id'=>$podcast['id']]) }}">
                         @csrf
                         @method('PUT')
 
                         
                             <div class="col-md-6">
                                 
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ $section->name }}" required>
+                                    <label for="name">title</label>
+                                    <input type="text" class="form-control" id="title" name="title" value="{{ $podcast->title }}" required>
                                 </div>
                             
 
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 
-                                    <label for="description">Description</label>
-                                    <textarea id="description" name="description" class="form-control">{{$section->description}}
-                                    </textarea>
+                                    <label for="audio">Audio URL</label>
+                                    <input type="text" class="form-control" id="audio" name="audio" value="{{ $podcast->audio_url }}" required>
                                 
                             </div>
-                        
+
+                            <div class="col-md-6">
+                                
+                                    <label for="status">Status</label>
+                                    <input type="text" class="form-control" id="status" name="status" value="{{ $podcast->status }}">
+                                
+                            </div>
+
+                            <div class="col-md-6">
+                                
+                                    <label for="description">Description</label>
+                                    <textarea id="description" name="description" class="form-control">{{$podcast->description}}
+                                    </textarea>
+                                
+                            
+                        </div>
 
                         <div class="col-md-6">
                                 
                                     <label for="is_online">Is Online</label>
-                                  <input type="checkbox" name="is_online"  @if ($section->is_online) checked @endif>
+                                  <input type="checkbox" name="is_online"  @if ($podcast->is_online) checked @endif>
                                 
-                            
-                        </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                
+                                    <label for="is_free">Is Free</label>
+                                  <input type="checkbox" name="is_free"  @if ($podcast->is_free) checked @endif>
+                                
+                            </div>
+
+
+
+                        
 
                 
 
-                        <div class="col-12">
+                            <div class="col-12">
+                            <br>
                         <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
+                            </div>
                     </form>
                 </div>
 

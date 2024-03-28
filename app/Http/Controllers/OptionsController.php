@@ -12,11 +12,16 @@ class OptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct()
+     {
+         $this->middleware('auth');
+     }
     public function index()
     {
-        $option = Option::firstOrFail(); // Assuming there's only one row in the options table
+        $options = Option::all(); // Assuming there's only one row in the options table
 
-        return view('options.settings', compact('option'));
+        return view('options.index', ['options'=>$options]);
     }
 
     /**
@@ -26,7 +31,7 @@ class OptionsController extends Controller
      */
     public function create()
     {
-        //
+        return view('options.create');
     }
 
     /**
@@ -37,7 +42,21 @@ class OptionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'key'=>'required|string',
+            'value'=>'required|string',
+
+        ]);
+
+        $option = new Option();
+        $option->user_id = auth()->user()->id;
+        $option->key = strip_tags($request->input('key'));
+        $option->value = strip_tags($request->input('value'));
+
+        $option->save();
+        return redirect()->route('options.index')->with('success', 'Option created successfully.');;
+
+
     }
 
     /**
@@ -59,7 +78,8 @@ class OptionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $option = Option::findOrFail($id);
+        return view('options.edit',['option'=>$option]);
     }
 
     /**
@@ -69,23 +89,17 @@ class OptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Option $option)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'ban_email' => 'nullable|string',
-            'paypal_key' => 'nullable|string',
-            'paypal_secret' => 'nullable|string',
-            'stripe_key' => 'nullable|string',
-            'stripe_secret' => 'nullable|string',
-            'crypto_key' => 'nullable|string',
-            'crypto_secret' => 'nullable|string',
-            'site_name' => 'nullable|string',
-            'tags' => 'nullable|string',
+       'value'=>'required|string',
         ]);
 
-        $option->update($request->all());
+        $option = Option::findOrFail($id);
+        $option->value = strip_tags($request->input('value'));
+        $option->save();
 
-        return redirect()->route('options.index')->with('success', 'Options updated successfully.');
+        return redirect()->route('options.index')->with('success', 'Option updated successfully.');
 
     }
 
@@ -97,6 +111,7 @@ class OptionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Option::destroy($id);
+        return redirect()->route('options.index');
     }
 }

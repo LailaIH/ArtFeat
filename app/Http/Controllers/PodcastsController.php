@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Podcast;
 use Illuminate\Http\Request;
 
 class PodcastsController extends Controller
@@ -11,9 +12,16 @@ class PodcastsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct()
+     {
+         $this->middleware('auth');
+     }
     public function index()
     {
-        //
+        $podcasts = Podcast::all();
+
+        return view('podcasts.index',['podcasts'=>$podcasts]);
     }
 
     /**
@@ -23,7 +31,7 @@ class PodcastsController extends Controller
      */
     public function create()
     {
-        //
+        return view('podcasts.create');
     }
 
     /**
@@ -34,7 +42,21 @@ class PodcastsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+        ]);
+
+        $podcast = new Podcast();
+        $podcast->user_id = auth()->user()->id;
+        $podcast->title = strip_tags($request->input('title'));
+        $podcast->description = strip_tags($request->input('description'));
+        $podcast->audio_url = strip_tags($request->input('audio'));
+
+        $podcast->save();
+        return redirect()->route('podcasts.index');
+
+        
+
     }
 
     /**
@@ -56,7 +78,9 @@ class PodcastsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $podcast = Podcast::findOrFail($id);
+
+        return view('podcasts.edit',['podcast'=>$podcast]);
     }
 
     /**
@@ -68,7 +92,23 @@ class PodcastsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'audio'=>'required',
+        ]);
+
+        $podcast = Podcast::findOrFail($id);
+        
+        $podcast->title = strip_tags($request->input('title'));
+        $podcast->description = strip_tags($request->input('description'));
+        $podcast->audio_url = strip_tags($request->input('audio'));
+        $podcast->is_online = $request->has('is_online')?1:0 ;
+        $podcast->is_free = $request->has('is_free')?1:0 ;
+        $podcast->status = strip_tags($request->input('status'));
+
+
+        $podcast->save();
+        return redirect()->route('podcasts.index');
     }
 
     /**
@@ -79,6 +119,15 @@ class PodcastsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Podcast::destroy($id);
+        return redirect()->route('podcasts.index');
+    }
+
+    public function updateStatus(Request $request, Podcast $podcast)
+    {
+        // Toggle the is_online status
+        $podcast->update(['is_online' => !$podcast->is_online]);
+
+        return back()->with('success', 'Status updated successfully');
     }
 }

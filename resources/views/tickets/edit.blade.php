@@ -37,36 +37,29 @@
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Create New Job Title</h1>
+                    <h1>Create New Tichet</h1>
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
 
-                    <form method="POST" action="{{ route('job_titles.store') }}">
+                    <form method="POST" action="{{ route('tickets.update' , ['ticket'=>$ticket['id']]) }}">
                         @csrf
-
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                        @method('PUT')
+                        <div>
+                            <label for="title">Title</label>
+                            <input value="{{$ticket->title}}" type="text" name="title" id="title" required>
                         </div>
-
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                        <div>
+                            <label for="body">Body</label>
+                            <textarea name="body" id="body" rows="4" required>
+                                {{$ticket->body}}
+                            </textarea>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Create Job Title</button>
+                        <div>
+                            <button type="submit">Edit Ticket</button>
+                        </div>
                     </form>
 
+
             </div>
-        </div>
         </div>
     </main>
 
@@ -151,10 +144,10 @@
 
 
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             // Initialize the Bootstrap tabs component
             $('#myTabs').tab();

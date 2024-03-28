@@ -71,11 +71,11 @@
                                             <td>{{ $product->price }}</td>
                                             <td>{{ $product->stock_quantity }}</td>
                                             <td>
-                                                <img src="{{ $product->img }}" alt="Product Image" width="100">
+                                            <img src="{{ asset('productImages/'.$product->img) }}" alt="Product Picture" width="100" height="100">
                                             </td>
                                             <td>{{ $product->is_online ? 'Yes' : 'No' }}</td>
                                             <td>
-                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                                <a href="{{ route('products.edit', ['id'=>$product['id']]) }}" class="btn btn-sm btn-primary">Edit</a>
                                                 <!-- Add delete form with CSRF token for deleting a product -->
 
                                             </td>
@@ -638,7 +638,7 @@
         @endif
     </div>--}}
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             var table = $('#productTable').DataTable();
 
@@ -651,7 +651,7 @@
                 table.column(1).search(this.value).draw();
             });
         });
-    </script>
+    </script> -->
 
 @endsection
 

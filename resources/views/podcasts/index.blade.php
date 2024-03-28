@@ -38,18 +38,23 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
                     <div class="container">
-                        <h1>Job Titles List</h1>
+                        <h1>Podcasts List</h1>
 
-                        @if ($jobTitles->isEmpty())
-                            <p>No Job Titles.</p>
+                        @if ($podcasts->isEmpty())
+                            <p>No Podcasts.</p>
                         @else
                             <div class=" mt-3 table-container">
                                 <table id="productTable" class="table small-table-text">
                                     <thead>
                                     <tr style="white-space: nowrap; font-size: 12px;">
 
-                                        <th>Name</th>
+                                        <th>Title</th>
                                         <th>Description</th>
+                                        <th>Audio URL</th>
+                                        
+                                        <th>Is Free</th>
+                                        <th>Status</th>
+                                        <th>Added by User</th>
                                         <th>Is Online</th>
                                         <th>Change Status</th>
                                         <th>Actions</th>
@@ -60,20 +65,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($jobTitles as $jobTitle)
+                                    @foreach ($podcasts as $podcast)
                                         <tr>
 
-                                            <td>{{ $jobTitle->name }}</td>
-                                            <td>{{ $jobTitle->description }}</td>
+                                            <td>{{ $podcast->title }}</td>
+                                            <td>{{ $podcast->description }}</td>
+                                            <td>{{ $podcast->audio_url }}</td>
+                                            <td>{{ $podcast->is_free? 'free':'not free' }}</td>
+                                            <td>{{ $podcast->status }}</td>
+                                            <td>{{ $podcast->user->name }}</td>
+
 
                                             <td>
-                        <span class="badge {{ $jobTitle->is_online ? 'badge-green' : 'badge-red' }}">
-                            {{ $jobTitle->is_online ? 'Online' : 'Offline' }}
+                        <span class="badge {{ $podcast->is_online ? 'badge-green' : 'badge-red' }}">
+                            {{ $podcast->is_online ? 'Online' : 'Offline' }}
                             </span>
                  
                                             </td>
                                             <td>
-                                            <form method="POST" action="{{ route('job_titles.updateStatus', $jobTitle) }}">
+                                            <form method="POST" action="{{ route('podcasts.updateStatus', $podcast) }}">
                                                     @csrf
                                                     @method('PATCH')
 
@@ -82,9 +92,9 @@
                                                 </form> 
                                             </td>
                                             <td>
-                                                <a href="{{ route('job_titles.edit',  ['id'=>$jobTitle['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
+                                                <a href="{{ route('podcasts.edit',  ['id'=>$podcast['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
                                                 <!-- Add delete form with CSRF token for deleting a section -->
-                                                <form action="{{ route('job_titles.destroy', ['id'=>$jobTitle['id']]) }}" method="POST" class="d-inline">
+                                                <form action="{{ route('podcasts.destroy', ['id'=>$podcast['id']]) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this section?')">Delete</button>
@@ -104,20 +114,7 @@
         </div>
     </main>
 
-    <!-- <script>
-        $(document).ready(function() {
-            var table = $('#productTable').DataTable();
 
-            // Add search filters
-            $('#searchName').on('keyup', function() {
-                table.column(0).search(this.value).draw();
-            });
-
-            $('#searchCategory').on('keyup', function() {
-                table.column(1).search(this.value).draw();
-            });
-        });
-    </script> -->
 
 @endsection
 

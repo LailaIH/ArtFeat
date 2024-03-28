@@ -14,7 +14,10 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
         public function index()
     {
         $products = Product::all();
@@ -39,32 +42,42 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+ 
+
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
-            'stock_quantity' => 'required|integer',
-            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_online' => 'required|boolean',
+            'stock_quantity' => 'required|integer',            
             'section_id' => 'required|exists:sections,id', // Validate the section_id exists in the sections table
         ]);
 
-        // Get the authenticated user's ID
-        $userId = Auth::id();
 
-        // Handle image upload if provided
+
+        $product = new Product();
+        $product->user_id = auth()->user()->id;
+        $product->section_id = $request->input('section_id');
+
         if ($request->hasFile('img')) {
-            $imagePath = $request->file('img')->store('products', 'public');
-            $validatedData['img'] = '/storage/' . $imagePath;
+            $image = $request->file('img');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('productImages'), $imageName);
+            $product->img = $imageName;
         }
+        $product->name = strip_tags($request->input('name'));
+        $product->description = strip_tags($request->input('description'));
+        $product->price = strip_tags($request->input('price'));
+        $product->stock_quantity = strip_tags($request->input('stock_quantity'));
 
-        // Associate the section with the product
-        $section = Section::findOrFail($validatedData['section_id']);
-        $product = new Product($validatedData);
-        $product->user_id = $userId;
-        $product->section()->associate($section);
+
+        $product->is_online =  $request->has('is_online') ? 1:0 ;
+
+
         $product->save();
 
         return redirect()->route('products.index')->with('success', 'Product created successfully!');
@@ -89,7 +102,9 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sections = Section::all();
+        $product = Product::findOrFail($id);
+        return view('products.edit',['product'=>$product , 'sections'=>$sections]);
     }
 
     /**
@@ -101,7 +116,38 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'stock_quantity' => 'required|integer',            
+            'section_id' => 'required|exists:sections,id', // Validate the section_id exists in the sections table
+        ]);
+
+
+        $product->section_id = $request->input('section_id');
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('productImages'), $imageName);
+            $product->img = $imageName;
+        }
+        $product->name = strip_tags($request->input('name'));
+        $product->description = strip_tags($request->input('description'));
+        $product->price = strip_tags($request->input('price'));
+        $product->stock_quantity = strip_tags($request->input('stock_quantity'));
+
+
+        $product->is_online =  $request->has('is_online') ? 1:0 ;
+
+
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+
+
     }
 
     /**

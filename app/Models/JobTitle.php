@@ -18,4 +18,8 @@ class JobTitle extends Model
         'description',
         'is_online'
     ];
+
+    public function users(){
+        return $this->hasMany(User::class);
+    }
 }

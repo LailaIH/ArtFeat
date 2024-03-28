@@ -12,6 +12,11 @@ class TicketsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct()
+     {
+         $this->middleware('auth');
+     }
     public function index()
     {
         $tickets = Ticket::where('parent_id', null)->get();
@@ -77,7 +82,11 @@ class TicketsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+        return view('tickets.edit',['ticket'=>$ticket]);
+
+
+
     }
 
     /**
@@ -89,7 +98,20 @@ class TicketsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+        $ticket->title = strip_tags($request->input('title'));
+        $ticket->body = strip_tags($request->input('body'));
+
+        $ticket->save();
+
+        return redirect()->route('tickets.show',$id);
+
+
+
     }
 
     /**

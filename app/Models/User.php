@@ -58,10 +58,10 @@ class User extends Authenticatable
         return $this->hasMany(Invoice::class);
     }
 
-    // Define the relationship with the cart
-    public function cart()
+    
+    public function carts()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 
     public function podcasts()
@@ -77,5 +77,17 @@ class User extends Authenticatable
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    public function sections(){
+        return $this->hasMany(Section::class);
+    }
+
+    public function jobTitle(){
+        return $this->belongsTo(JobTitle::class);
+    }
+
+    public function options(){
+        return $this->hasMany(Option::class);
     }
 }

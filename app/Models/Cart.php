@@ -16,12 +16,11 @@ class Cart extends Model
         'user_id',
         'product_id',
         'max_products',
+        'quantity',
     ];
 
     // If the 'product_id' column contains JSON data, cast it as an array
-    protected $casts = [
-        'product_id' => 'array',
-    ];
+
 
     // Define the relationship with the user
     public function user()
@@ -29,4 +28,8 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

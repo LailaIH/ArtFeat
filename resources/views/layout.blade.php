@@ -92,7 +92,7 @@
                         </div>
                     </a
                     >
-
+            
                     <div class="dropdown-divider m-0"></div>
                     <a class="dropdown-item py-3" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"
@@ -121,7 +121,7 @@
     <div id="layoutSidenav_content">
 
         @yield('content')
-
+        
         <footer class="footer mt-auto footer-light">
             <div class="container-fluid">
                 <div class="row">
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </footer>
-
+        
 
     </div>
 </div>

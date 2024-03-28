@@ -81,10 +81,32 @@
 
 
 
-                    <a class="nav-link" href="/carts">
-                        <div class="nav-link-icon"><i class="fas fa-users text-gray-200"></i></div>
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards500" aria-expanded="false" aria-controls="collapseDashboards500">
+                        <div class="nav-link-icon"><i
+                                class="fas fa-shopping-cart text-gray-200"></i></div>
                         Carts
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
+                    <div class="collapse" id="collapseDashboards500" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="/carts">
+                                All Carts
+
+                            </a>
+                            <a class="nav-link" href="/carts/create">
+                                New Cart
+
+                            </a>
+
+                        </nav>
+                    </div>
+
+
+
+
+
+
+
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards21" aria-expanded="false" aria-controls="collapseDashboards21">
                         <div class="nav-link-icon"><i
@@ -118,9 +140,12 @@
                                 All Auctions
 
                             </a>
-                            <a class="nav-link" href="/auctions/create">
-                                New Auctions
+                         
 
+
+
+                            <a href="{{route('auctions.create')}}" class="nav-link">
+                                New Auction
                             </a>
 
                         </nav>
@@ -173,6 +198,31 @@
 
                         </nav>
                     </div>
+
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards55" aria-expanded="false" aria-controls="collapseDashboards55">
+                        <div class="nav-link-icon"><i
+                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                        Options
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseDashboards55" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="{{route('options.index')}}">
+                                All Options
+
+                            </a>
+                            <a class="nav-link" href="/options/create">
+                                New Option
+
+                            </a>
+
+                        </nav>
+                    </div>
+
+
+
+
+
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards3" aria-expanded="false" aria-controls="collapseDashboards3">
                         <div class="nav-link-icon"><i

@@ -12,13 +12,19 @@ class JobTitlesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function index()
     {
         // Retrieve all job titles from the database
         $jobTitles = JobTitle::all();
 
         // Pass the job titles to the view
-        return view('jobtitles.index', compact('jobTitles'));
+        return view('jobtitles.index', ['jobTitles'=>$jobTitles]);
     }
     /**
      * Show the form for creating a new resource.
@@ -46,6 +52,7 @@ class JobTitlesController extends Controller
 
         // Create a new job title
         JobTitle::create($validatedData);
+        
 
         // Redirect to the job titles index page with a success message
         return redirect()->route('job_titles.index')->with('success', 'Job Title created successfully');
@@ -70,7 +77,8 @@ class JobTitlesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $jobTitle = JobTitle::findOrFail($id);
+        return view('jobtitles.edit',['jobTitle'=>$jobTitle]);
     }
 
     /**
@@ -82,7 +90,19 @@ class JobTitlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $jobTitle = JobTitle::findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        $jobTitle->name= strip_tags($request->input('name'));
+        $jobTitle->description= strip_tags($request->input('description'));
+        $jobTitle->is_online= $request->has('is_online')?1:0;
+
+        $jobTitle->save();
+        return redirect()->route('job_titles.index');
+
     }
 
     /**
@@ -93,7 +113,8 @@ class JobTitlesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        JobTitle::destroy($id);
+        return redirect()->route('job_titles.index');
     }
     public function updateStatus(Request $request, JobTitle $jobTitle)
     {

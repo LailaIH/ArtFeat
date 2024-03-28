@@ -12,6 +12,11 @@ class SectionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct()
+     {
+         $this->middleware('auth');
+     }
     public function index()
     {
         $sections = Section::all();
@@ -39,10 +44,15 @@ class SectionsController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'is_online' => 'required|boolean',
+            
         ]);
 
-        Section::create($validatedData);
+        $section = new Section();
+        $section->user_id = auth()->user()->id;
+        $section->name = strip_tags($request->input('name'));
+        $section->description = strip_tags($request->input('description'));
+        $section->is_online = $request->has('is_online')?1:0;
+        $section->save();
 
         return redirect()->route('sections.index')->with('success', 'Section created successfully!');
     }
@@ -66,7 +76,8 @@ class SectionsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $section = Section::findOrFail($id);
+        return view('sections.edit',['section'=>$section]);
     }
 
     /**
@@ -78,7 +89,21 @@ class SectionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            
+        ]);
+
+        $section = Section::findOrFail($id);
+        
+        $section->name = strip_tags($request->input('name'));
+        $section->description = strip_tags($request->input('description'));
+        $section->is_online = $request->has('is_online')?1:0;
+        $section->save();
+
+        return redirect()->route('sections.index')->with('success', 'Section Updated successfully.');; ;
+        
     }
 
     /**
@@ -89,6 +114,8 @@ class SectionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+       Section::destroy($id);
+       return redirect()->route('sections.index');
+       
     }
 }

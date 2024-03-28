@@ -38,8 +38,14 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
                     <h1>Ticket: {{ $ticket->title }}</h1>
+                    <h1>By User {{ $ticket->user->name }}</h1>
 
                     <p>{{ $ticket->body }}</p>
+
+                    <a href="{{route('tickets.edit',['ticket'=>$ticket['id']])}}"
+                                    class="btn btn-primary">
+                                    Edit This Ticket
+                                    </a>
 
                     <h2>Replies</h2>
                     <ul>
@@ -67,7 +73,7 @@
             </div>
     </main>
 
-    <script>
+    <!-- <script>
 
         //category
         // Get the category dropdown element
@@ -137,7 +143,7 @@
         });
 
 
-    </script>
+    </script> -->
 
 
 
@@ -151,12 +157,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             // Initialize the Bootstrap tabs component
             $('#myTabs').tab();
         });
-    </script>
+    </script> -->
 
 
 @endsection

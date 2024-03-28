@@ -38,71 +38,72 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
                     <div class="container">
-                        <h1>Job Titles List</h1>
+                        <h1>Artists List</h1>
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
 
-                        @if ($jobTitles->isEmpty())
-                            <p>No Job Titles.</p>
+                        @if ($artists->isEmpty())
+                            <p>No Sections found.</p>
                         @else
                             <div class=" mt-3 table-container">
-                                <table id="productTable" class="table small-table-text">
+                                <table id="productTable" class="table ">
                                     <thead>
                                     <tr style="white-space: nowrap; font-size: 12px;">
 
                                         <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Is Online</th>
-                                        <th>Change Status</th>
+                                        <th>Email</th>
+                                        <th>Job Title</th>
+                                        <th>Is Ban</th>
+                                        <th>Is Artist</th>
+                                        <th>Points</th>
                                         <th>Actions</th>
-                                        
-
-
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($jobTitles as $jobTitle)
+                                    @foreach ($artists  as $artist )
                                         <tr>
 
-                                            <td>{{ $jobTitle->name }}</td>
-                                            <td>{{ $jobTitle->description }}</td>
-
+                                            <td>{{ $artist->name }}</td>
+                                            <td>{{ $artist->email }}</td>
+                                            @if($artist->jobTitle)
+                                            <td>{{ $artist->jobTitle->name }}</td> @endif
+                                            <td>{{ $artist->is_ban ? 'Yes' : 'No' }}</td>
+                                            <td>{{ $artist->is_artist ? 'Yes' : 'No' }}</td>
+                                            <td>{{ $artist->points }}</td>
                                             <td>
-                        <span class="badge {{ $jobTitle->is_online ? 'badge-green' : 'badge-red' }}">
-                            {{ $jobTitle->is_online ? 'Online' : 'Offline' }}
-                            </span>
-                 
-                                            </td>
-                                            <td>
-                                            <form method="POST" action="{{ route('job_titles.updateStatus', $jobTitle) }}">
-                                                    @csrf
-                                                    @method('PATCH')
-
-                                                    <button type="submit" class="btn btn-danger btn-xs">Change Status</button>
-
-                                                </form> 
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('job_titles.edit',  ['id'=>$jobTitle['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
-                                                <!-- Add delete form with CSRF token for deleting a section -->
-                                                <form action="{{ route('job_titles.destroy', ['id'=>$jobTitle['id']]) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this section?')">Delete</button>
+                                            <a class="btn btn-primary btn-xs" href="{{route('users.artists.edit' , ['id'=>$artist['id'] ])}}" >   
+                                            Edit
+                                              </a>
+                                        
+                                            
+                                            <form class="d-inline" action="{{ route('users.delete', ['id'=>$artist['id']]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-xs">Delete</button>
                                                 </form>
-                                            </td>
-
+                                        </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         @endif
+                        <a href="{{route('users.create')}}" class="btn btn-success">
+                            Add User </a>
+
                     </div>
                 </div>
 
             </div>
         </div>
     </main>
+
+
+
+
+
 
     <!-- <script>
         $(document).ready(function() {

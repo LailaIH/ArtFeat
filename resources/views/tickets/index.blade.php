@@ -51,6 +51,13 @@
                                 <li>
                                     <h2>{{ $ticket->title }}</h2>
                                     <p>{{ $ticket->body }}</p>
+                                    
+                                    <a href="{{route('tickets.show',['ticket'=>$ticket['id']])}}"
+                                    class="btn btn-primary">
+                                    Show Details 
+                                    </a>
+
+
                                 </li>
                             @endforeach
                         </ul>
@@ -608,7 +615,7 @@
         @endif
     </div>--}}
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             var table = $('#productTable').DataTable();
 
@@ -621,7 +628,7 @@
                 table.column(1).search(this.value).draw();
             });
         });
-    </script>
+    </script> -->
 
 @endsection
 

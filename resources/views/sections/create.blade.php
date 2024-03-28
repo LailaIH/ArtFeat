@@ -61,10 +61,8 @@
                         </div>
                         <div class="form-group">
                             <label for="is_online">Is Online</label>
-                            <select name="is_online" id="is_online" class="form-control">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select>
+                            <input name="is_online" id="is_online" type="checkbox">
+                               
                         </div>
                         <button type="submit" class="btn btn-primary">Create Section</button>
                     </form>
@@ -73,7 +71,7 @@
         </div>
     </main>
 
-    <script>
+    <!-- <script>
 
         //category
         // Get the category dropdown element
@@ -143,7 +141,7 @@
         });
 
 
-    </script>
+    </script> -->
 
 
 
@@ -154,7 +152,7 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -162,7 +160,7 @@
             // Initialize the Bootstrap tabs component
             $('#myTabs').tab();
         });
-    </script>
+    </script> -->
 
 
 @endsection

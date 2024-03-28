@@ -36,7 +36,7 @@
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Edit Point Level</h1>
+                    <h1>Edit Product</h1>
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -48,53 +48,68 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('points.update', $point) }}">
+                    <form class="row g-3" method="POST" action="{{ route('products.update', ['id'=>$product['id']]) }}">
                         @csrf
                         @method('PUT')
 
-                        <div class="form-row">
+                        
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ $point->name }}" required>
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}" required>
                                 </div>
-                            </div>
+                           
 
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="lose_points">Lose Points</label>
-                                    <input type="number" class="form-control" id="lose_points" name="lose_points" value="{{ $point->lose_points }}" required>
-                                </div>
-                            </div>
+                            <label class="form-label" for="description">Description</label>
+                            <textarea name="description" id="description" class="form-control" required>
+                                {{$product->description}}
+                            </textarea>
                         </div>
 
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="beginning_points">Beginning Points</label>
-                                    <input type="number" class="form-control" id="beginning_points" name="beginning_points" value="{{ $point->beginning_points }}" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="total_points">Total Points</label>
-                                    <input type="number" class="form-control" id="total_points" name="total_points" value="{{ $point->total_points }}" required>
-                                </div>
-                            </div>
+                        <div class="col-12">
+                            <label class="form-label" for="section_id">Section</label>
+                            <select name="section_id" id="section_id" class="form-control" required>
+                                <option value="" disabled selected>Select a section</option>
+                                @foreach ($sections as $section)
+                                    <option value="{{ $section->id }}" @if ($product->section_id == $section->id) selected @endif>{{ $section->name }}</option>
+                                @endforeach
+                            </select>
+                            <br>
                         </div>
-
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="rescan_lose">Rescan Lose</label>
-                                    <input type="number" class="form-control" id="rescan_lose" name="rescan_lose" value="{{ $point->rescan_lose }}" required>
-                                </div>
-                            </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label" for="price">Price</label>
+                            <input type="number" name="price" id="price" class="form-control" required
+                            value="{{$product->price}}"> 
                         </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label" for="stock_quantity">Stock Quantity</label>
+                            <input type="number" name="stock_quantity" id="stock_quantity" class="form-control" required
+                            value="{{$product->stock_quantity}}">
+                        </div>
+                        <div class="col-12">
+                            <br>
+                        <img src="{{ asset('productImages/'.$product->img) }}" alt="Product Picture" width="100" height="100">
+                            <br>
+                            <label class="form-label" for="img">Image</label><br>
+                            <input type="file" name="img" id="img" class="form-control-file" multiple>
+                            <br>
+                        </div>
+                        
+                        <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="is_online"  @if ($product->is_online) checked @endif>
+                            <label class="form-label" for="is_online">Is Online</label>
 
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
+                        </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <br>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </div>                
+                        </form>
                 </div>
 
             </div>

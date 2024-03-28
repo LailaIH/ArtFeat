@@ -26,17 +26,21 @@
         <!-- Main page content-->
         <div class="container mt-n5">
 
+
+
+
+
             <div class="card">
 
                 <div class="card-body">
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Edit Section</h1>
+                    <h1>Edit Job Title</h1>
 
             
 
-                    <form class="form-group" method="POST" action="{{ route('sections.update', ['id'=>$section['id']]) }}">
+                    <form class="row g-3" method="POST" action="{{ route('job_titles.update', ['id'=>$jobTitle['id']]) }}">
                         @csrf
                         @method('PUT')
 
@@ -44,32 +48,30 @@
                             <div class="col-md-6">
                                 
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ $section->name }}" required>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ $jobTitle->name }}" required>
                                 </div>
                             
 
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 
                                     <label for="description">Description</label>
-                                    <textarea id="description" name="description" class="form-control">{{$section->description}}
+                                    <textarea id="description" name="description"class="form-control">{{$jobTitle->description}}
                                     </textarea>
-                                
-                            </div>
+                                </div>
                         
 
                         <div class="col-md-6">
                                 
                                     <label for="is_online">Is Online</label>
-                                  <input type="checkbox" name="is_online"  @if ($section->is_online) checked @endif>
-                                
-                            
-                        </div>
+                                  <input type="checkbox" name="is_online"  @if ($jobTitle->is_online) checked @endif>
+                                </div>
+                        
 
                 
 
-                        <div class="col-12">
+<div class="col-12">
                         <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
+</div>
                     </form>
                 </div>
 

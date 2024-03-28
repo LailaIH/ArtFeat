@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -38,71 +38,68 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
                     <div class="container">
-                        <h1>Job Titles List</h1>
+                        <h1>Auctions List</h1>
 
-                        @if ($jobTitles->isEmpty())
-                            <p>No Job Titles.</p>
+                        @if ($auctions->isEmpty())
+                            <p>No Auctions found.</p>
                         @else
                             <div class=" mt-3 table-container">
                                 <table id="productTable" class="table small-table-text">
                                     <thead>
                                     <tr style="white-space: nowrap; font-size: 12px;">
 
-                                        <th>Name</th>
+                                        <th>Title</th>
                                         <th>Description</th>
-                                        <th>Is Online</th>
-                                        <th>Change Status</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Starting Price</th>
                                         <th>Actions</th>
                                         
-
-
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($jobTitles as $jobTitle)
+                                    @foreach ($auctions  as $auction )
                                         <tr>
 
-                                            <td>{{ $jobTitle->name }}</td>
-                                            <td>{{ $jobTitle->description }}</td>
-
+                                            <td>{{ $auction->title}}</td>
+                                            <td>{{ $auction->description }}</td>
+                                            <td>{{ $auction->start_time }}</td>
+                                            <td>{{ $auction->end_time }}</td> 
+                                            <td>{{ $auction->starting_price }}</td>                                           
                                             <td>
-                        <span class="badge {{ $jobTitle->is_online ? 'badge-green' : 'badge-red' }}">
-                            {{ $jobTitle->is_online ? 'Online' : 'Offline' }}
-                            </span>
-                 
-                                            </td>
-                                            <td>
-                                            <form method="POST" action="{{ route('job_titles.updateStatus', $jobTitle) }}">
-                                                    @csrf
-                                                    @method('PATCH')
+                                            <a class="btn btn-success btn-xs" href="{{route('auctions.edit' , ['id'=>$auction['id'] ])}}" >   
+                                            Edit
+                                              </a>
+                                        
 
-                                                    <button type="submit" class="btn btn-danger btn-xs">Change Status</button>
-
-                                                </form> 
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('job_titles.edit',  ['id'=>$jobTitle['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
-                                                <!-- Add delete form with CSRF token for deleting a section -->
-                                                <form action="{{ route('job_titles.destroy', ['id'=>$jobTitle['id']]) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this section?')">Delete</button>
+                                        
+                                        <form class="d-inline"  action="{{ route('auctions.delete', ['id'=>$auction['id']]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-xs">Delete</button>
                                                 </form>
-                                            </td>
+                                        </td>
 
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
+
                             </div>
                         @endif
+                       
                     </div>
                 </div>
 
             </div>
         </div>
     </main>
+
+
+
+
+
 
     <!-- <script>
         $(document).ready(function() {

@@ -39,12 +39,15 @@
 
                     <div class="container">
                         <h1>Sections List</h1>
+                        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
 
                         @if ($sections->isEmpty())
                             <p>No Sections found.</p>
                         @else
                             <div class=" mt-3 table-container">
-                                <table id="productTable" class="table small-table-text">
+                                <table id="productTable" class="table ">
                                     <thead>
                                     <tr style="white-space: nowrap; font-size: 12px;">
 
@@ -62,12 +65,12 @@
 
                                             <td>{{ $section->name }}</td>
                                             <td>{{ $section->description }}</td>
-                                            <td>{{ $section->is_online ? 'Yes' : 'No' }} - <b class="text-blue">Change</b></td>
+                                            <td>{{ $section->is_online ? 'Yes' : 'No' }}</td>
 
                                             <td>
-                                                <a href="{{ route('sections.edit', $section->id) }}" class="btn btn-primary btn-xs">Edit</a>
+                                                <a href="{{ route('sections.edit',  ['id'=>$section['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
                                                 <!-- Add delete form with CSRF token for deleting a section -->
-                                                <form action="{{ route('sections.destroy', $section->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route('sections.destroy', ['id'=>$section['id']]) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this section?')">Delete</button>
@@ -125,7 +128,7 @@
         @endif
     </div>--}}
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             var table = $('#productTable').DataTable();
 
@@ -138,7 +141,7 @@
                 table.column(1).search(this.value).draw();
             });
         });
-    </script>
+    </script> -->
 
 @endsection
 

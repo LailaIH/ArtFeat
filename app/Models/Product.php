@@ -33,4 +33,9 @@ class Product extends Model
         return $this->belongsTo(Section::class);
     }
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
 }

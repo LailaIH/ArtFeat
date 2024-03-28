@@ -60,7 +60,7 @@
         </div>
     </main>
 
-    <script>
+    <!-- <script>
 
         //category
         // Get the category dropdown element
@@ -130,7 +130,7 @@
         });
 
 
-    </script>
+    </script> -->
 
 
 

@@ -79,8 +79,8 @@
                             <input type="number" name="stock_quantity" id="stock_quantity" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="img">Image</label>
-                            <input type="file" name="img" id="img" class="form-control-file">
+                            <label for="img" class="form-label">Image</label>
+                            <input type="file" name="img" id="img" class="form-control-file" multiple>
                         </div>
                         <div class="form-group">
                             <label for="is_online">Is Online</label>

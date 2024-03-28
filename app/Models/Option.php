@@ -13,23 +13,14 @@ class Option extends Model
 
     // The attributes that are mass assignable.
     protected $fillable = [
-        'is_online',
-        'paypal_key',
-        'paypal_secret',
-        'stripe_key',
-        'stripe_secret',
-        'crypto_key',
-        'crypto_secret',
-        'site_name',
-        'tags',
-        'slide_img_1',
-        'slide_img_2',
-        'slide_img_3',
-        'slide_text_1',
-        'slide_text_2',
-        'slide_text_3',
-        'primary_color',
-        'secondary_color',
-        'why_artfeat_text',
+            'user_id' ,
+            'key',
+            'value',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+
 }
