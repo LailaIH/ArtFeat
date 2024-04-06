@@ -112,6 +112,6 @@ class OptionsController extends Controller
     public function destroy($id)
     {
         Option::destroy($id);
-        return redirect()->route('options.index');
+        return redirect()->route('options.index')->withErrors(['fail' => 'Option has been deleted']);
     }
 }

@@ -29,15 +29,11 @@
 
 
 
-
-
-            <div class="card">
-                <div class="card-body">
-
-
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+                    <div class="card">
+                    <div class="card-header">Create A Cart</div>
+                    <div class="card-body">
 
-                    <h1>Create New Cart</h1>
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -52,9 +48,11 @@
                     <form action="{{ route('carts.store') }}" method="POST" >
                         @csrf
 
-                        <div class="form-group">
-                            <label for="user_id">User</label>
-                            <select name="user_id" id="user_id" class="form-control" required>
+                        <div class="row gx-3 mb-3">
+
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="user_id">User</label>
+                            <select name="user_id" id="user_id" class="form-control form-control-solid" aria-label="Default select example" required>
                                 <option value="" disabled selected>Select a user</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -62,30 +60,34 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="product_id">Product</label>
-                            <select name="product_id" id="product_id" class="form-control" required>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="product_id">Product</label>
+                            <select name="product_id" id="product_id" class="form-control form-control-solid" aria-label="Default select example" required>
                                 <option value="" disabled selected>Select a product</option>
                                 @foreach ($products as $product)
                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
                                 @endforeach
                             </select>
                         </div>
+                        </div>
 
-                        <div class="form-group">
-                            <label for="quantity">Quantity</label>
+                        <div class="row gx-3 mb-3">
+
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="quantity">Quantity</label>
                             <input type="number" name="quantity" id="quantity" class="form-control" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="max_products">Number Of Max Products</label>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="max_products">Number Of Max Products</label>
                             <input type="number" name="max_products" id="max_products" class="form-control" required>
+                        </div>
                         </div>
 
 
-
-
+                    <div>
                         <button type="submit" class="btn btn-primary">Create A Cart</button>
+                    </div>
                     </form>
 
             </div>

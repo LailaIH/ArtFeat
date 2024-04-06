@@ -30,20 +30,31 @@
 
 
 
-
-            <div class="card">
-                <div class="card-body">
-
-
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <div class="container">
-                        <h1>Podcasts List</h1>
+                    <div class="card">
+                    <div class="card-header">Podcasts List</div>
+                    @if (session('success'))
+
+                    <div class="alert alert-success m-3" role="alert">{{ session('success') }}</div>
+                    @endif
+                    @if ($errors->has('fail'))
+                        <div class="alert alert-danger m-3">
+                            {{ $errors->first('fail') }}
+                        </div>
+                    @endif
 
                         @if ($podcasts->isEmpty())
-                            <p>No Podcasts.</p>
+                        <div class="card-body">
+                         <form method="GET" action="{{route('podcasts.create')}}">
+                             <div class="col-md-6">
+                             <label class="small mb-1 mr-5" for="max_products">No Podcasts</label>
+                             <button type="submit" class="btn btn-primary btn-xs">Add Podcast</button>
+                             </div>
+                         </form>
+                         </div>
                         @else
-                            <div class=" mt-3 table-container">
+                        <div class="card-body">
                                 <table id="productTable" class="table small-table-text">
                                     <thead>
                                     <tr style="white-space: nowrap; font-size: 12px;">

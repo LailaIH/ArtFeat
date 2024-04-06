@@ -31,13 +31,14 @@
 
 
 
-            <div class="card">
-                <div class="card-body">
+            
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Create New Section</h1>
+                    <div class="card">
+                    <div class="card-header">Create A Section</div>
+                    <div class="card-body">
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -51,20 +52,32 @@
 
                     <form action="{{ route('sections.store') }}" method="POST">
                         @csrf
-                        <div class="form-group">
-                            <label for="name">Name</label>
+                        <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="name">Name</label>
                             <input type="text" name="name" id="name" class="form-control" required>
+                            @error('name')
+                                    {{$message}}
+                                    @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="description">Description</label>
                             <textarea name="description" id="description" class="form-control" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="is_online">Is Online</label>
-                            <input name="is_online" id="is_online" type="checkbox">
+                            @error('description')
+                                {{$message}}
+                                @enderror
+                        </div> </div>
+
+
+                        <div class="col-12">
+                        <input class="form-check-input" name="is_online" id="is_online" type="checkbox">
+
+                            <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
                                
                         </div>
-                        <button type="submit" class="btn btn-primary">Create Section</button>
+                        <div class="col-12">
+                            <br>
+                        <button type="submit" class="btn btn-primary">Create Section</button></div>
                     </form>
 
             </div>

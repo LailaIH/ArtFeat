@@ -21,6 +21,16 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'store_name',
+        'country',
+        'city',
+        'artwork_provided',
+        'language',
+        'facebook',
+        'instagram',
+        'twitter',
+        'tiktok',
+        'registered_business',
     ];
 
     /**
@@ -68,6 +78,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Podcast::class);
     }
+
+    // public function artists()
+    // {
+    //     return $this->hasMany(Artist::class);
+    // }
 
     public function auctions()
     {

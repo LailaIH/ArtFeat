@@ -27,43 +27,67 @@
         <!-- Main page content-->
         <div class="container mt-n5">
 
+        @if (session('success'))
+
+       <div class="alert alert-success m-3" role="alert">{{ session('success') }}</div>
+       @endif
 
 
-
-
-            <div class="card">
-                <div class="card-body">
+            
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Ticket: {{ $ticket->title }}</h1>
-                    <h1>By User {{ $ticket->user->name }}</h1>
+                    <div class="row gx-4">
+                    <div class="col-lg-8">
+                    <div class="card mb-4">
+                    <div class="card-header">
+                    {{ $ticket->title }}
+                    By User {{ $ticket->user->name }}
+                    </div>
 
-                    <p>{{ $ticket->body }}</p>
-
-                    <a href="{{route('tickets.edit',['ticket'=>$ticket['id']])}}"
+                    <div class="card-body">
+                        <input class="form-control"  type="text" value="{{ $ticket->body }}" readonly />
+                        <br>
+                        <a href="{{route('tickets.edit',['ticket'=>$ticket['id']])}}"
                                     class="btn btn-primary">
                                     Edit This Ticket
                                     </a>
+                    
+                    </div>
+                    </div>
+                    
 
-                    <h2>Replies</h2>
-                    <ul>
-                        @foreach ($relatedTickets as $relatedTicket)
-                            <li>
-                                <p>{{ $relatedTicket->body }}</p>
-                            </li>
-                        @endforeach
-                    </ul>
+                   
 
-                    <h2>Reply to this Ticket</h2>
+                                    <div class="card card-header-actions mb-4">
+                                    <div class="card-header">
+                                        Replies
+                                    <i class="text-muted" data-feather="info" data-bs-toggle="tooltip" data-bs-placement="left" title="The post preview text shows below the post title, and is the post summary on blog pages."></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul>
+                                            @foreach ($relatedTickets as $relatedTicket)
+                                                <li>
+                                                    {{$relatedTicket->body}}
+                                                
+                                                </li>
+                                            @endforeach
+                                        </ul>
+<br>
+                    <h4>Reply to this Ticket</h4>
                     <form method="POST" action="{{ route('tickets.storeReply', $ticket->id) }}">
                         @csrf
                         <div>
-                            <label for="reply_body">Reply</label>
-                            <textarea name="reply_body" id="reply_body" rows="4" required></textarea>
-                        </div>
+                            
+                            
+                        <textarea class="form-control" name="reply_body" id="reply_body"required></textarea>
+                        @error('reply_body')
+                                    {{$message}}
+                                    @enderror
+                    </div>
                         <div>
+                            <br>
                             <button type="submit">Submit Reply</button>
                         </div>
                     </form>

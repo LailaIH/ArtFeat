@@ -1,0 +1,30 @@
+@extends('commonlanding')
+@section('content')
+
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/error.css')}}">
+
+<div class="pageHeader">
+      <img src="/assets/img/404.svg" />
+      <div class="overLay">
+        <img src="/assets/img/shadowBlue.svg" />
+      </div>
+      <div class="header">
+        <h1>Ups!...</h1>
+      </div>
+    </div>
+    <div class="pageContent">
+      <div aria-label="Breadcrumb" class="breadcrumb">
+        <ul>
+          <li><a href="../index.html">ArtFeat</a></li>
+          <li class="active">Search</li>
+        </ul>
+      </div>
+
+      <div class="errorPage">
+        <h3>no results found !! .. Please try another search</h3>
+        <a href="{{ route('welcome') }}"><button>HomePage</button></a>
+      </div>
+    </div>
+   
+@endsection
+

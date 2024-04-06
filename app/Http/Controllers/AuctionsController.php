@@ -60,7 +60,7 @@ class AuctionsController extends Controller
     $auction->starting_price = strip_tags($request->input('starting_price'));
 
     $auction->save();
-    return redirect()->route('auctions.index');
+    return redirect()->route('auctions.index')->with('success','Auction has been created successfully');
 
 
 
@@ -118,7 +118,7 @@ class AuctionsController extends Controller
         $auction->starting_price = strip_tags($request->input('starting_price'));
     
         $auction->save();
-        return redirect()->route('auctions.index');
+        return redirect()->route('auctions.index')->with('success','Auction has been updated successfully');
 
 
     }
@@ -132,7 +132,7 @@ class AuctionsController extends Controller
     public function destroy($id)
     {
         Auction::destroy($id);
-        return redirect()->route('auctions.index');
+        return redirect()->route('auctions.index')->withErrors(['fail' => 'Auction has been deleted']);
     }
 
     public function showSettings()

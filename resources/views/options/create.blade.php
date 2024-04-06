@@ -31,13 +31,14 @@
 
 
 
-            <div class="card">
-                <div class="card-body">
+           
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Create New Option</h1>
+                    <div class="card">
+                    <div class="card-header">Create An Option</div>
+                    <div class="card-body">
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -52,17 +53,19 @@
                     <form method="POST" action="{{ route('options.store') }}">
                         @csrf
 
-                        <div class="form-group">
-                            <label for="key">Key</label>
+                        <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="key">Key</label>
                             <input type="text" class="form-control" id="key" name="key" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="value">Value</label>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="value">Value</label>
                             <input type="text" class="form-control" id="value" name="value" required>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Create Option</button>
+                        </div>
+                        <div>
+                        <button type="submit" class="btn btn-primary">Create Option</button></div>
                     </form>
 
             </div>

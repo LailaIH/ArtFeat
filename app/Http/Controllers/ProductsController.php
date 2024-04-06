@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +34,8 @@ class ProductsController extends Controller
     public function create()
     {
         $sections = Section::all();
-        return view('products.create', compact('sections'));
+        $artists = User::where('is_artist',true)->get();
+        return view('products.create', ['sections'=>$sections , 'artists'=>$artists]);
     }
 
     /**
@@ -55,6 +57,8 @@ class ProductsController extends Controller
             'price' => 'required|numeric',
             'stock_quantity' => 'required|integer',            
             'section_id' => 'required|exists:sections,id', // Validate the section_id exists in the sections table
+            'artist_id' => 'required',
+       
         ]);
 
 
@@ -62,6 +66,9 @@ class ProductsController extends Controller
         $product = new Product();
         $product->user_id = auth()->user()->id;
         $product->section_id = $request->input('section_id');
+        $product->artist_id = $request->input('artist_id');
+
+       
 
         if ($request->hasFile('img')) {
             $image = $request->file('img');
@@ -104,7 +111,10 @@ class ProductsController extends Controller
     {
         $sections = Section::all();
         $product = Product::findOrFail($id);
-        return view('products.edit',['product'=>$product , 'sections'=>$sections]);
+        $artists = User::where('is_artist',true)->get();
+        return view('products.edit',['product'=>$product , 'sections'=>$sections,
+        'artists'=>$artists
+    ]);
     }
 
     /**
@@ -127,6 +137,7 @@ class ProductsController extends Controller
 
 
         $product->section_id = $request->input('section_id');
+        $product->artist_id = $request->input('artist_id');
 
         if ($request->hasFile('img')) {
             $image = $request->file('img');

@@ -53,7 +53,7 @@ class PodcastsController extends Controller
         $podcast->audio_url = strip_tags($request->input('audio'));
 
         $podcast->save();
-        return redirect()->route('podcasts.index');
+        return redirect()->route('podcasts.index')->with('success','podcasy created successfully');
 
         
 
@@ -108,7 +108,7 @@ class PodcastsController extends Controller
 
 
         $podcast->save();
-        return redirect()->route('podcasts.index');
+        return redirect()->route('podcasts.index')->with('success','podcasy updated successfully');
     }
 
     /**
@@ -120,7 +120,7 @@ class PodcastsController extends Controller
     public function destroy($id)
     {
         Podcast::destroy($id);
-        return redirect()->route('podcasts.index');
+        return redirect()->route('podcasts.index')->withErrors(['fail' => 'podcast has been deleted']);
     }
 
     public function updateStatus(Request $request, Podcast $podcast)

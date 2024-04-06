@@ -28,24 +28,39 @@
         <div class="container mt-n5">
 
 
-            <div class="card">
-                <div class="card-body">
+           
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    
-                        <h1>Carts List</h1>
+                    <div class="card">
+                    <div class="card-header">Carts List</div>
+                        
 
                         @if (session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
 
+                            <div class="alert alert-success m-3" role="alert">{{ session('success') }}</div>
+                        @endif
+                        @if ($errors->has('fail'))
+                                <div class="alert alert-danger m-3">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif
                         @if ($carts->isEmpty())
-                            <p>No Carts.</p>
-                        @else
-                        Show Cart For {{$user->name}}
-                                <table class="table">
+                            
+                             <div class="card-body">
+                         <form method="GET" action="{{route('carts.create')}}">
+                             <div class="col-md-6">
+                             <label class="small mb-1 mr-5" for="max_products">No Carts For {{$user->name}}</label>
+                             <button type="submit" class="btn btn-primary btn-xs">Add Cart</button>
+                             </div>
+                         </form>
+                         </div>
+                       
+                            @else
+                       <div class="card-body">
+                                <table class="table small-table-text">
+
                                     <thead>
                                         <tr>
                                         
@@ -92,8 +107,7 @@
                     
                 </div>
 
-            </div>
-        </div>
+       
     </main>
 
 

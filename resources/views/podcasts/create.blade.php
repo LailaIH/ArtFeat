@@ -31,13 +31,14 @@
 
 
 
-            <div class="card">
-                <div class="card-body">
+            
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Create New Podcast</h1>
+                    <div class="card">
+                    <div class="card-header">Create A New Podcast</div>
+                    <div class="card-body">
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -51,26 +52,39 @@
 
                     <form method="POST" action="{{ route('podcasts.store') }}">
                         @csrf
+                        <div class="row gx-3 mb-3">
 
-                        <div class="form-group">
-                            <label for="title">Title</label>
+                        <div class="col-md-6">
+                       
+                            <label class="small mb-1"  for="title">Title</label>
                             <input type="text" class="form-control" id="title" name="title" required>
+                            @error('title')
+                                    {{$message}}
+                                    @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description"  required></textarea>
+                            @error('description')
+                                {{$message}}
+                                @enderror
                         </div>
-
-                        <div class="form-group">
-                            <label for="audio">Audio URL</label>
+                        </div>
+                        <div class="col-12">
+                            <label class="small mb-1" for="audio">Audio URL</label>
                             <input type="text" class="form-control" id="audio" name="audio" required>
+                            @error('audio')
+                                {{$message}}
+                                @enderror
                         </div>
 
 
 
-
+                        <div>
+                            <br>
                         <button type="submit" class="btn btn-primary">Create Podcast</button>
+                       </div>
                     </form>
 
             </div>

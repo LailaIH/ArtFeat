@@ -26,13 +26,13 @@
         <!-- Main page content-->
         <div class="container mt-n5">
 
-            <div class="card">
 
-                <div class="card-body">
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Edit Section</h1>
+                    <div class="card">
+                    <div class="card-header">Edit Section</div>
+                    <div class="card-body">
 
             
 
@@ -41,26 +41,34 @@
                         @method('PUT')
 
                         
-                            <div class="col-md-6">
+                        <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
                                 
-                                    <label for="name">Name</label>
+                                    <label class="small mb-1" for="name">Name</label>
+                                    
                                     <input type="text" class="form-control" id="name" name="name" value="{{ $section->name }}" required>
+                                    @error('name')
+                                    {{$message}}
+                                    @enderror
                                 </div>
                             
 
-                            <div class="col-12">
+                                <div class="col-md-6">
                                 
-                                    <label for="description">Description</label>
+                                    <label class="small mb-1" for="description">Description</label>
                                     <textarea id="description" name="description" class="form-control">{{$section->description}}
                                     </textarea>
-                                
-                            </div>
+                                    @error('description')
+                                    {{$message}}
+                                    @enderror
+                            </div> </div>
                         
 
-                        <div class="col-md-6">
+                        <div class="col-12">
+                        <input class="form-check-input" type="checkbox" name="is_online"  @if ($section->is_online) checked @endif>
+
                                 
-                                    <label for="is_online">Is Online</label>
-                                  <input type="checkbox" name="is_online"  @if ($section->is_online) checked @endif>
+                        <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
                                 
                             
                         </div>
@@ -68,6 +76,7 @@
                 
 
                         <div class="col-12">
+                            <br>
                         <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                     </form>

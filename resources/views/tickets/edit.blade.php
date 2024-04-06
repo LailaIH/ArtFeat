@@ -31,28 +31,39 @@
 
 
 
-            <div class="card">
-                <div class="card-body">
+          
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Create New Tichet</h1>
+                    <div class="card">
+                    <div class="card-header">Edit Ticket</div>
+                    <div class="card-body">
 
 
                     <form method="POST" action="{{ route('tickets.update' , ['ticket'=>$ticket['id']]) }}">
                         @csrf
                         @method('PUT')
-                        <div>
-                            <label for="title">Title</label>
-                            <input value="{{$ticket->title}}" type="text" name="title" id="title" required>
+                        <div class="row gx-3 mb-3">
+
+                          <div class="col-md-6">
+                            <label class="small mb-1" for="title">Title</label>
+                            <input class="form-control" value="{{$ticket->title}}" type="text" name="title" id="title" required>
+                            @error('title')
+                                    {{$message}}
+                                    @enderror
+                       
                         </div>
-                        <div>
-                            <label for="body">Body</label>
-                            <textarea name="body" id="body" rows="4" required>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="body">Body</label>
+                            <textarea class="form-control" name="body" id="body"  required>
                                 {{$ticket->body}}
                             </textarea>
-                        </div>
+                            @error('body')
+                                    {{$message}}
+                                    @enderror
+                        
+                        </div></div>
                         <div>
                             <button type="submit">Edit Ticket</button>
                         </div>

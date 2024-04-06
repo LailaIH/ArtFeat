@@ -27,29 +27,32 @@
         <!-- Main page content-->
         <div class="container mt-n5">
 
-            <div class="card">
-                <div class="card-body">
+            <!-- <div class="card">
+                <div class="card-body"> -->
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <div class="container">
-                        <h1>Create a new Auction</h1>
-                        <form method="post" action="{{ route('auctions.store') }}   " class="form-group table-container form-container">
+                    <div class="card">
+                    <div class="card-header">Create An Auction</div>
+                    <div class="card-body">
+                        <form method="post" action="{{ route('auctions.store') }}">
                           @csrf
                           
-                                <div>
-                                    <label for="name" >Title</label>
-                                    <input id ="name" name="title" type="text" value="{{ old('title') }}">
+                          <div class="row gx-3 mb-3">
+                                               
+                          <div class="col-md-6">
+                                    <label for="name" class="small mb-1" >Title</label>
+                                    <input class="form-control" id ="name" name="title" type="text" value="{{ old('title') }}">
                                     @error('title')
                                     {{$message}}
                                     @enderror
                                 </div>
 
 
-                                <div>
-                                <label for="description" >Description</label>
-                                <textarea id="description" name="description" rows="4" cols="5" value="{{old('description')}}">
+                                <div class="col-md-6">
+                                <label class="small mb-1" for="description" >Description</label>
+                                <textarea class="form-control" id="description" name="description"  value="{{old('description')}}">
                                 </textarea>
                                 @error('description')
                                 {{$message}}
@@ -57,25 +60,34 @@
                                 
 
                                 </div>
-
-                                <div>
-                                <label for="start_time" >Start Date</label>
-                                <input type="datetime-local" id="start_time" name="start_time" >
-                                </div>
-
-
-
-
-
-                            <div>
-                                <label for="end_time" >End Date</label>
-                                <input type="datetime-local" id="end_time" name="end_time" >
-                                </div>
+                          </div>
+                          <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                <label class="small mb-1" for="start_time" >Start Date</label>
+                              
+                                <input class="form-control" type="datetime-local" id="start_time" name="start_time" >
+                                @error('start_time')
+                                {{$message}}
+                                @enderror
+                            </div>
 
 
-                                <div>
-                                <label for="starting_price" >Starting Price</label>
-                                <input type="number" id="starting_price" name="starting_price" >
+
+
+
+                               <div class="col-md-6">
+                                <label class="small mb-1" for="end_time" >End Date</label>
+                                <input class="form-control" type="datetime-local" id="end_time" name="end_time" >
+                                @error('end_time')
+                                {{$message}}
+                                @enderror
+                            
+                            </div>
+
+                          </div>
+                          <div class="mb-3">
+                                <label class="small mb-1" for="starting_price" >Starting Price</label>
+                                <input class="form-control" type="number" id="starting_price" name="starting_price" >
                                 @error('starting_price')
                                 {{$message}}
                                 @enderror
@@ -84,7 +96,7 @@
 
 
                                 <div>
-                              <button type="submit">Submit</button>
+                              <button class="btn btn-primary" type="submit">Submit</button>
                          </div>
 
 
@@ -93,9 +105,9 @@
 
 
                     </div>
-                </div>
+                <!-- </div>
 
-            </div>
+            </div> -->
 
     </main>
 

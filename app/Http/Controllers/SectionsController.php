@@ -115,7 +115,7 @@ class SectionsController extends Controller
     public function destroy($id)
     {
        Section::destroy($id);
-       return redirect()->route('sections.index');
+       return redirect()->route('sections.index')->withErrors(['fail' => 'Section Has Been Deleted']);
        
     }
 }

@@ -31,13 +31,14 @@
 
 
 
-            <div class="card">
-                <div class="card-body">
+            
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Create New Job Title</h1>
+                    <div class="card">
+                    <div class="card-header">Create A Job Title</div>
+                    <div class="card-body">
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -52,17 +53,27 @@
                     <form method="POST" action="{{ route('job_titles.store') }}">
                         @csrf
 
-                        <div class="form-group">
-                            <label for="name">Name</label>
+                        <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
+                            @error('name')
+                                    {{$message}}
+                                    @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description"  required></textarea>
+                            @error('description')
+                                {{$message}}
+                                @enderror
                         </div>
+                        </div>
+                        
+                        <div>
 
-                        <button type="submit" class="btn btn-primary">Create Job Title</button>
+                        <button type="submit" class="btn btn-primary">Create Job Title</button></div>
                     </form>
 
             </div>

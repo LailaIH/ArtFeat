@@ -89,6 +89,13 @@ class HomeController extends Controller
             'name'=>'required',
        ] );
 
+       if ($request->hasFile('img')) {
+        $image = $request->file('img');
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('userImages'), $imageName);
+        $artistUser->img = $imageName;
+    }
+
        $artistUser->name = strip_tags($request->input('name'));
        $artistUser->job_title_id = strip_tags($request->input('job_title_id'));
 
@@ -140,6 +147,13 @@ class HomeController extends Controller
             
         ]);
 
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('userImages'), $imageName);
+            $nonArtistUser->img = $imageName;
+        }
+
         $nonArtistUser->name = strip_tags($request->input('name'));
         $nonArtistUser->job_title_id = strip_tags($request->input('job_title_id'));
         $nonArtistUser->is_ban = $request->has('is_ban') ? 1:0 ;
@@ -148,6 +162,10 @@ class HomeController extends Controller
         $nonArtistUser->points = strip_tags(intval($request->input('points')));
 
         $nonArtistUser->save();
+
+        if($nonArtistUser->id == auth()->user()->id){
+            return redirect()->route('users.profile',$id); 
+        }
 
         return redirect()->route('users.nonArtists')->with('success', 'User Updated successfully.');; ;
 
@@ -158,6 +176,14 @@ class HomeController extends Controller
 
 
 
+    public function profile($id){
+
+        $user = User::findOrFail($id);
+        $jobs = JobTitle::all();
+
+        return view('users.profile',['user'=>$user , 'jobs'=>$jobs]);
+
+    }
 
 
 

@@ -29,21 +29,31 @@
 
 
 
-
-
-            <div class="card">
-                <div class="card-body">
-
-
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+                    
+                    <div class="card">
+                    <div class="card-header">Products List</div>
+                    @if (session('success'))
 
-                    <div class="container">
-                        <h1>Products List</h1>
+                    <div class="alert alert-success m-3" role="alert">{{ session('success') }}</div>
+                    @endif
+                    @if ($errors->has('fail'))
+                        <div class="alert alert-danger m-3">
+                            {{ $errors->first('fail') }}
+                        </div>
+                    @endif
 
                         @if ($products->isEmpty())
-                            <p>No Products found.</p>
+                        <div class="card-body">
+                         <form method="GET" action="{{route('products.create')}}">
+                             <div class="col-md-6">
+                             <label class="small mb-1 mr-5" for="max_products">No Products</label>
+                             <button type="submit" class="btn btn-primary btn-xs">Add Product</button>
+                             </div>
+                         </form>
+                         </div>
                         @else
-                            <div class=" mt-3 table-container">
+                        <div class="card-body">
                                 <table id="productTable" class="table small-table-text">
                                     <thead>
                                     <tr style="white-space: nowrap; font-size: 12px;">
@@ -87,7 +97,9 @@
                         @endif
                     </div>
                 </div>
-
+        
+    </main>
+    
 
                 {{--<div class="card-header row">
 
@@ -597,7 +609,7 @@
                 </div>--}}
             </div>
         </div>
-    </main>
+    
 
 
 

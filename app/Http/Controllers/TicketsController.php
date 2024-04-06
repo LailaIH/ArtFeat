@@ -108,7 +108,7 @@ class TicketsController extends Controller
 
         $ticket->save();
 
-        return redirect()->route('tickets.show',$id);
+        return redirect()->route('tickets.show',$id)->with('success', 'Ticket updated successfully');
 
 
 
@@ -134,7 +134,7 @@ class TicketsController extends Controller
         // Create a new ticket as a reply
         Ticket::create([
             'user_id' => auth()->user()->id, // Assuming you're using authentication
-            'title' => '', // You can customize this if needed
+            'title' => 'reply', // You can customize this if needed
             'body' => $validatedData['reply_body'],
             'parent_id' => $parentTicketId,
         ]);

@@ -20,12 +20,18 @@ class Product extends Model
         'stock_quantity',
         'img',
         'is_online',
+        'artist_id',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    // public function artist()
+    // {
+    //     return $this->belongsTo(Artist::class);
+    // }
 
     // Define the relationship with the section
     public function section()

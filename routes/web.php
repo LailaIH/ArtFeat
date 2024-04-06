@@ -11,6 +11,7 @@ use App\Http\Controllers\PodcastsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionsController;
 use App\Http\Controllers\TicketsController;
+use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,10 +26,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
+
+Route::get('/who/we/are', function () {
+    return view('who-we-are');
 });
 
+Route::get('/terms/conditions', function () {
+    return view('terms-and-conditions');
+});
+
+
+
+Route::get('/cart/details', function () {
+    return view('cart-detail');
+});
+
+
+Route::get('/landing/login', function () {
+    return view('landing-login');
+});
+
+Route::get('/landing/signup', function () {
+    return view('landing-signup');
+});
 
 // Define resourceful routes for products
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
@@ -170,6 +195,7 @@ Route::put('/artists/update/{id}', [HomeController::class, 'updateArtists'])->na
 Route::get('/users/create', [HomeController::class, 'create'])->name('users.create');
 Route::post('/users/store', [HomeController::class, 'store'])->name('users.store');
 Route::delete('/users/delete/{id}', [HomeController::class, 'delete'])->name('users.delete');
+Route::get('/users/profile/{id}', [HomeController::class, 'profile'])->name('users.profile');
 
 
 Route::get('/non-artists', [HomeController::class, 'showNonArtists'])->name('users.nonArtists');

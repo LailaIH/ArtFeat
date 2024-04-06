@@ -30,13 +30,12 @@
 
 
 
-            <div class="card">
-
-                <div class="card-body">
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Edit Option</h1>
+                    <div class="card">
+                    <div class="card-header">Edit Option</div>
+                    <div class="card-body">
 
             
 
@@ -44,23 +43,27 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="form-row">
+                        <div class="row gx-3 mb-3">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="value">{{$option->key}}</label>
+                                
+                                    <label class="small mb-1" for="value">{{$option->key}}</label>
+                                   
                                     <input type="text" class="form-control" id="value" name="value" value="{{ $option->value }}">
+                                    @error('value')
+                                {{$message}}
+                                @enderror
                                 </div>
                             </div>
 
                            
-                        </div>
+                       
 
                       
 
                 
 
-
-                        <button type="submit" class="btn btn-primary">Update</button>
+<div>
+                        <button type="submit" class="btn btn-primary">Update</button></div>
                     </form>
                 </div>
 

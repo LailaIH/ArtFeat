@@ -27,39 +27,40 @@
         <!-- Main page content-->
         <div class="container mt-n5">
 
-            <div class="card">
-                <div class="card-body">
+         
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
-                    <div class="container">
-                        <h1>Create a new User</h1>
-                        <form method="post" action="{{ route('users.store') }}   " class="form-group table-container form-container">
+                    <div class="card">
+                    <div class="card-header">Create A User</div>
+                    <div class="card-body">
+                        <form method="post" action="{{ route('users.store') }}">
                           @csrf
                           
-                                <div>
-                                    <label for="name" >Name</label>
-                                    <input id ="name" name="name" type="text" value="{{ old('name') }}">
+                          <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                                    <label class="small mb-1" for="name" >Name</label>
+                                    <input class="form-control" id ="name" name="name" type="text" value="{{ old('name') }}">
                                     @error('name')
                                     {{$message}}
                                     @enderror
                                 </div>
 
 
-                                <div>
-                                    <label for="email" >Email</label>
-                                    <input id ="email" name="email" type="text"  value="{{ old('email') }}">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="email" >Email</label>
+                                    <input class="form-control" id ="email" name="email" type="text"  value="{{ old('email') }}">
                                     @error('email')
                                     {{$message}}
                                     @enderror
-                                </div>
+                                </div> </div>
 
+<br>
 
-
-                                <div>
-                                <label for="job_title_id">Job Title:</label>
-                                <select name="job_title_id" id="job_title_id">
+                                <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                <label class="small mb-1" for="job_title_id">Job Title:</label>
+                                <select name="job_title_id" id="job_title_id" class="form-control form-control-solid" aria-label="Default select example">
                                     <option value="">Select a Job</option>
                                     @foreach ($jobTitles as $jobTitle)
                                         <option value="{{ $jobTitle->id }}">{{ $jobTitle->name }}</option>
@@ -67,40 +68,46 @@
                                 </select>
                                 </div>
 
-                                <div>
-                                    <label for="password" >Password</label>
-                                    <input id ="password" name="password" type="password" >
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="password" >Password</label>
+                                    <input class="form-control" id ="password" name="password" type="password" >
                                     @error('password')
                                     {{$message}}
                                     @enderror
-                                </div>
+                                </div> </div>
+<br>
 
+                                <div class="row gx-3 mb-3">
+                                <div class="col-md-4 form-check form-check-solid">
+                                <input class="form-check-input" id ="is_ban" name="is_ban" type="checkbox" >
 
-                                <div>
-                                    <label for="is_ban" >Is Ban</label>
-                                    <input id ="is_ban" name="is_ban" type="checkbox" >
+                                <label class="form-check-label small mb-1" for="is_ban" >Is Ban</label>
                                     @error('is_ban')
                                     {{$message}}
                                     @enderror
                                 </div>
 
 
-                                <div>
-                                    <label for="is_dealer" >Is Dealer</label>
-                                    <input id ="is_dealer" name="is_dealer" type="checkbox" >
+                                <div class="col-md-4 form-check form-check-solid">
+                                <input class="form-check-input" id ="is_dealer" name="is_dealer" type="checkbox" >
+
+                                <label class="form-check-label small mb-1" for="is_dealer" >Is Dealer</label>
                                     @error('is_dealer')
                                     {{$message}}
                                     @enderror
                                 </div>
 
 
-                                <div>
-                                    <label for="is_artist" >Is Artist</label>
-                                    <input id ="is_artist" name="is_artist" type="checkbox" >
+                                <div class="col-md-4 form-check form-check-solid">
+                                <input class="form-check-input" id ="is_artist" name="is_artist" type="checkbox" >
+
+                                <label class="form-check-label small mb-1" for="is_artist" >Is Artist</label>
                                     @error('is_artist')
                                     {{$message}}
                                     @enderror
-                                </div>
+                                </div></div>
+
+                                <div class="col-12">
 
                                 <label for="points" >Points</label>
                                     <input id ="points" name="points" type="text"  value="{{ old('points') }}">
@@ -111,7 +118,8 @@
 
 
 
-                                <div>
+                                <div class="col-12">
+                                    <br>
                               <button type="submit">Submit</button>
                          </div>
 

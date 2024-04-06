@@ -27,73 +27,83 @@
         <!-- Main page content-->
         <div class="container mt-n5">
 
-            <div class="card">
-                <div class="card-body">
+           
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <div class="container">
-                        <h1>Edit {{$artist->name}}</h1>
-                        <form method="post" action="{{route('users.artists.update' , ['id'=>$artist->id] )}}   )" class="form-group table-container form-container">
+                    <div class="card">
+                    <div class="card-header">Edit {{$artist->name}}</div>
+                    <div class="card-body">
+                        <form method="post" action="{{route('users.artists.update' , ['id'=>$artist->id] )}})" enctype="multipart/form-data">
                           @csrf
                           @method('PUT')
-                                <div>
-                                    <label for="name" >Name</label>
-                                    <input id ="name" name="name" type="text"  value="{{$artist->name}}">
+                          <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                    <label class="small mb-1" for="name" >Name</label>
+                                    <input class="form-control" id ="name" name="name" type="text"  value="{{$artist->name}}">
                                     @error('name')
                                     {{$message}}
                                     @enderror
                                 </div>
 
-                                <br>
-                                <div>
-                                <label for="job_title_id">Job Title:</label>
-                                <select name="job_title_id" id="job_title_id">
+                                
+                                <div class="col-md-6">
+                                <label class="small mb-1" for="job_title_id">Job Title:</label>
+                                <select name="job_title_id" id="job_title_id" class="form-control form-control-solid" aria-label="Default select example">
                                     <option value="">Select a job title</option>
                                     @foreach ($jobTitles as $jobTitle)
                                         <option value="{{ $jobTitle->id }}" @if ($jobTitle->id == $artist->job_title_id) selected @endif>{{ $jobTitle->name }}</option>
                                     @endforeach
                                 </select>
                                 </div>
+                          </div>
+                          <br>
 
+                          <div class="col-12">
+                          <img width="160" height="160"  src="{{ asset('userImages/'.$artist->img) }}" alt="artist pic" />
+                          <label class="small mb-1">Change Picture</label>
+                          <input type="file" name="img" id="img" class="form-control-file" multiple>
 
-                                <div>
-                                    <label for="is_ban" >Is Ban</label>
-                                    <input id ="is_ban" name="is_ban" type="checkbox"  @if ($artist->is_ban) checked @endif">
-                                    @error('is_ban')
-                                    {{$message}}
-                                    @enderror
+                          </div>
+                          <br>
+
+                          <div class="row gx-3 mb-3">
+                          <div class="col-md-4 form-check form-check-solid">
+                          <input class="form-check-input" id ="is_ban" name="is_ban" type="checkbox"  @if ($artist->is_ban) checked @endif">
+
+                            <label class="form-check-label small mb-1 " for="is_ban" >Is Ban</label>
+                                   
                                 </div>
 
 
-                                <div>
-                                    <label for="is_dealer" >Is Dealer</label>
-                                    <input id ="is_dealer" name="is_dealer" type="checkbox"  @if ($artist->is_dealer) checked @endif">
-                                    @error('is_dealer')
-                                    {{$message}}
-                                    @enderror
+                                <div class="col-md-4 form-check form-check-solid">
+                                <input class="form-check-input" id ="is_dealer" name="is_dealer" type="checkbox"  @if ($artist->is_dealer) checked @endif">
+
+                                    <label class="form-check-label small mb-1 " for="is_dealer" >Is Dealer</label>
+                                  
                                 </div>
 
 
-                                <div>
-                                    <label for="is_artist" >Is Artist</label>
-                                    <input id ="is_artist" name="is_artist" type="checkbox"  checked >
-                                    @error('is_artist')
-                                    {{$message}}
-                                    @enderror
-                                </div>
+                                <div class="col-md-4 form-check form-check-solid">
+                                <input class="form-check-input" id ="is_artist" name="is_artist" type="checkbox"  checked >
 
-                                <label for="points" >Points</label>
-                                    <input id ="points" name="points" type="text"  value="{{$artist->points}}">
+                                <label class="form-check-label small mb-1 " for="is_artist" >Is Artist</label>
+                               
+                                </div>
+                          </div>
+                          <div class="col-12">
+                                <label class="small mb-1" for="points" >Points</label>
+                                    <input class="form-control" id ="points" name="points" type="text"  value="{{$artist->points}}">
                                     @error('points')
                                     {{$message}}
                                     @enderror
-                                </div>
+                            </div>
 
 
 
-                                <div>
+                                <div class="col-12">
+                                    <br>
                               <button type="submit">Submit</button>
                          </div>
 
@@ -102,8 +112,7 @@
                         </form>
 
 
-                    </div>
-                </div>
+        
 
             </div>
         </div>

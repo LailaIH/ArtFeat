@@ -30,66 +30,86 @@
 
 
 
-            <div class="card">
-
-                <div class="card-body">
+          
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Edit Podcast</h1>
+                    <div class="card">
+                    <div class="card-header">Edit Podcast
+
+                    </div>
+                    <div class="card-body">
 
             
 
-                    <form class="row g-3" method="POST" action="{{ route('podcasts.update', ['id'=>$podcast['id']]) }}">
+                    <form  method="POST" action="{{ route('podcasts.update', ['id'=>$podcast['id']]) }}">
                         @csrf
                         @method('PUT')
 
                         
-                            <div class="col-md-6">
+                        <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
                                 
-                                    <label for="name">title</label>
+                                    <label class="small mb-1" for="name">title</label>
                                     <input type="text" class="form-control" id="title" name="title" value="{{ $podcast->title }}" required>
+                                    @error('title')
+                                   {{$message}}
+                                    @enderror
                                 </div>
                             
 
                             <div class="col-md-6">
                                 
-                                    <label for="audio">Audio URL</label>
+                                    <label class="small mb-1" for="audio">Audio URL</label>
                                     <input type="text" class="form-control" id="audio" name="audio" value="{{ $podcast->audio_url }}" required>
-                                
+                                    @error('audio')
+                                {{$message}}
+                                @enderror
                             </div>
+                        </div>
+
+                        <div class="row gx-3 mb-3">
 
                             <div class="col-md-6">
                                 
-                                    <label for="status">Status</label>
+                                    <label class="small mb-1" for="status">Status</label>
                                     <input type="text" class="form-control" id="status" name="status" value="{{ $podcast->status }}">
-                                
+                                    @error('status')
+                                   {{$message}}
+                                   @enderror
                             </div>
 
                             <div class="col-md-6">
                                 
-                                    <label for="description">Description</label>
+                                    <label class="small mb-1" for="description">Description</label>
                                     <textarea id="description" name="description" class="form-control">{{$podcast->description}}
                                     </textarea>
                                 
+                                @error('description')
+                                {{$message}}
+                                @enderror
                             
                         </div>
+                        </div>
 
-                        <div class="col-md-6">
-                                
-                                    <label for="is_online">Is Online</label>
-                                  <input type="checkbox" name="is_online"  @if ($podcast->is_online) checked @endif>
-                                
-                            </div>
+                        
 
-                            <div class="col-md-6">
-                                
-                                    <label for="is_free">Is Free</label>
-                                  <input type="checkbox" name="is_free"  @if ($podcast->is_free) checked @endif>
+                        <div class="col-12">
+
+                                    <input class="form-check-input" type="checkbox" name="is_online"  @if ($podcast->is_online) checked @endif>
+
+                                    <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
                                 
                             </div>
 
+                            <div class="col-12">
+                                
+                                    
+                                  <input class="form-check-input" type="checkbox" name="is_free"  @if ($podcast->is_free) checked @endif>
+                                  <label class="form-check-label small mb-1 " for="is_free">Is Free</label>
+                            </div>
 
+                       
 
                         
 
@@ -104,6 +124,7 @@
 
             </div>
         </div>
+        
     </main>
 
 

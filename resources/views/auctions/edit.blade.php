@@ -27,20 +27,21 @@
         <!-- Main page content-->
         <div class="container mt-n5">
 
-            <div class="card">
-                <div class="card-body">
+            
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <div class="container">
-                        <h1>Edit Auction</h1>
-                        <form class="row g-3 " method="post" action="{{ route('auctions.update' ,['id'=>$auction['id']]) }}   " class="form-group table-container form-container">
+                    <div class="card">
+                    <div class="card-header">Edit Auction</div>
+                    <div class="card-body">
+                        <form  method="post" action="{{ route('auctions.update' ,['id'=>$auction['id']]) }}" >
                           @csrf
                           @method('PUT')
+                          <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
-                                    <label for="name" >Title</label>
-                                    <input id ="name" name="title" type="text" value="{{ $auction->title }}">
+                                    <label  class="small mb-1" for="name" >Title</label>
+                                    <input class="form-control" id ="name" name="title" type="text" value="{{ $auction->title }}">
                                     @error('title')
                                     {{$message}}
                                     @enderror
@@ -48,7 +49,7 @@
 
 
                                 <div class="col-md-6">
-                                <label for="description" >Description</label>
+                                <label class="small mb-1" for="description" >Description</label>
                                 <textarea id="description" name="description" class="form-control" >
                                     {{$auction->description}}
                                 </textarea>
@@ -56,30 +57,42 @@
                                 {{$message}}
                                 @enderror
                                 
+                                </div>
 
                                 </div>
-                                <br>
-                                <div class="col-12">
-                                <label for="start_time" >Start Date</label>
+
+                                <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                <label class="small mb-1" for="start_time" >Start Date</label>
                                 <input type="datetime-local" id="start_time" name="start_time"
-                                value="{{$auction->start_time}}" >
+                                value="{{$auction->start_time}}" class="form-control" >
+
+                                @error('start_time')
+                                {{$message}}
+                                @enderror
                                 </div>
 
 
 
-<br>
 
-                            <div class="col-12">
-                                <label for="end_time" >End Date</label>
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="end_time" >End Date</label>
                                 <input type="datetime-local" id="end_time" name="end_time"
-                                value="{{$auction->end_time}}" >
+                                value="{{$auction->end_time}}" class="form-control" >
+                                @error('end_time')
+                                {{$message}}
+                                @enderror
+                            
+                            
+                            </div>
                                 </div>
 
+                                <div class="row gx-3 mb-3">
 
                                 <div class="col-md-6">
-                                    <br>
-                                <label for="starting_price" >Starting Price</label>
-                                <input type="number" id="starting_price" name="starting_price"
+                                <label class="small mb-1" for="starting_price" >Starting Price</label>
+                                <input class="form-control" type="number" id="starting_price" name="starting_price"
                                 value="{{$auction->starting_price}}" >
                                 @error('starting_price')
                                 {{$message}}
@@ -90,26 +103,25 @@
 
 
                                 <div class="col-md-6">
-                                    <label for="status" >Status</label>
-                                    <input id ="status" name="status" type="text" value="{{ $auction->status}}">
+                                    <label class="small mb-1" for="status" >Status</label>
+                                    <input class="form-control" id ="status" name="status" type="text" value="{{ $auction->status}}">
                                     @error('status')
                                     {{$message}}
                                     @enderror
                                 </div>
+                                </div>
 
-                                <div class="col-12">
-                                    <br>
-                                    <input type="checkbox" name="is_online"  @if ($auction->is_online) checked @endif>
-                                    <label for="is_online">Is Online:</label>
-                                    @error('is_online')
-                                        {{$message}}
-                                        @enderror
+                                <div class="col-12 form-check form-check-solid">
+                                    
+                                    <input class="form-check-input" type="checkbox" name="is_online"  @if ($auction->is_online) checked @endif>
+                                    <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
+                                    
                                 </div>
 
 
-
-                                <div class="col-12">
-                              <button type="submit">Submit</button>
+<br>
+                                <div>
+                              <button class="btn btn-primary" type="submit">Submit</button>
                          </div>
 
 
@@ -117,10 +129,7 @@
                         </form>
 
 
-                    </div>
-                </div>
-
-            </div>
+         
         </div>
 
     </main>

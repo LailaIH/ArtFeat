@@ -31,13 +31,14 @@
 
 
 
-            <div class="card">
-                <div class="card-body">
+           
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-                    <h1>Create New Product</h1>
+                    <div class="card">
+                    <div class="card-header">Create A New Product</div>
+                    <div class="card-body">
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -51,45 +52,94 @@
 
                     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" name="name" id="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea name="description" id="description" class="form-control" required></textarea>
+                        <div class="row gx-3 mb-3">
+
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="name">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" required value="{{old('name')}}">
+                            @error('name')
+                                    {{$message}}
+                                    @enderror
+                        
                         </div>
 
-                        <div class="form-group">
-                            <label for="section_id">Section</label>
-                            <select name="section_id" id="section_id" class="form-control" required>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="description">Description</label>
+                            <textarea name="description" id="description" class="form-control" required></textarea>
+                            @error('description')
+                                {{$message}}
+                                @enderror
+                        </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="section_id">Section</label>
+                            <select name="section_id" id="section_id" class="form-control form-control-solid" aria-label="Default select example" required>
                                 <option value="" disabled selected>Select a section</option>
                                 @foreach ($sections as $section)
                                     <option value="{{ $section->id }}">{{ $section->name }}</option>
                                 @endforeach
+                                @error('section_id')
+                                {{$message}}
+                                @enderror
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="price">Price</label>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="artist_id">Artist</label>
+                            <select name="artist_id" id="artist_id" class="form-control form-control-solid" aria-label="Default select example" required>
+                                <option value="" disabled selected>Select an artist</option>
+                                @foreach ($artists as $artist)
+                                    <option value="{{ $artist->id }}">{{ $artist->name }}</option>
+                                @endforeach
+                                @error('artist_id')
+                                {{$message}}
+                                @enderror
+                            </select>
+                        </div></div>
+
+
+
+
+
+
+
+
+
+
+
+<br>
+                        <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="price">Price</label>
                             <input type="number" name="price" id="price" class="form-control" required>
+                            @error('price')
+                                {{$message}}
+                                @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="stock_quantity">Stock Quantity</label>
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="stock_quantity">Stock Quantity</label>
                             <input type="number" name="stock_quantity" id="stock_quantity" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="img" class="form-label">Image</label>
+                            @error('stock_quantity')
+                                {{$message}}
+                                @enderror
+                        </div> 
+                    </div>
+                    
+                            <div class="col-12">
+                            <label class="small mb-1" for="img" class="form-label">Image</label>
                             <input type="file" name="img" id="img" class="form-control-file" multiple>
                         </div>
-                        <div class="form-group">
-                            <label for="is_online">Is Online</label>
-                            <select name="is_online" id="is_online" class="form-control">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create Product</button>
+
+                        <br>
+                        <div class="col-12 form-check ">
+                        <input class="form-check-input" type="checkbox" name="is_online">
+                        <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
+                       <br>
+                    </div>
+                        <div>
+                            <br>
+                        <button type="submit" class="btn btn-primary">Create Product</button></div>
                     </form>
 
             </div>

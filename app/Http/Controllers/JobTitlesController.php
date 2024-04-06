@@ -101,7 +101,7 @@ class JobTitlesController extends Controller
         $jobTitle->is_online= $request->has('is_online')?1:0;
 
         $jobTitle->save();
-        return redirect()->route('job_titles.index');
+        return redirect()->route('job_titles.index')->with('success','Job Title has been updated successfully');
 
     }
 
@@ -114,7 +114,7 @@ class JobTitlesController extends Controller
     public function destroy($id)
     {
         JobTitle::destroy($id);
-        return redirect()->route('job_titles.index');
+        return redirect()->route('job_titles.index')->withErrors(['fail' => 'Job Title has been deleted']);
     }
     public function updateStatus(Request $request, JobTitle $jobTitle)
     {

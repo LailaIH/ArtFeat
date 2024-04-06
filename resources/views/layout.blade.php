@@ -82,7 +82,7 @@
                      aria-labelledby="navbarDropdownDocs">
 
 
-                    <a class="dropdown-item py-3" href="/profile"
+                    <a class="dropdown-item py-3" href="{{route('users.profile' , ['id' => auth()->user()->id])}}"
                     >
                         <div class="icon-stack bg-primary-soft text-primary mr-4"><i
                                 class="fas fa-user"></i></div>
@@ -121,8 +121,9 @@
     <div id="layoutSidenav_content">
 
         @yield('content')
-        
+
         <footer class="footer mt-auto footer-light">
+            
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 small">Copyright &copy; {{--{{ \App\Setting::where('key', '=', 'site_name')->first()->value }}--}}.com 2020</div>
@@ -133,6 +134,7 @@
                     </div>
                 </div>
             </div>
+            
         </footer>
         
 

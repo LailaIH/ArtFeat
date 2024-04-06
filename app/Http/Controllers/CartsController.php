@@ -126,14 +126,15 @@ class CartsController extends Controller
         $user = User::findOrFail($request->input('user_id'));
 
 
+     
         $cart = Cart::findOrFail($id);
         $cart->user_id = $request->input('user_id');
         $cart->product_id = $request->input('product_id');
         $cart->quantity = strip_tags($request->input('quantity'));
         $cart->max_products = strip_tags($request->input('max_products'));
         $cart->save();
-            
-        return redirect()->route('carts.show',$user)->with('success', 'Cart Updated successfully.');; ;
+        
+        return redirect()->route('carts.show',$user)->with('success', 'Cart Updated successfully.');
         
     }
 
@@ -148,6 +149,6 @@ class CartsController extends Controller
         $cart = Cart::findOrFail($id);
         $user = $cart->user;
         Cart::destroy($id);
-        return redirect()->route('carts.show',$user);
+        return redirect()->route('carts.show',$user)->withErrors(['fail' => 'Cart has been deleted']);
     }
 }
