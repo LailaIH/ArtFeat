@@ -164,7 +164,7 @@ class HomeController extends Controller
         $nonArtistUser->save();
 
         if($nonArtistUser->id == auth()->user()->id){
-            return redirect()->route('users.profile',$id); 
+            return redirect()->route('users.profile',$id)->with('success','profile has been successfully updated'); 
         }
 
         return redirect()->route('users.nonArtists')->with('success', 'User Updated successfully.');; ;

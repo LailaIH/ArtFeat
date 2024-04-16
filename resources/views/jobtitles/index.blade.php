@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -58,7 +58,7 @@
                         <div class="card-body">
                                 <table id="productTable" class="table small-table-text">
                                     <thead>
-                                    <tr style="white-space: nowrap; font-size: 12px;">
+                                    <tr style="white-space: nowrap; font-size: 14px;">
 
                                         <th>Name</th>
                                         <th>Description</th>
@@ -73,14 +73,14 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($jobTitles as $jobTitle)
-                                        <tr>
+                                        <tr style="white-space: nowrap; font-size: 12px;">
 
                                             <td>{{ $jobTitle->name }}</td>
                                             <td>{{ $jobTitle->description }}</td>
 
                                             <td>
                         <span class="badge {{ $jobTitle->is_online ? 'badge-green' : 'badge-red' }}">
-                            {{ $jobTitle->is_online ? 'Online' : 'Offline' }}
+                              {{ $jobTitle->is_online ? 'Online' : 'Offline' }}
                             </span>
                  
                                             </td>

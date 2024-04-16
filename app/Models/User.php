@@ -79,10 +79,10 @@ class User extends Authenticatable
         return $this->hasMany(Podcast::class);
     }
 
-    // public function artists()
-    // {
-    //     return $this->hasMany(Artist::class);
-    // }
+    public function artists()
+    {
+        return $this->hasOne(Artist::class);
+    }
 
     public function auctions()
     {

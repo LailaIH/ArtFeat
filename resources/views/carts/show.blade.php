@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -34,7 +34,7 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
                     <div class="card">
-                    <div class="card-header">Carts List</div>
+                    <div class="card-header">{{$user->name}}'s carts list</div>
                         
 
                         @if (session('success'))
@@ -48,7 +48,7 @@
                             @endif
                         @if ($carts->isEmpty())
                             
-                             <div class="card-body">
+                        <div class="card-body">
                          <form method="GET" action="{{route('carts.create')}}">
                              <div class="col-md-6">
                              <label class="small mb-1 mr-5" for="max_products">No Carts For {{$user->name}}</label>
@@ -59,10 +59,10 @@
                        
                             @else
                        <div class="card-body">
-                                <table class="table small-table-text">
+                                <table id="myTable" class="table small-table-text">
 
                                     <thead>
-                                        <tr>
+                                        <tr style="white-space: nowrap; font-size: 14px;">
                                         
                                         
                                         <th scope="col">Product</th>
@@ -73,7 +73,7 @@
                                     <tbody>
                         
                             @foreach($carts as $cart)
-                            <tr>
+                            <tr style="white-space: nowrap; font-size: 14px;">
                                 
                                 
                                 <td>{{$cart->product->name}}</td>
@@ -101,16 +101,18 @@
                                 </tbody>
                              </table>
                         
-
+                       </div>
                            
                         @endif
                     
                 </div>
-
+        </div>
        
     </main>
 
-
+<script>
+    let table = new DataTable('#myTable');
+</script>
 
 @endsection
 

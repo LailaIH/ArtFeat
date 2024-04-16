@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -57,9 +57,9 @@
                          </div>                       
                           @else
                           <div class="card-body">
-                                <table id="productTable" class="table small-table-text">
+                                <table id="myTable" class="table small-table-text">
                                     <thead>
-                                    <tr style="white-space: nowrap; font-size: 12px;">
+                                    <tr style="white-space: nowrap; font-size: 14px;">
 
                                         <th>Name</th>
                                         <th>Description</th>
@@ -71,7 +71,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($sections as $section)
-                                        <tr>
+                                        <tr style="white-space: nowrap; font-size: 14px;">
 
                                             <td>{{ $section->name }}</td>
                                             <td>{{ $section->description }}</td>
@@ -95,11 +95,12 @@
                     </div>
                 </div>
 
-            </div>
-        </div>
+      
     </main>
 
-
+    <script>
+    let table = new DataTable('#myTable');
+</script>
 
 
 

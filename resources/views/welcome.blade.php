@@ -14,10 +14,19 @@
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
+        
             <div class="card-body">
+            @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif
+          
                 <img src="assets/img/kofia.svg" />
                 <div class="title">
+               
                     <h1 class="card-title">Shop Most Beautiful</h1>
+                 
                     <h1>Paintings Now</h1>
                 </div>
                 <p class="card-text"><span>+100,000</span> of the best art pieces that will spoil your eyes</p>
@@ -42,7 +51,10 @@
         @foreach($sections as $section)
         <div class="card">
             <div class="overlay">
-                <img class="" src="assets/img/a6.png" />
+                @if($section->name=='sculptures')
+                <img src="{{asset('assets\img\sculptures.jpg')}}" alt="artist pic"/>
+@else
+                <img src="https://source.unsplash.com/featured/?{{$section->name}}"/>@endif
             </div>
             <p>{{$section->name}}</p>
         </div>
@@ -372,7 +384,11 @@
                                         </div>
                                         <div class="footerCard">
                                             <div class="Avatar">
+                                                @if(isset($artist->img))
                                                 <img src="{{ asset('userImages/'.$artist->img) }}" alt="artist" />
+                                                @else
+                                                <img src="{{asset('assets\img\artist.png')}}" alt="artist pic"/>
+                                                @endif               
                                             </div>
                                             <div  class="info">
                                                 <h2>{{$artist->name}}</h2>

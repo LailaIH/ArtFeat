@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Option;
+use Illuminate\Pagination\Paginator;
 
 
 
@@ -27,4 +28,22 @@ class LandingController extends Controller
         'whyArtfeatText'=>$whyArtfeatText,
     ]);
     }
+
+
+    //
+    public function discover(){
+
+       // $artists = User::where('is_artist', true)->get();
+        $artists = User::where('is_artist', true)->paginate(3);
+
+
+        return view('discover',['artists'=>$artists]);
+
+    }
+
+
+
+
+
+
 }

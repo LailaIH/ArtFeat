@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -29,9 +29,6 @@
 
 
 
-
-
-            
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">

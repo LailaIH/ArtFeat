@@ -58,6 +58,7 @@ class ProductsController extends Controller
             'stock_quantity' => 'required|integer',            
             'section_id' => 'required|exists:sections,id', // Validate the section_id exists in the sections table
             'artist_id' => 'required',
+            'img'=>'required',
        
         ]);
 

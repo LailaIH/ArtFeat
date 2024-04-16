@@ -15,8 +15,8 @@
     <div class="pageContent">
       <div aria-label="Breadcrumb" class="breadcrumb">
         <ul>
-          <li><a href="../index.html">ArtFeat</a></li>
-          <li class="active">Search</li>
+          <li><a href="#">ArtFeat</a></li>
+          <li class=""><a href="#">Search</a></li>
         </ul>
       </div>
 

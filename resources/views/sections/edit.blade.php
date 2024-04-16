@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -56,7 +56,7 @@
                                 <div class="col-md-6">
                                 
                                     <label class="small mb-1" for="description">Description</label>
-                                    <textarea id="description" name="description" class="form-control">{{$section->description}}
+                                    <textarea id="description" name="description" class="form-control" required>{{$section->description}}
                                     </textarea>
                                     @error('description')
                                     {{$message}}
@@ -65,11 +65,11 @@
                         
 
                         <div class="col-12">
-                        <input class="form-check-input" type="checkbox" name="is_online"  @if ($section->is_online) checked @endif>
 
                                 
                         <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
-                                
+                        <input class="form-check-input ml-3" type="checkbox" name="is_online"  @if ($section->is_online) checked @endif>
+
                             
                         </div>
 

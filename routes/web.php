@@ -11,7 +11,11 @@ use App\Http\Controllers\PodcastsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionsController;
 use App\Http\Controllers\TicketsController;
-use App\Http\Controllers\LandingController;
+use App\Http\Controllers\LandingPage\LandingController;
+use App\Http\Controllers\LandingPage\DiscoverController;
+use App\Http\Controllers\LandingPage\ArtistController;
+
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +35,36 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
+Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover');
+Route::get('/dis',function(){
+return view('dis');
+});
+
+Route::get('/artists/signup', [ArtistController::class, 'signup'])->name('artists.signup');
+Route::post('/artists/create', [ArtistController::class, 'create'])->name('artists.create');
+
+Route::get('/artists/profile/{id}', [ArtistController::class, 'profile'])
+->name('artists.profile')
+->middleware('auth', 'checkArtistProfile');
+
+Route::get('/artists/edit/profile/{id}', [ArtistController::class, 'editProfile'])
+->name('artists.edit_profile')
+->middleware('auth', 'checkArtistProfile');
+
+Route::put('/artists/update/profile/{id}', [ArtistController::class, 'update'])
+->name('artists.update')
+->middleware('auth', 'checkArtistProfile');
+
+Route::post('/artists/edit/profile/picture/{id}', [ArtistController::class, 'updateProfilePicture'])
+->name('artists.updateProfilePicture')
+->middleware('auth', 'checkArtistProfile');
+
+Route::post('/artists/edit/background/picture/{id}', [ArtistController::class, 'updateBackgroundPicture'])
+->name('artists.updateBackgroundPicture')
+->middleware('auth', 'checkArtistProfile');
+
+
+
 
 Route::get('/who/we/are', function () {
     return view('who-we-are');
@@ -39,6 +73,7 @@ Route::get('/who/we/are', function () {
 Route::get('/terms/conditions', function () {
     return view('terms-and-conditions');
 });
+
 
 
 

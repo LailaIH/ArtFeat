@@ -27,6 +27,11 @@
 
                             </a>
 
+                            <a class="nav-link" href="{{route('users.create')}}">
+                               Add A New User
+
+                            </a>
+
                         </nav>
                     </div>
 

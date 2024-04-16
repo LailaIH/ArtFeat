@@ -9,25 +9,25 @@ class Artist extends Model
 {
     use HasFactory;
 
-    // protected $fillable = [
-    //     'name',
-    //     'store_name',
-    //     'country',
-    //     'city',
-    //     'artwork_provided',
-    //     'language',
-    //     'facebook',
-    //     'instagram',
-    //     'twitter',
-    //     'tiktok',
-    //     'user_id',
-    // ];
+    protected $fillable = [
+        'name',
+        'store_name',
+        'country',
+        'city',
+        'artwork_provided',
+        'language',
+        'facebook',
+        'instagram',
+        'twitter',
+        'tiktok',
+        'user_id',
+    ];
 
 
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // public function products()
     // {

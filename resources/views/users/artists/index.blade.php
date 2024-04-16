@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -51,18 +51,12 @@
                         @endif
 
                         @if ($artists->isEmpty())
-                        <div class="card-body">
-                         <form method="GET" action="{{route('users.create')}}">
-                             <div class="col-md-6">
-                             <label class="small mb-1 mr-5" for="max_products">No Artists</label>
-                             </div>
-                         </form>
-                         </div>
+                       <h4>No Artists</h4>
                         @else
                         <div class="card-body">
-                                <table id="productTable" class="table small-table-text">
+                                <table id="myTable" class="table small-table-text">
                                     <thead>
-                                    <tr style="white-space: nowrap; font-size: 12px;">
+                                    <tr style="white-space: nowrap; font-size: 14px;">
 
                                         <th>Name</th>
                                         <th>Email</th>
@@ -76,15 +70,20 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($artists  as $artist )
-                                        <tr>
+                                        <tr style="white-space: nowrap; font-size: 14px;">
 
                                             <td>{{ $artist->name }}</td>
                                             <td>{{ $artist->email }}</td>
                                             @if($artist->jobTitle)
-                                            <td>{{ $artist->jobTitle->name }}</td> @endif
+                                            <td>{{ $artist->jobTitle->name }}</td>
+                                            @else<td>No Job Registered</td>
+                                            @endif
                                             <td>{{ $artist->is_ban ? 'Yes' : 'No' }}</td>
                                             <td>{{ $artist->is_artist ? 'Yes' : 'No' }}</td>
+                                            @if(isset($artist->points))
                                             <td>{{ $artist->points }}</td>
+                                            @else
+                                            <td>0</td>@endif
                                             <td>
                                             <a class="btn btn-primary btn-xs" href="{{route('users.artists.edit' , ['id'=>$artist['id'] ])}}" >   
                                             Edit
@@ -103,14 +102,7 @@
                                 </table>
                             </div>
                         @endif
-                        <div class="col-12">
-                        <a href="{{route('users.create')}}" class="btn btn-success">
-                            Add User </a>
-                        </div>
                     </div>
-                </div>
-
-            </div>
         </div>
     </main>
 
@@ -119,20 +111,9 @@
 
 
 
-    <!-- <script>
-        $(document).ready(function() {
-            var table = $('#productTable').DataTable();
-
-            // Add search filters
-            $('#searchName').on('keyup', function() {
-                table.column(0).search(this.value).draw();
-            });
-
-            $('#searchCategory').on('keyup', function() {
-                table.column(1).search(this.value).draw();
-            });
-        });
-    </script> -->
+<script>
+    let table = new DataTable('#myTable');
+</script>
 
 @endsection
 

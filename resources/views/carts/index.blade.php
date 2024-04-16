@@ -2,6 +2,8 @@
 
 @section('content')
 
+<link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <main>
         <header class="page-header page-header-dark bg-danger pb-5">
@@ -11,7 +13,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -31,33 +33,35 @@
 
 
 
-            <div class="card">
-                <div class="card-body">
+            
+                
 
 
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
-                    <div class="container">
-                        <h1>Carts List</h1>
+                    <div class="card">
+                    <div class="card-header">Carts List</div>
 
                         @if ($carts->isEmpty())
                             <p>No Carts.</p>
                         @else
-
+                        <div class="card-body">
                         <div class="list-group">
                             @foreach($usersWithCarts as $user)
                             <br>
-                            <a href="{{route('carts.show',$user)}}" class="list-group-item list-group-item-action">Show Cart of {{$user->name}}</a>
+                            <a href="{{route('carts.show',$user)}}" class="list-group-item list-group-item-action">
+                            <i class="fa fa-shopping-cart " aria-hidden="true"></i> 
+                            Show Cart of {{$user->name}}
+                            </a>
                             @endforeach
                         </div>
+                        
 
                            
                         @endif
                     </div>
                 </div>
 
-            </div>
-        </div>
+       
     </main>
 
     <!-- <script>

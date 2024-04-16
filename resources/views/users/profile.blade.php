@@ -9,7 +9,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -25,6 +25,9 @@
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
 
+        @if (session('success'))
+                            <div class="alert alert-success m-3">{{ session('success') }}</div>
+                        @endif
 
 
                   <div class="row m-5">
@@ -34,14 +37,24 @@
                                     <div class="card-header">User Picture</div>
                                     <div class="card-body text-center">
                                         <!-- Profile picture image-->
-                                        <img width="160" height="160" class="img-account-profile rounded-circle mb-1" src="{{ asset('userImages/'.$user->img) }}" alt=" user pic " />
+                                        @if($user->img)
+                                        <img id="profile-image" width="160" height="160" class="img-account-profile rounded-circle mb-1" src="{{ asset('userImages/'.$user->img) }}" alt=" user pic " />
+                                        @else
+                                        <img id="profile-image" width="160" height="140" class="img-account-profile rounded-circle mb-1" src="{{ asset('assets/img/nopro.png') }}" alt=" user pic " />
+                                        @endif
                                         <!-- Profile picture help block-->
+                                       
                                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                         <!-- Profile picture upload button-->
-                                        <form  method="POST" action="{{ route('users.nonArtists.update', ['id'=>$user['id']]) }}" enctype="multipart/form-data">
+                                        <form  method="POST" action="{{ route('users.nonArtists.update', ['id'=>$user['id']]) }}" enctype="multipart/form-data" id="image-form">
                                         @csrf
                                         @method('PUT')
-                                        <input type="file" name="img" id="img" class="form-control-file" multiple>
+                                        
+                                        <label for="img" class="custom-file-upload">
+                                            Upload New Image
+                                        </label>
+                                        <input style="display: none;" type="file" name="img" id="img" class="form-control-file" multiple onchange="updateProfileImage(event);">
+
                                     </div>
                                 </div>
                             </div>
@@ -127,4 +140,18 @@
                         </div>
 
 </main>
+
+<script>
+    function updateProfileImage(event) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            var output = document.getElementById('profile-image');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+
+        // Submit form after selecting image
+    }
+</script>
+
 @endsection                       

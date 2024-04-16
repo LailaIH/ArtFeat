@@ -51,17 +51,14 @@
 
                         @if ($nonArtists->isEmpty())
                         <div class="card-body">
-                         <form method="GET" action="{{route('users.create')}}">
-                             <div class="col-md-6">
-                             <label class="small mb-1 mr-5" for="max_products">No Users</label>
-                             </div>
-                         </form>
+                         
+                            <h4>No Users</h4>
                          </div>     
                          @else
                          <div class="card-body">
-                                <table id="productTable" class="table small-table-text">
+                                <table id="myTable" class="table small-table-text">
                                     <thead>
-                                    <tr style="white-space: nowrap; font-size: 12px;">
+                                    <tr style="white-space: nowrap; font-size: 14px;">
 
                                         <th>Name</th>
                                         <th>Email</th>
@@ -76,15 +73,21 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($nonArtists  as $nonArtist )
-                                        <tr>
+                                        <tr style="white-space: nowrap; font-size: 14px;">
 
                                             <td>{{ $nonArtist->name }}</td>
                                             <td>{{ $nonArtist->email }}</td>
                                             @if($nonArtist->jobTitle)
-                                            <td>{{ $nonArtist->jobTitle->name }}</td> @endif
+                                            <td>{{ $nonArtist->jobTitle->name }}</td>
+                                            @else
+                                            <td>No Job Registered</td>
+                                             @endif
                                             <td>{{ $nonArtist->is_ban ? 'Yes' : 'No' }}</td>
                                             <td>{{ $nonArtist->is_artist ? 'Yes' : 'No' }}</td>
+                                            @if($nonArtist->points)
                                             <td>{{ $nonArtist->points}}</td>
+                                            @else
+                                            <td>0</td>@endif
                                             <td>
                                             <a class="btn btn-primary btn-xs" href="{{route('users.nonArtists.edit' , ['id'=>$nonArtist['id'] ])}}" >   
                                             Edit
@@ -106,40 +109,21 @@
 
                             </div>
                         @endif
-<div class="col-12">
-    
-                        <a href="{{route('users.create')}}" class="btn btn-success">
-                            Add User </a>
 
-                        </div>
                        
                     </div>
                 </div>
 
-            </div>
-        </div>
+        
     </main>
 
 
 
 
 
-
-    <!-- <script>
-        $(document).ready(function() {
-            var table = $('#productTable').DataTable();
-
-            // Add search filters
-            $('#searchName').on('keyup', function() {
-                table.column(0).search(this.value).draw();
-            });
-
-            $('#searchCategory').on('keyup', function() {
-                table.column(1).search(this.value).draw();
-            });
-        });
-    </script> -->
-
+<script>
+    let table = new DataTable('#myTable');
+</script>
 @endsection
 
 

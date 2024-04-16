@@ -313,7 +313,7 @@ nav input[type="checkbox"] {
 }
 
 .breadcrumb {
-  padding-top: 10%;
+  padding-top: 3%;
 }
 
 .breadcrumb ul {
@@ -334,6 +334,9 @@ nav input[type="checkbox"] {
 .breadcrumb ul li a {
   color: #667085;
   text-decoration: none;
+  font-family :'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 17px;
+  
 }
 .breadcrumb ul .active {
   color: #00a5f2;

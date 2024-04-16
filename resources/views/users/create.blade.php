@@ -40,7 +40,7 @@
                           <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                                     <label class="small mb-1" for="name" >Name</label>
-                                    <input class="form-control" id ="name" name="name" type="text" value="{{ old('name') }}">
+                                    <input class="form-control" id ="name" name="name" type="text" value="{{ old('name') }}" required>
                                     @error('name')
                                     {{$message}}
                                     @enderror
@@ -49,7 +49,7 @@
 
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="email" >Email</label>
-                                    <input class="form-control" id ="email" name="email" type="text"  value="{{ old('email') }}">
+                                    <input class="form-control" id ="email" name="email" type="text"  value="{{ old('email') }}" required>
                                     @error('email')
                                     {{$message}}
                                     @enderror
@@ -60,7 +60,7 @@
                                 <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                 <label class="small mb-1" for="job_title_id">Job Title:</label>
-                                <select name="job_title_id" id="job_title_id" class="form-control form-control-solid" aria-label="Default select example">
+                                <select name="job_title_id" id="job_title_id" class="form-control form-control-solid" aria-label="Default select example" required>
                                     <option value="">Select a Job</option>
                                     @foreach ($jobTitles as $jobTitle)
                                         <option value="{{ $jobTitle->id }}">{{ $jobTitle->name }}</option>
@@ -70,7 +70,7 @@
 
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="password" >Password</label>
-                                    <input class="form-control" id ="password" name="password" type="password" >
+                                    <input class="form-control" id ="password" name="password" type="password" required >
                                     @error('password')
                                     {{$message}}
                                     @enderror
@@ -79,30 +79,33 @@
 
                                 <div class="row gx-3 mb-3">
                                 <div class="col-md-4 form-check form-check-solid">
-                                <input class="form-check-input" id ="is_ban" name="is_ban" type="checkbox" >
 
                                 <label class="form-check-label small mb-1" for="is_ban" >Is Ban</label>
-                                    @error('is_ban')
+                                <input class="form-check-input ml-3" id ="is_ban" name="is_ban" type="checkbox" >
+
+                                @error('is_ban')
                                     {{$message}}
                                     @enderror
                                 </div>
 
 
                                 <div class="col-md-4 form-check form-check-solid">
-                                <input class="form-check-input" id ="is_dealer" name="is_dealer" type="checkbox" >
 
                                 <label class="form-check-label small mb-1" for="is_dealer" >Is Dealer</label>
-                                    @error('is_dealer')
+                                <input class="form-check-input ml-3" id ="is_dealer" name="is_dealer" type="checkbox" >
+
+                                @error('is_dealer')
                                     {{$message}}
                                     @enderror
                                 </div>
 
 
                                 <div class="col-md-4 form-check form-check-solid">
-                                <input class="form-check-input" id ="is_artist" name="is_artist" type="checkbox" >
 
                                 <label class="form-check-label small mb-1" for="is_artist" >Is Artist</label>
-                                    @error('is_artist')
+                                <input class="form-check-input ml-3" id ="is_artist" name="is_artist" type="checkbox" >
+
+                                @error('is_artist')
                                     {{$message}}
                                     @enderror
                                 </div></div>
@@ -110,7 +113,7 @@
                                 <div class="col-12">
 
                                 <label for="points" >Points</label>
-                                    <input id ="points" name="points" type="text"  value="{{ old('points') }}">
+                                    <input id ="points" class="form-control" name="points" type="text"  value="{{ old('points') }}" required>
                                     @error('points')
                                     {{$message}}
                                     @enderror
@@ -128,10 +131,7 @@
                         </form>
 
 
-                    </div>
-                </div>
-
-            </div>
+              
         </div>
 </div>
     </main>

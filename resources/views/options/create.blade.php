@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-6 mt-4">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                Welcome Admin
+                                Welcome {{ Auth::user()->name }}
                             </h1>
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
@@ -57,11 +57,17 @@
                         <div class="col-md-6">
                             <label class="small mb-1" for="key">Key</label>
                             <input type="text" class="form-control" id="key" name="key" required>
+                            @error('key')
+                                {{$message}}
+                                @enderror
                         </div>
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="value">Value</label>
-                            <input type="text" class="form-control" id="value" name="value" required>
+                            <textarea name="value" id="value" class="form-control" required></textarea>
+                            @error('value')
+                                {{$message}}
+                                @enderror
                         </div>
                         </div>
                         <div>

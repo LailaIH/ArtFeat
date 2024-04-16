@@ -16,11 +16,13 @@
     <div class="pageContent">
       <div aria-label="Breadcrumb" class="breadcrumb">
         <ul>
-          <li><a href="../index.html">ArtFeat</a></li>
-          <li class="active">Terms & Conditions</li>
+          <li><a href="/">ArtFeat</a></li>
+          <li class=""><a href="#">Terms & Conditions</a></li>
         </ul>
+        
       </div>
       <p>
+        <br><br><br>
         Please read these terms and conditions carefully before using [Website
         URL] operated by Lorem Ipsum Ltd.
       </p>
