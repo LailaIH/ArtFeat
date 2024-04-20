@@ -60,12 +60,12 @@
                          </div>
                         @else
                         <div class="card-body">
-                        <a href="{{ route('tickets.create') }}" class="btn btn-success ">Create New Ticket</a>
+                        <a href="{{ route('tickets.create') }}" class="btn btn-success btn-sm ">Create New Ticket</a>
                         <br>
                         <br>
-                            <table id="productTable" class="table small-table-text">
+                            <table id="myTable" class="table small-table-text">
                                     <thead>
-                                    <tr style="white-space: nowrap; font-size: 12px;">
+                                    <tr style="white-space: nowrap; font-size: 14px;">
                                     <th>Ticket Title</th>
                                     <th>Ticket Body</th>
                                     <th>Actions</th>
@@ -73,9 +73,9 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($tickets as $ticket)
-                                    <tr>
+                                    <tr style="white-space: nowrap; font-size: 14px;">
 
-                                    <td>{{$ticket->title}}</td>
+                                    <td class=" text-black"><b>{{$ticket->title}}</b></td>
                                     <td>{{$ticket->body}}</td>
                                     <td>
                                     <a href="{{route('tickets.show',['ticket'=>$ticket['id']])}}"
@@ -93,10 +93,14 @@
                             </table>
                             @endif
 
-                        </div>
+                       
                     </div>
         </div>
     </main>
+
+<script>
+    let table = new DataTable('#myTable');
+</script>    
 @endsection        
                         
 

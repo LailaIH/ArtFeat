@@ -94,33 +94,36 @@
 
                         
 
-                        <div class="col-12">
+                        <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
 
-                                    <input class="form-check-input" type="checkbox" name="is_online"  @if ($podcast->is_online) checked @endif>
+
 
                                     <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
-                                
+                                    <input class="form-check-input ml-3" type="checkbox" name="is_online"  @if ($podcast->is_online) checked @endif>
+
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 
                                     
-                                  <input class="form-check-input" type="checkbox" name="is_free"  @if ($podcast->is_free) checked @endif>
                                   <label class="form-check-label small mb-1 " for="is_free">Is Free</label>
-                            </div>
+                                  <input class="form-check-input ml-3" type="checkbox" name="is_free"  @if ($podcast->is_free) checked @endif>
+
+                                </div></div>
 
                        
 
                         
 
                 
-
+                                <div class="row gx-3 mb-3">
                             <div class="col-12">
-                            <br>
+                            
                         <button type="submit" class="btn btn-primary">Update</button>
-                            </div>
+                            </div></div>
                     </form>
-                </div>
+                
 
             </div>
         </div>

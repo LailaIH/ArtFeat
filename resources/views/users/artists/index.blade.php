@@ -62,7 +62,6 @@
                                         <th>Email</th>
                                         <th>Job Title</th>
                                         <th>Is Ban</th>
-                                        <th>Is Artist</th>
                                         <th>Points</th>
                                         <th>Actions</th>
 
@@ -72,18 +71,18 @@
                                     @foreach ($artists  as $artist )
                                         <tr style="white-space: nowrap; font-size: 14px;">
 
-                                            <td>{{ $artist->name }}</td>
+                                            <td class=" text-black"><b>{{ $artist->name }}</b></td>
                                             <td>{{ $artist->email }}</td>
                                             @if($artist->jobTitle)
                                             <td>{{ $artist->jobTitle->name }}</td>
                                             @else<td>No Job Registered</td>
                                             @endif
-                                            <td>{{ $artist->is_ban ? 'Yes' : 'No' }}</td>
-                                            <td>{{ $artist->is_artist ? 'Yes' : 'No' }}</td>
-                                            @if(isset($artist->points))
-                                            <td>{{ $artist->points }}</td>
+                                            <td class="{{ $artist->is_ban ? 'text-green' : 'text-red' }}">
+    {{ $artist->is_ban ? 'Yes' : 'No' }}
+</td>                                            @if(isset($artist->points))
+                                            <td class="text-primary">{{ $artist->points }}</td>
                                             @else
-                                            <td>0</td>@endif
+                                            <td class="text-primary">0</td>@endif
                                             <td>
                                             <a class="btn btn-primary btn-xs" href="{{route('users.artists.edit' , ['id'=>$artist['id'] ])}}" >   
                                             Edit

@@ -56,7 +56,7 @@
                          </div>
                         @else
                         <div class="card-body">
-                                <table id="productTable" class="table small-table-text">
+                                <table id="myTable" class="table small-table-text">
                                     <thead>
                                     <tr style="white-space: nowrap; font-size: 14px;">
 
@@ -73,9 +73,9 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($jobTitles as $jobTitle)
-                                        <tr style="white-space: nowrap; font-size: 12px;">
+                                        <tr style="white-space: nowrap; font-size: 14px;">
 
-                                            <td>{{ $jobTitle->name }}</td>
+                                            <td class=" text-black"><b>{{ $jobTitle->name }}</b></td>
                                             <td>{{ $jobTitle->description }}</td>
 
                                             <td>
@@ -109,27 +109,15 @@
                                 </table>
                             </div>
                         @endif
-                    </div>
-                </div>
+                   
 
             </div>
         </div>
     </main>
 
-    <!-- <script>
-        $(document).ready(function() {
-            var table = $('#productTable').DataTable();
-
-            // Add search filters
-            $('#searchName').on('keyup', function() {
-                table.column(0).search(this.value).draw();
-            });
-
-            $('#searchCategory').on('keyup', function() {
-                table.column(1).search(this.value).draw();
-            });
-        });
-    </script> -->
+<script>
+    let table = new DataTable('#myTable');
+</script>
 
 @endsection
 

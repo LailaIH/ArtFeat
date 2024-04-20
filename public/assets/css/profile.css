@@ -501,12 +501,36 @@ nav input[type="checkbox"] {
 .collections {
   position: relative;
 }
+.artwork {
+  position: relative;
+}
 .collections .addnew {
   position: absolute;
-  top: -60px;
+  top: -90px;
+  right: 50px;
+}
+.artwork .addnew {
+  position: absolute;
+  top: -90px;
   right: 50px;
 }
 .collections .addnew button {
+  width: 162px;
+  height: 50px;
+  display: inline-flex;
+  padding: 14px 24px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background: #ff00c6;
+  border: none;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.artwork .addnew button {
   width: 162px;
   height: 50px;
   display: inline-flex;
@@ -531,7 +555,7 @@ nav input[type="checkbox"] {
   row-gap: 12px;
 }
 .collections .outerCard {
-  width: 300px;
+  width: 350px;
   position: relative;
 }
 .collections .grid-container {
@@ -540,12 +564,14 @@ nav input[type="checkbox"] {
   grid-template-rows: repeat(2, 1fr);
   border-radius: 8px;
   overflow: hidden;
+  
 }
 .collections .grid-container .grid-item img {
   width: 150px;
   height: 104px;
   flex-shrink: 0;
   object-fit: cover;
+  
 }
 .collections .outerCard .text {
   position: absolute;
@@ -857,4 +883,10 @@ nav input[type="checkbox"] {
   .outerFooter .content .custom-input {
     width: 90%;
   }
+}
+
+.line {
+  width: 1px;
+  height: 70px;
+  background: var(--secondary-color);
 }

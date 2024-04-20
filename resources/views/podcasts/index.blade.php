@@ -55,9 +55,9 @@
                          </div>
                         @else
                         <div class="card-body">
-                                <table id="productTable" class="table small-table-text">
+                                <table id="myTable" class="table small-table-text">
                                     <thead>
-                                    <tr style="white-space: nowrap; font-size: 12px;">
+                                    <tr style="white-space: nowrap; font-size: 14px;">
 
                                         <th>Title</th>
                                         <th>Description</th>
@@ -77,13 +77,13 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($podcasts as $podcast)
-                                        <tr>
+                                        <tr style="white-space: nowrap; font-size: 14px;">
 
-                                            <td>{{ $podcast->title }}</td>
+                                            <td class=" text-black"><b>{{ $podcast->title }}</b></td>
                                             <td>{{ $podcast->description }}</td>
                                             <td>{{ $podcast->audio_url }}</td>
-                                            <td>{{ $podcast->is_free? 'free':'not free' }}</td>
-                                            <td>{{ $podcast->status }}</td>
+                                            <td class="{{ $podcast->is_free ? 'text-green' : 'text-red' }}">
+                                 {{ $podcast->is_free ? 'Free' : 'Not Free' }} </td>                                            <td>{{ $podcast->status }}</td>
                                             <td>{{ $podcast->user->name }}</td>
 
 
@@ -124,7 +124,9 @@
         
     </main>
 
-
+<script>
+    let table = new DataTable('#myTable');
+</script>
 
 @endsection
 

@@ -71,23 +71,24 @@
                                 @enderror
                         </div>
                         </div>
+                        <div class="row gx-3 mb-3">
                         <div class="col-12">
                             <label class="small mb-1" for="audio">Audio URL</label>
                             <input type="text" class="form-control" id="audio" name="audio" required>
                             @error('audio')
                                 {{$message}}
                                 @enderror
-                        </div>
+                        </div></div>
 
 
 
                         <div>
-                            <br>
+                           
                         <button type="submit" class="btn btn-primary">Create Podcast</button>
                        </div>
                     </form>
 
-            </div>
+            
         </div>
         </div>
     </main>

@@ -14,6 +14,8 @@ use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\LandingPage\LandingController;
 use App\Http\Controllers\LandingPage\DiscoverController;
 use App\Http\Controllers\LandingPage\ArtistController;
+use App\Http\Controllers\LandingPage\UserCartsController;
+
 
 
 use Illuminate\Support\Facades\Auth;
@@ -36,12 +38,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
 Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover');
-Route::get('/dis',function(){
-return view('dis');
-});
+Route::get('/non/logged/user/add/to/cart/{id}', [UserCartsController::class, 'nonLoggedUserAddToCart'])->name('non_logged_add_to_cart');
+Route::get('/cart/details', [UserCartsController::class, 'nonLoggedUserCart'])->name('non_logged_cart');
+
+Route::get('/cart/details/user/{id}', [UserCartsController::class, 'loggedUserCart'])->name('logged_user_cart')
+->middleware('auth', 'checkUserCart');
+Route::get('/logged/user/add/to/cart/{id}', [UserCartsController::class, 'loggedUserAddToCart'])->name('logged_add_to_cart')
+->middleware('auth');
+Route::post('/updateLoggedUserCart/{id}', [UserCartsController::class, 'updateLoggedUserCart'])->name('updateLoggedUserCart');
+
+
+
 
 Route::get('/artists/signup', [ArtistController::class, 'signup'])->name('artists.signup');
 Route::post('/artists/create', [ArtistController::class, 'create'])->name('artists.create');
+Route::get('/artists/show/add/collection', [ArtistController::class, 'showAddCollection'])->name('artists.showAddCollection');
+Route::post('/artists/add/collection/{id}', [ArtistController::class, 'addCollection'])->name('artists.add_collection');
+Route::get('/artists/show/add/to/collection/{id}', [ArtistController::class, 'showAddToCollection'])->name('artists.showAddToCollection');
+Route::post('/artists/add/to/collection/{id}', [ArtistController::class, 'addArtToCollection'])->name('artists.add_to_collection');
+
+
 
 Route::get('/artists/profile/{id}', [ArtistController::class, 'profile'])
 ->name('artists.profile')
@@ -64,7 +80,9 @@ Route::post('/artists/edit/background/picture/{id}', [ArtistController::class, '
 ->middleware('auth', 'checkArtistProfile');
 
 
-
+Route::get('/live/join', function () {
+    return view('livejoin');
+});
 
 Route::get('/who/we/are', function () {
     return view('who-we-are');
@@ -77,9 +95,7 @@ Route::get('/terms/conditions', function () {
 
 
 
-Route::get('/cart/details', function () {
-    return view('cart-detail');
-});
+
 
 
 Route::get('/landing/login', function () {

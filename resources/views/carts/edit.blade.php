@@ -76,7 +76,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        </div> <br>
+                        </div> 
                         <div class="row gx-3 mb-3">
                         <div class="col-md-6">
                         
@@ -89,7 +89,7 @@
                             <input value="{{$cart->max_products}}" type="number" name="max_products" id="max_products" class="form-control" required>
                         </div>
                         </div>
-<br>
+
 
                          <div>
                         <button type="submit" class="btn btn-primary">Edit Cart</button></div>

@@ -22,112 +22,116 @@
                     </div>
                 </div>
             </div>
+            <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
         </header>
 
         <!-- Main page content-->
-        <div class="container mt-n5">
+        <div class="row m-5">
+                            <div class="col-xl-4">
+                                <!-- Profile picture card-->
+                                <div class="card mb-4 mb-xl-0">
+                                    <div class="card-header">{{$artist->name}}'s picture</div>
+                                    <div class="card-body text-center">
+                                        <!-- Profile picture image-->
+                                        @if($artist->img)
+                                        <img id="profile-image" width="160" height="160" class="img-account-profile rounded-circle mb-1" src="{{ asset('userImages/'.$artist->img) }}" alt=" user pic " />
+                                        @else
+                                        <img id="profile-image" width="160" height="140" class="img-account-profile rounded-circle mb-1" src="{{ asset('assets/img/nopro.png') }}" alt=" user pic " />
+                                        @endif
+                                        <!-- Profile picture help block-->
+                                       
+                                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                                        <!-- Profile picture upload button-->
+                                        <form  method="POST" action="{{route('users.artists.update' , ['id'=>$artist->id] )}}" enctype="multipart/form-data" id="image-form">
+                                        @csrf
+                                        @method('PUT')
+                                        
+                                        <label for="img" class="custom-file-upload">
+                                            Upload New Image
+                                        </label>
+                                        <input style="display: none;" type="file" name="img" id="img" class="form-control-file" multiple onchange="updateProfileImage(event);">
 
-           
-
-
-                    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
-                    <div class="card">
-                    <div class="card-header">Edit {{$artist->name}}</div>
-                    <div class="card-body">
-                        <form method="post" action="{{route('users.artists.update' , ['id'=>$artist->id] )}})" enctype="multipart/form-data" id="image-form">
-                          @csrf
-                          @method('PUT')
-                          <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-                                    <label class="small mb-1" for="name" >Name</label>
-                                    <input class="form-control" id ="name" name="name" type="text"  value="{{$artist->name}}" required>
-                                    @error('name')
-                                    {{$message}}
-                                    @enderror
+                                    </div>
                                 </div>
-
-                                
-                                <div class="col-md-6">
-                                <label class="small mb-1" for="job_title_id">Job Title:</label>
-                                <select name="job_title_id" id="job_title_id" class="form-control form-control-solid" aria-label="Default select example" required>
-                                    <option value="">Select a job title</option>
-                                    @foreach ($jobTitles as $jobTitle)
-                                        <option value="{{ $jobTitle->id }}" @if ($jobTitle->id == $artist->job_title_id) selected @endif>{{ $jobTitle->name }}</option>
-                                    @endforeach
-                                </select>
-                                </div>
-                          </div>
-                          <br>
-
-                          @if(isset($artist->img))
-                          <div class="col-12">
-                          <img id="profile-image" class="img-account-profile rounded-circle mb-1" width="160" height="160"  src="{{ asset('userImages/'.$artist->img) }}" alt="artist pic" /></div>
-                          @else
-                          <div class="col-12">
-                        <img id="profile-image" class="img-account-profile rounded-circle mb-1" width="160" height="160"  src="{{ asset('assets/img/illustrations/profiles/profile-1.png') }}" alt="artist pic" />
-                          </div>
-                        @endif 
-                        <label for="img" class="custom-file-upload ">
-                               Upload New Image
-                        </label>
-                        <input style="display: none;" type="file" name="img" id="img" class="form-control-file" multiple onchange="updateProfileImage(event);">
-
-                          
-                          <br><br>
-
-                          <div class="row gx-3 mb-3">
-                          <div class="col-md-4 form-check form-check-solid">
-
-                            <label class="form-check-label small mb-1 " for="is_ban" >Is Ban</label>
-                            <input class="form-check-input ml-3" id ="is_ban" name="is_ban" type="checkbox"  @if ($artist->is_ban) checked @endif">
-
-                                </div>
-
-
-                                <div class="col-md-4 form-check form-check-solid">
-
-                                    <label class="form-check-label small mb-1 " for="is_dealer" >Is Dealer</label>
-                                    <input class="form-check-input ml-3" id ="is_dealer" name="is_dealer" type="checkbox"  @if ($artist->is_dealer) checked @endif">
-
-                                </div>
-
-
-                                <div class="col-md-4 form-check form-check-solid">
-
-                                <label class="form-check-label small mb-1 " for="is_artist" >Is Artist</label>
-                                <input class="form-check-input ml-3" id ="is_artist" name="is_artist" type="checkbox"  checked >
-
-                                </div>
-                          </div>
-                          <div class="col-12">
-                                <label class="small mb-1" for="points" >Points</label>
-                                    <input class="form-control" id ="points" name="points" type="text"  value="{{$artist->points}}">
-                                    @error('points')
-                                    {{$message}}
-                                    @enderror
                             </div>
+                            <div class="col-xl-8">
+                                <!-- Account details card-->
+                                <div class="card mb-4">
+                                    <div class="card-header">{{$artist->name}}'s details</div>
+                                    <div class="card-body">
+                                       
+                                        <!-- Form Row-->
+                                           
+                                            <div class="row gx-3 mb-3">
+                                               
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="name">Name</label>
+                                                    <input class="form-control" id="name" type="text" name="name" value="{{ $artist->name }}" required />
+                                                </div>
+                                                
+                                             
+                                           
+                                           
+                                            
+                                            <div class="col-md-6">
+                                            <label class="small mb-1" for="job_title_id">Job Title</label>
+                                            <select name="job_title_id" id="job_title_id" class="form-control form-control-solid" required>
+                                                <option value="" disabled selected>Select a job title</option>
+                                                @foreach ($jobTitles as $job)
+                                                    <option value="{{ $job->id }}" @if ($artist->job_title_id == $job->id) selected @endif>{{ $job->name }}</option>
+                                                @endforeach
+                                            </select>
 
 
+                                            </div></div>
 
-                                <div class="col-12">
-                                    <br>
-                              <button type="submit">Submit</button>
-                         </div>
+                                            
+                                               <div class="row gx-3 mb-3">
+                                            <div class="col-12">
+                                                   <label class="small mb-1" for="price">Points</label>
+                                                   <input class="form-control" id="price" type="number" name="points" value="{{ $artist->points }}"  />
+                                               </div> </div>
+                                           
+                  
+                                            <div class="row gx-3 mb-3">
+                                               <div class="col-md-4">
+                                               <label class="form-check-label small mb-1 " for="is_artist">Is Artist</label>
 
-
-
-                        </form>
-
-
-        
-
-            </div>
-        </div>
-</div>
-    </main>
+                                            <input class="form-check-input ml-3" type="checkbox" name="is_artist"  @if ($artist->is_artist) checked @endif>
 
 
+                                            </div> 
+
+                                            
+                                           
+                                            <div class="col-md-4 form-check form-check-solid">
+                                            <label class="form-check-label small mb-1 "  for="is_ban" >Is Ban</label>
+
+                                            <input class="form-check-input ml-3" id ="is_ban" name="is_ban" type="checkbox"  @if ($artist->is_ban) checked @endif>
+
+                                                    
+                                            </div>
+
+
+                                            <div class="col-md-4 form-check form-check-solid">
+                                            <label class="form-check-label small mb-1 "  for="is_dealer" >Is Dealer</label>
+
+                                            <input class="form-check-input ml-3" id ="is_dealer" name="is_dealer" type="checkbox" @if ($artist->is_dealer) checked @endif >
+
+                                 
+                                           </div> </div>
+
+                                            <!-- Submit button-->
+                                            
+                                            <button class="btn btn-primary" type="submit">Save changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+</main>
 
 
     <script>
@@ -142,7 +146,6 @@
         // Submit form after selecting image
     }
 </script>
-
 @endsection
 
 

@@ -79,7 +79,7 @@ class User extends Authenticatable
         return $this->hasMany(Podcast::class);
     }
 
-    public function artists()
+    public function artist()
     {
         return $this->hasOne(Artist::class);
     }
@@ -104,5 +104,10 @@ class User extends Authenticatable
 
     public function options(){
         return $this->hasMany(Option::class);
+    }
+
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
     }
 }

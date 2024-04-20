@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/index.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/signup.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/login.css')}}">
 
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <title>ArtFeat</title>
@@ -18,7 +18,8 @@
   <body>
     <div class="outerLogin">
       <div class="outerForm">
-        <div class="form signup">
+        <div class="form login">
+          
           <header>Create Account</header>
           <h3>Be the spark of the artistry of ARTFEAT</h3>
           <div class="media-options">
@@ -96,7 +97,7 @@
             <div class="form-link">
               <span
                 >Already have an account?
-                <a href="#" class="link login-link">Login</a></span
+                <a href="/landing/login" class="link login-link">Login</a></span
               >
             </div>
           </div>

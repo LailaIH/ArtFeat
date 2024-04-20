@@ -78,4 +78,12 @@ input[type="file"] {
     background-color: #0056b3;
 }
 
+.text-green {
+    color: green;
+}
+
+.text-red {
+    color: red;
+}
+
 

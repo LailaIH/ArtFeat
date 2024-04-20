@@ -76,7 +76,7 @@
             <li class="nav-item dropdown no-caret " style="padding-top: 2px">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownDocs" href="#" role="button"
                    data-toggle="dropdown" aria-haspopup="true"
-                   aria-expanded="false"><small>Sittings <i
+                   aria-expanded="false"><small>Settings <i
                             class="fas fa-chevron-right dropdown-arrow"></i></small></a>
                 <div class="dropdown-menu dropdown-menu-right animated--fade-in-up"
                      aria-labelledby="navbarDropdownDocs">

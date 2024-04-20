@@ -33,4 +33,9 @@ class Artist extends Model
     // {
     //     return $this->hasMany(Product::class);
     // }
+
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
+    }
 }

@@ -60,9 +60,9 @@
                          </div>
                         @else
                         <div class="card-body">
-                                <table id="productTable" class="table small-table-text">
+                                <table id="myTable" class="table small-table-text">
                                     <thead>
-                                    <tr style="white-space: nowrap; font-size: 12px;">
+                                    <tr style="white-space: nowrap; font-size: 14px;">
 
                                         <th>Title</th>
                                         <th>Description</th>
@@ -76,13 +76,13 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($auctions  as $auction )
-                                        <tr>
+                                        <tr style="white-space: nowrap; font-size: 14px;">
 
-                                            <td>{{ $auction->title}}</td>
+                                            <td class=" text-black"><b>{{ $auction->title}}</b></td>
                                             <td>{{ $auction->description }}</td>
                                             <td>{{ $auction->start_time }}</td>
                                             <td>{{ $auction->end_time }}</td> 
-                                            <td>{{ $auction->starting_price }}</td>                                           
+                                            <td class="text-primary">{{ $auction->starting_price }}</td>                                           
                                             <td>
                                             <a class="btn btn-primary btn-xs" href="{{route('auctions.edit' , ['id'=>$auction['id'] ])}}" >   
                                             Edit
@@ -105,8 +105,7 @@
                             </div>
                         @endif
                        
-                    </div>
-                </div>
+                    
 
             </div>
         </div>
@@ -117,20 +116,9 @@
 
 
 
-    <!-- <script>
-        $(document).ready(function() {
-            var table = $('#productTable').DataTable();
-
-            // Add search filters
-            $('#searchName').on('keyup', function() {
-                table.column(0).search(this.value).draw();
-            });
-
-            $('#searchCategory').on('keyup', function() {
-                table.column(1).search(this.value).draw();
-            });
-        });
-    </script> -->
+<script>
+    let table = new DataTable('#myTable');
+</script>
 
 @endsection
 

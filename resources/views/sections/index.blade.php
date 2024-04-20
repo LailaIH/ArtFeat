@@ -73,10 +73,12 @@
                                     @foreach ($sections as $section)
                                         <tr style="white-space: nowrap; font-size: 14px;">
 
-                                            <td>{{ $section->name }}</td>
+                                            <td class=" text-black"><b>{{ $section->name }}</b></td>
                                             <td>{{ $section->description }}</td>
-                                            <td>{{ $section->is_online ? 'Yes' : 'No' }}</td>
-
+                                            <td>
+                                            <span class="badge {{ $section->is_online ? 'badge-green' : 'badge-red' }}">
+                              {{ $section->is_online ? 'Online' : 'Offline' }}
+                            </span></td>
                                             <td>
                                                 <a href="{{ route('sections.edit',  ['id'=>$section['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
                                                 <!-- Add delete form with CSRF token for deleting a section -->

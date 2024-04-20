@@ -48,14 +48,22 @@
 
               </div>
             </div>
-            <div class="info">
+            <div class="info container">
+              
               <div><h3 class="name">{{$user->name}}</h3></div><br>
               @if($artist && $artist->store_name)
               
               <a class="name" style="margin-top:90px; color: #35ace8;" href='#'>Store:{{$artist->store_name}}</a>
               @endif
 
-              <div class="actions">
+              <div class="actions mt-4">
+              @php 
+                $products = DB::table('products')->where('artist_id', $user->id)->get();
+              @endphp
+                @if($products->isEmpty())
+                <div><span>0</span>Artworks</div>
+                @else
+                <div><span>{{count($products)}}</span>Artworks</div>@endif
                 <div><span>4</span>followers</div>
                 <div><span>55</span>following</div>
                 <a href="{{route('artists.edit_profile',['id'=>$user['id']] )}}">
@@ -66,67 +74,71 @@
           <div class="outerSections">
             <div class="innerSections">
               <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <div class="nav nav-tabs " id="nav-tab" role="tablist">
                   <button
-                    class="nav-link active"
-                    id="nav-home-tab"
-                    data-toggle="tab"
-                    data-target="#nav-Work"
+                    class="nav-link active "
+                    id="nav-Work-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Work"
                     type="button"
                     role="tab"
-                    aria-controls="nav-home"
+                    aria-controls="nav-Work"
                     aria-selected="true"
                   >
                     Art Work
                   </button>
                   <button
-                    class="nav-link"
-                    id="nav-profile-tab"
-                    data-toggle="tab"
-                    data-target="#nav-Collections"
+                    class="nav-link "
+                    id="nav-Collections-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Collections"
                     type="button"
                     role="tab"
-                    aria-controls="nav-profile"
+                    aria-controls="nav-Collections"
                     aria-selected="false"
                   >
                     Collections
                   </button>
                   <button
                     class="nav-link"
-                    id="nav-contact-tab"
-                    data-toggle="tab"
-                    data-target="#nav-Favorites"
+                    id="nav-Favorites-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Favorites"
                     type="button"
                     role="tab"
-                    aria-controls="nav-contact"
+                    aria-controls="nav-Favorites"
                     aria-selected="false"
                   >
                     Favorites
                   </button>
                   <button
                     class="nav-link"
-                    id="nav-contact-tab"
-                    data-toggle="tab"
-                    data-target="#nav-About"
+                    id="nav-About-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-About"
                     type="button"
                     role="tab"
-                    aria-controls="nav-contact"
+                    aria-controls="nav-About"
                     aria-selected="false"
                   >
                     About
                   </button>
                 </div>
               </nav>
-              <div class="tab-content" id="nav-tabContent">
+              <div class="tab-content mt-4" id="nav-tabContent">
                 @php 
                 $products = DB::table('products')->where('artist_id', $user->id)->get();
                 @endphp
                 <div
-                  class="tab-pane fade show active"
+                  class="tab-pane fade show active artwork"
                   id="nav-Work"
                   role="tabpanel"
-                  aria-labelledby="nav-home-tab"
+                  aria-labelledby="nav-Work-tab"
                 >
+                <div class="addnew">
+                    <a href="{{route('artists.showAddCollection')}}">
+                    <button>Add Collection</button></a>
+                  </div>
                   <div class="flexbin flexbin-margin">
 
                   @if(!$products->isEmpty())
@@ -158,124 +170,71 @@
                   class="tab-pane fade collections"
                   id="nav-Collections"
                   role="tabpanel"
-                  aria-labelledby="nav-profile-tab"
+                  aria-labelledby="nav-Collections-tab"
                 >
                   <div class="addnew">
-                    <button>Add Collection</button>
+                    <a href="{{route('artists.showAddCollection')}}">
+                    <button>Add Collection</button></a>
                   </div>
+                  @if(!$collections->isEmpty())
+                  @foreach($collections as $collection)
+                 
                   <div class="outerCollections">
                     <div class="outerCard">
                       <button class="delete">
-                        <img src="/assets/Delete.svg" alt="" />
+                        <img src="/assets/img/Delete.svg" alt="" />
                       </button>
                       <div class="grid-container">
+                        
+                    @if(count($collection->products) >= 1)
+                      
+                      @for($i=0;$i<4;$i++)
+                       @if(isset($collection->products[$i]))
                         <div class="grid-item">
-                          <img src="/assets/a1.png" />
+                          <img src="{{ asset('productImages/'.$collection->products[$i]->img) }}" />
                         </div>
+                        @else
                         <div class="grid-item">
-                          <img src="/assets/a2.png" />
+                          <img src="/assets/img/a5.png" />
                         </div>
+                        @endif 
+                      @endfor
+                    @else
+                        @for($i=0;$i<4;$i++)
                         <div class="grid-item">
-                          <img src="/assets/a3.png" />
+                          <img src="/assets/img/a{{$i+1}}.png" />
                         </div>
-                        <div class="grid-item">
-                          <img src="/assets/a4.png" />
-                        </div>
+
+                        @endfor
+
+                    @endif
+
+
                       </div>
-                      <div class="text">CREATIVE COLLECTION</div>
-                      <div class="overLay"></div>
-                    </div>
-                    <div class="outerCard">
-                      <button class="delete">
-                        <img src="/assets/Delete.svg" alt="" />
-                      </button>
-                      <div class="grid-container">
-                        <div class="grid-item">
-                          <img src="/assets/a1.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a2.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a3.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a4.png" />
-                        </div>
+                      <div class="text">{{$collection->name}}</div>
+                    
+                      <div class="overLay">
+                      <a href="{{route('artists.showAddToCollection',['id'=>$collection['id']] )}}" class="btn btn-success btn-xs">
+                      add artwork
+                    </a>
                       </div>
-                      <div class="text">CREATIVE COLLECTION</div>
-                      <div class="overLay"></div>
+                    
                     </div>
-                    <div class="outerCard">
-                      <button class="delete">
-                        <img src="/assets/Delete.svg" alt="" />
-                      </button>
-                      <div class="grid-container">
-                        <div class="grid-item">
-                          <img src="/assets/a1.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a2.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a3.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a4.png" />
-                        </div>
-                      </div>
-                      <div class="text">CREATIVE COLLECTION</div>
-                      <div class="overLay"></div>
-                    </div>
-                    <div class="outerCard">
-                      <button class="delete">
-                        <img src="/assets/Delete.svg" alt="" />
-                      </button>
-                      <div class="grid-container">
-                        <div class="grid-item">
-                          <img src="/assets/a1.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a2.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a3.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a4.png" />
-                        </div>
-                      </div>
-                      <div class="text">CREATIVE COLLECTION</div>
-                      <div class="overLay"></div>
-                    </div>
-                    <div class="outerCard">
-                      <button class="delete">
-                        <img src="/assets/Delete.svg" alt="" />
-                      </button>
-                      <div class="grid-container">
-                        <div class="grid-item">
-                          <img src="/assets/a1.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a2.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a3.png" />
-                        </div>
-                        <div class="grid-item">
-                          <img src="/assets/a4.png" />
-                        </div>
-                      </div>
-                      <div class="text">CREATIVE COLLECTION</div>
-                      <div class="overLay"></div>
-                    </div>
+                    
+                  @endforeach 
+                  
+                  @else
+                  <h5  class="p-4">No Collections</h5>
+                  @endif
+                    
+                  
                   </div>
                 </div>
                 <div
                   class="tab-pane fade"
                   id="nav-Favorites"
                   role="tabpanel"
-                  aria-labelledby="nav-contact-tab"
+                  aria-labelledby="nav-Favorites-tab"
                 >
                   <div class="outerFav">
                     <div class="innerFav">
@@ -362,7 +321,7 @@
                   class="tab-pane fade AboutProfile"
                   id="nav-About"
                   role="tabpanel"
-                  aria-labelledby="nav-contact-tab"
+                  aria-labelledby="nav-About-tab"
                 >
                   <div>
                     <h3>About</h3>
@@ -436,6 +395,19 @@
     function submitBackgroundForm() {
         document.getElementById('backgroundPictureForm').submit();
     }
+
+
+  
 </script>
+
+<script>
+    $(document).ready(function(){
+        $('#nav-tab a').on('click', function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
+
 
 @endsection

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/index.css">
     <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/signup.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/login.css')}}">
 
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <title>ArtFeat</title>
@@ -18,7 +18,7 @@
   <body>
     <div class="outerLogin">
       <div class="outerForm">
-        <div class="form signup">
+        <div class="form login">
           <header>Create Account</header>
           <h3>Be the spark of the artistry of ARTFEAT</h3>
           <div class="media-options">
@@ -37,26 +37,27 @@
           <div class="form-content">
             <form method="POST" action="{{ route('artists.create') }}">
             @csrf
-
-            <div class="field input-field">
-                <input id="name" type="text" placeholder="Name" class="input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus />
+          <div class="row gx-3 mb-3">
+            <div class="col-md-6" >
+                <input class= "form-control" id="name" type="text" placeholder="Name" class="input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus />
                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                           <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $message }}</strong>
+                            </span>
+                @enderror
             </div>
 
-            <div class="field input-field">
-                <input id="store" type="text" placeholder="Store Name"  name="store" value="{{ old('store') }}" required autocomplete="store" autofocus />
+            <div class="col-md-6" >
+                <input class="form-control" id="store" type="text" placeholder="Store Name"  name="store" value="{{ old('store') }}" required autocomplete="store" autofocus />
                 @error('store')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
             </div>
-
-            <div class="field input-field">
+          </div>
+         <div class="row">
+            <div class="col">
             <select name="country" id="country" class="form-control form-control-solid" aria-label="Default select example" required>
                                 <option value="" disabled selected>Select a Country</option>
                                 @foreach ($countries as $country)
@@ -66,7 +67,7 @@
 
             </div>
 
-            <div class="field input-field">
+            <div class="col">
             <select name="city" id="city" class="form-control form-control-solid" aria-label="Default select example" required>
                                 <option value="" disabled selected>Select a City</option>
                                 @foreach ($cities as $city)
@@ -74,22 +75,25 @@
                                 @endforeach
                             </select>
 
-            </div>
+            </div></div>
 
-            <div class="field input-field">
-
-            <label for="registered">Is your business registered?</label><br>
-            <div class="form-check form-check-inline">
+            
+            
+            
+            <label for="registered">Is your business registered?</label>
+            <div class="row ">
+            <div class="col"> 
                 <input class="form-check-input" type="radio" name="registered" id="yes" value="yes">
                 <label class="form-check-label" for="yes">Yes</label>
             </div>
-            <div class="form-check form-check-inline">
+            <div class="col"> 
                 <input class="form-check-input" type="radio" name="registered" id="no" value="no">
                 <label class="form-check-label" for="no">No</label>
             </div>
-
-
             </div>
+
+
+            
             
 
 
@@ -139,7 +143,7 @@
             <div class="form-link">
               <span
                 >Already have an account?
-                <a href="#" class="link login-link">Login</a></span
+                <a href="/landing/login" class="link login-link">Login</a></span
               >
             </div>
           </div>

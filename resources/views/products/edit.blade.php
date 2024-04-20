@@ -71,14 +71,16 @@
                                                     <label class="small mb-1" for="description">Description</label>
                                                     <textarea name="description" id="description" class="form-control" required>
                                                         {{$product->description}}
-                                                        @error('description')
+                                                       
+                                                    </textarea>  
+                                                    @error('description')
                                                         {{$message}}
-                                                        @enderror
-                                                    </textarea>                                        
+                                                        @enderror                                      
                                                         </div>
                                             </div>
                                            
-                                            <div class="mb-3">
+                                            <div class="row gx-3 mb-3">
+                                            <div class="col-md-6">
                                             
                                             <label class="small mb-1" for="section_id">Section</label>
                                             <select name="section_id" id="section_id" class="form-control form-control-solid" required>
@@ -96,7 +98,7 @@
                                             </div>
 
 
-                                            <div class="mb-3">
+                                            <div class="col-md-6">
                                             
                                             <label class="small mb-1" for="artist_id">Artist</label>
                                             <select name="artist_id" id="artist_id" class="form-control form-control-solid" required >
@@ -108,7 +110,7 @@
                                             @error('artist_id')
                                          {{$message}}
                                         @enderror
-                                            </div>
+                                            </div></div>
 
                                             <div class="row gx-3 mb-3">
                                                
@@ -132,17 +134,17 @@
                                                        </div>
                                            </div>
                                        
-
+                                           <div class="row gx-3 mb-3">
                                            <div class="col-12">
 
-                                            <input class="form-check-input" type="checkbox" name="is_online"  @if ($product->is_online) checked @endif>
 
                                             <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
+                                            <input class="form-check-input ml-3" type="checkbox" name="is_online"  @if ($product->is_online) checked @endif>
 
-                                            </div>
+                                            </div></div>
                                             <!-- Submit button-->
-                                            <br>
-                                            <button class="btn btn-primary" type="submit">Save changes</button>
+                                            <div>
+                                            <button class="btn btn-primary" type="submit">Save changes</button></div>
                                         </form>
                                     </div>
                                 </div>

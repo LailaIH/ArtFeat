@@ -70,7 +70,7 @@
                             </select>
                         </div>
                         </div>
-                        <br>
+                       
 
                         <div class="row gx-3 mb-3">
 
@@ -84,7 +84,7 @@
                             <input type="number" name="max_products" id="max_products" class="form-control" required>
                         </div>
                         </div>
-<br>
+
 
                     <div>
                         <button type="submit" class="btn btn-primary">Create A Cart</button>

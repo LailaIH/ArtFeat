@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\JobTitle;
 use App\Models\User;
+use App\Models\Artist;
+use App\Models\Product;
+
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -58,7 +62,11 @@ class HomeController extends Controller
         $user->save();
 
         if($user->is_artist){
-        return redirect()->route('users.artists');
+           $artist = new Artist();
+           $artist->user_id = $user->id;
+           $artist->name = $user->name;
+           $artist->save(); 
+        return redirect()->route('users.artists')->with('success', 'Artist Created successfully.');
         }
         else{
             return redirect()->route('users.nonArtists')->with('success', 'User Created successfully.'); 
@@ -105,6 +113,17 @@ class HomeController extends Controller
        $artistUser->points = strip_tags(intval($request->input('points')));
 
        $artistUser->save();
+
+       $products = Product::where('artist_id', $artistUser->id)->delete();
+
+
+       if(!$artistUser->is_artist){
+        $artist = Artist::where('user_id',$artistUser->id)->first();
+        if($artist){
+            
+            Artist::destroy($artist->id);
+        }
+       }
 
        return redirect()->route('users.artists')->with('success', 'User updated successfully.') ;
 
@@ -162,6 +181,13 @@ class HomeController extends Controller
         $nonArtistUser->points = strip_tags(intval($request->input('points')));
 
         $nonArtistUser->save();
+
+        if($nonArtistUser->is_artist){
+            $artist = new Artist();
+            $artist->user_id = $nonArtistUser->id;
+            $artist->name = $nonArtistUser->name;
+            $artist->save();
+        } 
 
         if($nonArtistUser->id == auth()->user()->id){
             return redirect()->route('users.profile',$id)->with('success','profile has been successfully updated'); 

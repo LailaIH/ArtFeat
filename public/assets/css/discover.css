@@ -359,6 +359,7 @@ nav input[type="checkbox"] {
   gap: 24px;
   
   
+  
 }
 
 .wrapperDiscoverCards .DiscoverCard {
@@ -390,9 +391,10 @@ nav input[type="checkbox"] {
 }
 .wrapperDiscoverCards .DiscoverCard .image-grid div {
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 6px;
   width: 70.41px;
   flex-shrink: 0;
+  
 }
 .wrapperDiscoverCards .DiscoverCard .image-grid img {
   background-size: cover;
@@ -402,6 +404,7 @@ nav input[type="checkbox"] {
   cursor: pointer;
   transition: 500ms;
 }
+
 .wrapperDiscoverCards .DiscoverCard .image-grid img:hover {
   scale: calc(1.1);
 }

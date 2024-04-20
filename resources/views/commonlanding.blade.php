@@ -6,59 +6,145 @@
     <link rel="icon" type="image/x-icon" href="Images/fave.svg">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/index.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/index.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <title>ArtFeat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href=
 "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{{asset('assets/css/profileMenue.css')}}" />
 </head>
 <body>
 <nav>
     <div class="logo">
-        <!------- Logo ------->
-        <img src="{{asset('assets/img/logo.svg')}}">
+        <!-- Logo -->
+        <a href="/">
+            <img src="{{ asset('assets/img/logo.svg') }}">
+        </a>
     </div>
     <input type="checkbox" id="click">
     <label for="click" class="menu-btn">
         <i class="fa fa-bars"></i>
     </label>
     <ul>
-        <!------- Links ------->
+        <!-- Links -->
         <div class="links">
             <li><a href="#">Gallery</a></li>
             <li><a href="#">Artists</a></li>
             <li><a href="#">Who we are</a></li>
             <li><a href="#">I’m an Artist</a></li>
         </div>
-        <div class="headerButtons  ">
 
-            <!------- Login buttons ------->
+        <div class="headerButtons">
+            <!-- Login buttons -->
             <div class="innerContent">
-                <div class="signUp">
-                    <button class="botton" type="submit" onclick="">Sign Up</button>
-                </div>
-                <div class="line"></div>
-                <button>
-                    <img src="{{asset('assets/img/Heart (1).svg')}}"/>
-                </button>
+            
                 @auth
-                    <button>
-                        <a href="{{ route('artists.profile', ['id' => auth()->user()->id]) }}">
-                            <img src="{{ asset('assets/img/Profile.svg') }}" />
-                        </a>
-                    </button>
+                    <!-- <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <div class="signUp">
+                        <button class="botton" type="submit" onclick="">Logout</button>
+                        </div>
+                    </form> -->
+                @else
+                
+                      <li class="nav-item-btn">
+                        <div class="signUp">
+                        <a href="/landing/signup" style=" text-decoration: none;">
+                        
+                        <button class="botton" type="submit" onclick="">Sign Up</button>
+                        
+                        </a></div></li>
+                        <li class="nav-item-btn">
+                        <div class="signUp">
+                        <a href="/landing/login" style=" text-decoration: none;">
+                        
+                        <button class="botton " type="submit" onclick="">Log In</button>
+                        
+                        </a></div></li>
+                       
+                
+               
                 @endauth
-                <button>
-                    <img src="{{asset('assets/img/Cart.svg')}}"/>
-                </button>
+                
+
+                <div class="line"></div>
+                
+                <li class="nav-item">
+                    <button>
+                        <img src="{{ asset('assets/img/Heart (1).svg') }}">
+                    </button>
+                </li>
+
+                @auth 
+                    <li class="nav-item">
+                        <a href="{{ route('logged_user_cart', ['id' => auth()->user()->id]) }}">
+                            <button>
+                                <img src="{{ asset('assets/img/Cart.svg') }}">
+                            </button>
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a href="{{ route('non_logged_cart') }}">
+                            <button>
+                                <img src="{{ asset('assets/img/Cart.svg') }}">
+                            </button>
+                        </a>
+                    </li>
+                @endauth
+
+                @auth
+                    <div class="profile-dropdown">
+                        <div onclick="toggle()" class="profile-dropdown-btn">
+                            <div class="profile-img"></div>
+                            <span>{{auth()->user()->name}} <i class="fa-solid fa-angle-down"></i></span>
+                        </div>
+
+                        <ul class="profile-dropdown-list">
+                            @if(auth()->user()->is_artist == 1)  
+                                <li class="profile-dropdown-list-item">
+                                    <a href="{{ route('artists.profile', ['id' => auth()->user()->id]) }}">
+                                        <img src="{{ asset('assets/img/Profile.svg') }}" />
+                                    </a>
+                                </li>
+                            @endif 
+
+                            <hr />
+
+                            <li class="profile-dropdown-list-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                    
+                                    
+                                    <button class="botton" type="submit" onclick="">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                    Logout
+                                </button>                          
+                                   </form>
+                            </li>
+                        </ul>
+                    </div>
+                @endauth
             </div>
         </div>
-
     </ul>
 </nav>
+
+
+
+
+
+
+
+
+
 
 <div class="searchBar">
     <div class="inner">
@@ -73,15 +159,23 @@
         
        
 
+        
+        <input type="text" class="form-control " placeholder="Search anything here..." aria-label="Search" aria-describedby="search-icon"  />
+        
+        <a href="#" class="search-icon">
+                        <span>
+                        <i class="fa fa-search " aria-hidden="true">
+                        </i>                       
+                        </span>
+                        </a>
+       
+
+
+</div></div>
           
-
-        <input type="text" class="form-control" placeholder="Search anything here..." aria-label="Search" aria-describedby="search-icon"  />
-
-          <i class="fa fa-search " aria-hidden="true">
-
-          </i> 
           
-    </div></div>
+    </div>
+</div>
 
 
 @yield('content')
@@ -159,5 +253,17 @@
     })
 
 
+</script>
+<script>
+let profileDropdownList = document.querySelector(".profile-dropdown-list");
+let btn = document.querySelector(".profile-dropdown-btn");
+
+let classList = profileDropdownList.classList;
+
+const toggle = () => classList.toggle("active");
+
+window.addEventListener("click", function (e) {
+  if (!btn.contains(e.target)) classList.remove("active");
+});
 </script>
 </html>

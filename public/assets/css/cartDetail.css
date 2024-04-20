@@ -457,6 +457,11 @@ nav input[type="checkbox"] {
   font-size: 16px;
   font-weight: 600;
 }
+.mydiv{
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  font-weight: 600;
+}
 .outerCart .innerCart .info .price {
   color: #000;
   text-align: start;

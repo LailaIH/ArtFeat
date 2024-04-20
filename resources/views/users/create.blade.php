@@ -55,7 +55,7 @@
                                     @enderror
                                 </div> </div>
 
-<br>
+
 
                                 <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
@@ -75,10 +75,10 @@
                                     {{$message}}
                                     @enderror
                                 </div> </div>
-<br>
+
 
                                 <div class="row gx-3 mb-3">
-                                <div class="col-md-4 form-check form-check-solid">
+                                <div class="col-md-4 ">
 
                                 <label class="form-check-label small mb-1" for="is_ban" >Is Ban</label>
                                 <input class="form-check-input ml-3" id ="is_ban" name="is_ban" type="checkbox" >
@@ -109,21 +109,22 @@
                                     {{$message}}
                                     @enderror
                                 </div></div>
+                                <div class="row gx-3 mb-3">
 
                                 <div class="col-12">
 
-                                <label for="points" >Points</label>
+                                <label class="small mb-1" for="points" >Points</label>
                                     <input id ="points" class="form-control" name="points" type="text"  value="{{ old('points') }}" required>
                                     @error('points')
                                     {{$message}}
                                     @enderror
-                                </div>
+                                </div></div>
 
 
-
+                                <div class="row gx-3 mb-3">
                                 <div class="col-12">
-                                    <br>
-                              <button type="submit">Submit</button>
+                                    
+                              <button type="submit">Submit</button></div>
                          </div>
 
 

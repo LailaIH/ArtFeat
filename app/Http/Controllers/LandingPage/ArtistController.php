@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\Product;
+use App\Models\Collection;
 use App\Models\User;
 use App\Models\Artist;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 
 
@@ -27,7 +30,7 @@ class ArtistController extends Controller
     public function create(Request $request){
         $request->validate([
 
-            'name'=>'required|string|max:255',
+            'name'=>'required|string|unique:artists|max:255',
             'email'=>'required|string|email|unique:users|max:255',
             'password'=>'required|string|min:8|confirmed',
             'store'=>'required|string',
@@ -56,11 +59,10 @@ class ArtistController extends Controller
             $artist->is_registered = 0;
         }
         $artist->save();
+        Auth::login($user);
 
         return redirect()->route('welcome');
         
-
-
 
     }
 
@@ -76,7 +78,9 @@ class ArtistController extends Controller
             $user->save();
         }
 
-        return view('artists.profile',['artist'=>$artist , 'user'=>$user]);
+        $collections = $artist->collections;
+
+        return view('artists.profile',['artist'=>$artist , 'user'=>$user , 'collections'=>$collections]);
     }
 
     public function updateProfilePicture(Request $request ,$id){
@@ -166,6 +170,93 @@ class ArtistController extends Controller
 
 
 
+
+    }
+
+    // add a new collection
+    public function showAddCollection(){
+        return view('artists.add-collection');
+
+    }
+
+    public function addCollection(Request $request ,$id){
+       $request->validate([
+       'name'=>'required',
+       
+       ]);
+        $user = User::findOrFail($id);
+        $artist = $user->artist;
+
+        $collection = new Collection();
+        $collection->name= strip_tags($request->input('name'));
+        $collection->artist_id = $artist->id;
+        $collection->save();
+        return redirect()->route('artists.profile',$id)->with('success','collection created successufully');
+
+
+    }
+
+    //show add art to a collection
+    public function showAddToCollection($id){
+        $collection = Collection::findOrFail($id);
+        return view('artists.add-to-collection',['collection'=>$collection , 'sections'=>Section::all()]);
+
+    }
+
+    // add art to a certain collection
+
+    public function addArtToCollection(Request $request , $id){
+        $request->validate([
+            'name'=>'required',
+            'type'=>'required',
+            'description'=>'required',
+            'date'=>'required|date',
+            'dimensions'=>'required',
+            'price'=>'required|numeric',
+            'quantity'=>'required|numeric',
+        ]);
+        $collection = Collection::findOrFail($id);
+
+        $product = new Product();
+        $product->artist_id = auth()->user()->id;
+        $product->name = strip_tags($request->input('name'));
+        $product->description = strip_tags($request->input('description'));
+
+        $product->artwork_type = strip_tags($request->input('type'));
+        $product->collection_id = $collection->id;
+        if($request->input('created')=='yes'){
+            $product->is_created_by_artist = 1;
+        }
+        else {
+            $product->is_created_by_artist = 0;
+        }
+        $product->creation_date = $request->input('date');
+        $product->artwork_dimensions = strip_tags($request->input('dimensions'));
+        $product->price = strip_tags($request->input('price'));
+
+        if($request->has('discount_price')){
+            $product->price_after_discount =$request->input('discount_price');
+        }
+
+        $product->stock_quantity = strip_tags($request->input('quantity'));
+        $product->product_visibility = $request->has('visibility')?1:0;
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('productImages'), $imageName);
+            $product->img = $imageName;
+        }
+
+        
+        $product->user_id = auth()->user()->id;
+        $product->section_id = $request->input('section_id') ;
+        
+        $product->save();
+        return redirect()->route('artists.profile',auth()->user()->id)->with('success','artwork added successfully');
+      
+
+        
 
     }
 

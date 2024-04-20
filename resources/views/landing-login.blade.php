@@ -74,7 +74,7 @@
           <div class="form-link">
             <span
               >New to ArtFeat?
-              <a href="#" class="link login-link">Join now</a></span
+              <a href="/landing/signup" class="link login-link">Join now</a></span
             >
           </div>
           <div class="artist">

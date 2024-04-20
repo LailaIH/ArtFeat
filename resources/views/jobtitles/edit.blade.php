@@ -68,7 +68,7 @@
                                 </div>
                         
 
-                <br>
+               
 
                <div>
                         <button type="submit" class="btn btn-primary">Update</button>
@@ -77,7 +77,7 @@
                 </div>
 
             </div>
-        </div>
+       
     </main>
 
 

@@ -68,16 +68,18 @@
                                 @enderror
                         </div> </div>
 
-
+                        <div class="row gx-3 mb-3">
                         <div class="col-12">
 
                             <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
                             <input class="form-check-input ml-3" name="is_online" id="is_online" type="checkbox">
-
                         </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
                         <div class="col-12">
-                            <br>
+                            
                         <button type="submit" class="btn btn-primary">Create Section</button></div>
+                        </div>
                     </form>
 
             </div>

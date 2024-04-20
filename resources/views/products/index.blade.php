@@ -56,15 +56,14 @@
                         <div class="card-body">
                                 <table id="myTable" class="table small-table-text">
                                     <thead>
-                                    <tr style="white-space: nowrap; font-size: 13px;">
+                                    <tr style="white-space: nowrap; font-size: 14px;">
 
                                         <th>Name</th>
-                                        <th>User Name</th>
+                                        <th>Created By Admin</th>
                                         <th>Section Name</th>
                                         <th>Description</th>
                                         <th>Price</th>
                                         <th>Stock Quantity</th>
-                                        <th>Is Online</th>
                                         <th>Image</th>
                                         <th>Actions</th>
 
@@ -72,15 +71,14 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($products as $product)
-                                        <tr style="white-space: nowrap; font-size: 13px;">
+                                        <tr style="white-space: nowrap; font-size: 14px;">
 
-                                            <td>{{ $product->name }}</td>
+                                            <td class=" text-black"><b>{{ $product->name }}</b></td>
                                             <td>{{ $product->user->name }}</td>
                                             <td>{{ $product->section->name }}</td>
                                             <td>{{ $product->description }}</td>
-                                            <td>{{ $product->price }}</td>
-                                            <td>{{ $product->stock_quantity }}</td>
-                                            <td>{{ $product->is_online ? 'Yes' : 'No' }}</td>
+                                            <td class="text-primary">{{ $product->price }}</td>
+                                            <td class="text-primary">{{ $product->stock_quantity }}</td>
                                             <td>
                                             @if(isset($product->img))
                                             <img src="{{ asset('productImages/'.$product->img) }}" alt="Product Picture" width="100" height="100">

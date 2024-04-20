@@ -21,6 +21,7 @@ class Product extends Model
         'img',
         'is_online',
         'artist_id',
+        'collection_id',
     ];
 
     public function user()
@@ -38,7 +39,11 @@ class Product extends Model
     {
         return $this->belongsTo(Section::class);
     }
-
+    public function collection()
+    {
+        return $this->belongsTo(Collection::class);
+    }
+    
     public function carts()
     {
         return $this->hasMany(Cart::class);

@@ -76,7 +76,7 @@
                             <tr style="white-space: nowrap; font-size: 14px;">
                                 
                                 
-                                <td>{{$cart->product->name}}</td>
+                                <td class=" text-black"><b>{{$cart->product->name}}</b></td>
                                 <td>{{$cart->quantity}}</td>
                                 <td>
                                 <a href="{{ route('carts.edit',  ['id'=>$cart['id']]) }}" class="btn btn-primary btn-xs">Edit</a>

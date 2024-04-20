@@ -111,15 +111,16 @@
                                 </div>
                                 </div>
 
+                                <div class="row gx-3 mb-3">
                                 <div class="col-12 form-check form-check-solid">
                                     
-                                    <input class="form-check-input" type="checkbox" name="is_online"  @if ($auction->is_online) checked @endif>
                                     <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
-                                    
-                                </div>
+                                    <input class="form-check-input ml-3" type="checkbox" name="is_online"  @if ($auction->is_online) checked @endif>
+
+                                </div></div>
 
 
-<br>
+
                                 <div>
                               <button class="btn btn-primary" type="submit">Submit</button>
                          </div>

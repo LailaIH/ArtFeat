@@ -64,7 +64,7 @@
                                         <th>Email</th>
                                         <th>Job Title</th>
                                         <th>Is Ban</th>
-                                        <th>Is Artist</th>
+                                        
                                         <th>Points</th>
                                         <th>Actions</th>
                                         
@@ -75,19 +75,19 @@
                                     @foreach ($nonArtists  as $nonArtist )
                                         <tr style="white-space: nowrap; font-size: 14px;">
 
-                                            <td>{{ $nonArtist->name }}</td>
+                                            <td class=" text-black"><b>{{ $nonArtist->name }}</b></td>
                                             <td>{{ $nonArtist->email }}</td>
                                             @if($nonArtist->jobTitle)
                                             <td>{{ $nonArtist->jobTitle->name }}</td>
                                             @else
                                             <td>No Job Registered</td>
                                              @endif
-                                            <td>{{ $nonArtist->is_ban ? 'Yes' : 'No' }}</td>
-                                            <td>{{ $nonArtist->is_artist ? 'Yes' : 'No' }}</td>
-                                            @if($nonArtist->points)
-                                            <td>{{ $nonArtist->points}}</td>
+                                             <td class="{{ $nonArtist->is_ban ? 'text-green' : 'text-red' }}">
+                                 {{ $nonArtist->is_ban ? 'Yes' : 'No' }} </td>                                           
+                                           @if($nonArtist->points)
+                                            <td class="text-primary">{{ $nonArtist->points}}</td>
                                             @else
-                                            <td>0</td>@endif
+                                            <td class="text-primary">0</td>@endif
                                             <td>
                                             <a class="btn btn-primary btn-xs" href="{{route('users.nonArtists.edit' , ['id'=>$nonArtist['id'] ])}}" >   
                                             Edit

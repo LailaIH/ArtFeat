@@ -108,7 +108,13 @@
                                             <p><span>by: </span>{{$ownerArtist->name}}</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            @auth 
+                                            <a href="{{route('logged_add_to_cart',['id'=>$product['id']])}}">
+                                            <button>ADD TO CART</button></a>
+                                            @else
+                                            <a href="{{route('non_logged_add_to_cart',['id'=>$product['id']])}}">
+                                            <button>ADD TO CART</button></a>
+                                            @endauth
                                         </div>
                                         
                                     </div>
