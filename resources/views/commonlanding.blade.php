@@ -129,6 +129,16 @@
                                 </button>                          
                                    </form>
                             </li>
+
+                            @if(auth()->user()->job_title_id!=null && auth()->user()->jobTitle->name=='admin')
+                            <li class="profile-dropdown-list-item">
+                                <a href="/home">
+                                <button class="botton" type="submit" onclick="">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                    Admin Panel
+                                </button>
+                                </a></li>
+                                @endif
                         </ul>
                     </div>
                 @endauth

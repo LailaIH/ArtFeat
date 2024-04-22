@@ -9,12 +9,12 @@
         <img src="{{asset('assets/img/shadowBlue.svg')}}" />
       </div>
       <div class="header">
-        <h1>Profile Details</h1>
+        <h1>Add Artwork </h1>
       </div>
     </div>
     <div class="EditProfileSection">
     <div class="pageContent">
-      <a>Back to Profile</a>
+      <a href="{{route('artists.profile',auth()->user()->id)}}">Back to Profile</a>
       <h3>Add New Artwork To Your Collection</h3>
       <div class="outerEditProfile addNewWork">
         <div class="profile">
@@ -68,15 +68,17 @@
               <!-- Artwork Category -->
               <fieldset>
                 <div class="grid-35">
-                  <label for="Category">Artwork Category</label>
+                  <label for="section">Artwork Category</label>
                 </div>
                 <div class="grid-65">
-                  <select name="Category" id="Category" tabindex="8">
+                  <select name="section_id" id="section_id" tabindex="8">
+                    
                     <option selected="selected" value="" disabled>
                       Choose Category
                     </option>
-                    <option value="a">A</option>
-                    <option value="b">B</option>
+                    @foreach($sections as $section)
+                    <option value="{{$section->id}}">{{$section->name}}</option>
+                    @endforeach
                   </select>
                 </div>
               </fieldset>

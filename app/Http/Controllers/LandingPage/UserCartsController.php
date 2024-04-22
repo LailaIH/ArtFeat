@@ -53,6 +53,61 @@ class UserCartsController extends Controller
 
     }
 
+    //update non logged user cart session
+    public function updateNonLoggedUserCart(Request $request , $productId){
+        $cart = session()->get('cart');
+        if($cart){
+            if ($request->input('action') == 'plus'){
+                $cart[$productId]['quantity']++ ;
+            }
+            elseif($request->input('action') == 'minus' && $cart[$productId]['quantity'] >1 ){
+                $cart[$productId]['quantity']--;
+            }
+
+            session()->put('cart', $cart);
+           
+            
+            return redirect()->back()->with('success','cart has been updated successfully');
+
+        }
+    }
+
+    //remove from non logged user session
+    public function removeFromCart($productId){
+
+        $cart = session()->get('cart');
+        if(isset($cart[$productId])) {
+            unset($cart[$productId]);
+            session()->put('cart', $cart);
+
+
+
+            return redirect()->back()->withErrors(['fail' => 'Cart has been deleted']);
+
+    }
+}
+
+
+    //migrate non logged user to database
+    public function migrateCartToDatabase($user) {
+        $cart = session('cart', []);
+    
+        foreach ($cart as $productId => $item) {
+            $cartItem = new Cart();
+            $cartItem->user_id = $user;
+            $cartItem->product_id = $productId;
+            $cartItem->quantity = $item['quantity'];
+            $cartItem->max_products = 0;
+            $cartItem->save();
+        }
+    
+        // Clear cart from session
+        session()->forget('cart');
+    }
+    
+
+    
+
     //show cart of logged user
     public function loggedUserCart($id){
 
@@ -98,28 +153,32 @@ class UserCartsController extends Controller
  // update user cart
  public function updateLoggedUserCart(Request $request , $id){
 
-    
-    $total = $request->input('subtotal');
-    $quantity = intval($request->input('quantity'));
-
     $cart = Cart::findOrFail($id);
-    $user = $cart->user;
-    $cart->quantity = $quantity;
-    $cart->save();
 
-    $subtotal = $quantity*$cart->product->price;
-    $total = 0;
-    foreach($user->carts as $cart){
-        $total += $cart['quantity'] * $cart->product->price;
+    if ($request->input('action') == 'plus') {
+     $cart->quantity++;
     }
+    elseif ($request->input('action') == 'minus'){
+        if($cart->quantity > 1){
+        $cart->quantity--;
+    }
+}
+    
+    
+    $cart->save();
+    return redirect()->back()->with('success','cart has been updated successfully');
 
-    return response()->json([
-        'quantity' => $quantity,
-        'subtotal' => $subtotal,
-        'total' => $total,
-    ]);
+
 
  
+ }
+
+
+ public function deleteLoggedUserCart($id){
+
+    Cart::destroy($id);
+    return redirect()->back()->withErrors(['fail' => 'Cart has been Deleted']);
+
  }
 
 

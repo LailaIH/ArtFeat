@@ -115,8 +115,10 @@
     </main>
 
 
-<script>
-    let table = new DataTable('#myTable');
+    <script>
+    let table = new DataTable('#myTable', {
+        pageLength: 50
+    });
 </script>
 @endsection
 

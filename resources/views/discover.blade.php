@@ -64,12 +64,18 @@
         @endif
     </ul>
         </div>
-        <div class="divider"></div>
+        
+        <div class="divider"></div>    
+       
         <div class="wrapperDiscoverCards" >
+        
+        <div class="row row-cols-3">
             @foreach($artists as $artist)
             @php   
                 $products = DB::table('products')->where('artist_id', $artist->id)->get();
             @endphp
+            
+            <div class="col mb-4">
             <div class="DiscoverCard" >
                 <div class="infoCard">
                     <div class="Avatar">
@@ -93,20 +99,31 @@
                         <img src="{{asset('assets/img/a2.png')}}" alt="Image 2" />
                         @endif
                     </div> 
+
                     @for($i=1 ; $i<=6 ; $i++)
-                    @if(isset($products[$i]))
                     <div>
+                    @if(isset($products[$i]))
+                        
                         <img src="{{asset('productImages/'.$products[$i]->img)}}" alt="Image 2" />
-                    </div>
+                       
                     @else
+                      
                     <img src="assets/img/a{{ $i + 1 }}.png" alt="Image 2" />
+                      
                     @endif
+                    
+                    </div>
                     @endfor
                 </div>
-            </div>
+
+            </div></div>
             @endforeach
         </div>
+        </div>
     </div>
+
+
+
 </div>
 
 

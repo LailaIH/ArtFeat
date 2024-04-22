@@ -14,6 +14,18 @@
         <h1>Cart Details</h1>
       </div>
     </div>
+    @if (session('success'))
+                  <div class="alert alert-success ">{{ session('success') }}</div>
+        @endif
+
+
+    
+        @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+          @endif
+
     <div class="CartDetailsSection">
     <div class="pageContent">
     @if(!$carts->isEmpty())
@@ -23,9 +35,8 @@
 
 
         @foreach($carts as $cart)
-        <input hidden value="{{$cart->id}}" id="cartId"/>
           
-          <div class="cartDetails">
+          <div class="cartDetails" data-cart-id="{{$cart->id}}">
             <div class="cartImg">  
               <img src="{{ asset('productImages/'.$cart->product->img) }}" alt="" />
             </div>
@@ -46,17 +57,21 @@
                   </div>
                   <div class="price">
                     <p>$<span>{{$cart->product->price}}</span></p>
-                    <div id="subtotal" class="mydiv">total:${{$cart->product->price*$cart['quantity']}}</div>
+                    <div id="subtotal_{{$cart->id}}" class="mydiv">total:${{$cart->product->price*$cart['quantity']}}</div>
                   </div>
                 </div>
                 <div class="actions">
                   <div class="Quantity">
                     <div class="quantity d-flex">
-                      <a href="#" class="quantity__minus"  >
+                      <form method="POST" action="{{route('updateLoggedUserCart',$cart->id)}}">
+                        @csrf 
+                        @method('PUT')
+                        <button class="quantity__button" type="submit" name="action" value="minus" >
+                      <a href="#" class="quantity__minus" >
                         <span>
                           <img src="/assets/img/minus.svg" alt="" />
                         </span>
-                      </a>
+                      </a></button>
                       <input
                         id="{{$cart->id}}"
                         name="quantity"
@@ -64,16 +79,23 @@
                         class="quantity__input"
                         value="{{$cart['quantity']}}"
                       />
+                      <button  class="quantity__button" type="submit" name="action" value="plus">
                       <a href="#" class="quantity__plus" >
                         <span>
                           <img src="/assets/img/plus.svg" alt="" />
                         </span>
-                      </a>
+                      </a></button>
+                      </form>
                     </div>
                   </div>
-                  <button class="remove">
+                 
+                  <form method="POST" action="{{route('deleteLoggedUserCart',$cart->id)}}">
+                 @csrf 
+                 @method('DELETE')
+                  <button type="submit" class="remove" onclick="return confirm('Are you sure you want to delete this cart?')">
                     <img src="/assets/img/minus-circle.svg" alt="" />
-                  </button>
+                  </button></form>
+                  </form>
                 </div>
               </div>
             </div>
@@ -85,7 +107,7 @@
 
         </div>
         <div class="saleDetails">
-          <div class="saleCard">
+          <div class="saleCard" id="saleCard_{{$cart->id}}">
             <header>Order summary</header>
             <div>
               <div class="info">
@@ -106,7 +128,7 @@
               <div class="divider"></div>
               <div class="total">
                 <p>Total</p>
-                <p id="total">$<span>{{$total}}</span></p>
+                <p id="total_{{$cart->id}}">$<span>{{$total}}</span></p>
               </div>
             </div>
             <button>Continue to payment</button>
@@ -118,57 +140,74 @@
       @endif
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $(".quantity__plus").click(function(e) {
-        e.preventDefault();
+// $(document).ready(function() {
+//     // Listen for click event on plus button
+//     $(".quantity__plus").click(function(e) {
+//         e.preventDefault();
         
-        var input = $('.quantity__input');
-        var currentQuantity = parseInt(input.val());
+//         // Get the input element and current quantity
+//         var input = $(this).closest('.Quantity').find('.quantity__input');
+//         var currentQuantity = parseInt(input.val());
         
-        input.val(currentQuantity + 1);
-        updateCart(input);
-    });
-    
-    $(".quantity__minus").click(function(e) {
-        e.preventDefault();
+//         // Increase quantity
+//         var newQuantity = currentQuantity + 1;
         
-        var input = $(this).closest('.quantity d-flex').find('.quantity__input');
-        var currentQuantity = parseInt(input.val());
+//         // Update input value
+//         input.val(newQuantity);
         
-        if (currentQuantity > 1) {
-            input.val(currentQuantity - 1);
-            updateCart(input);
-        }
-    });
-    
-    function updateCart(input) {
-        var quantity = input.val();
-        var id = parseInt($('#cartId').val());
+//         // Get cart ID
+//         var cartId = input.attr('id');
         
-        $.post(
-            'http://localhost:8000/updateLoggedUserCart/' + id,
+//         // Send AJAX request to update cart
+//         updateCartQuantity(cartId, newQuantity);
+//     });
+
+//     // Listen for click event on minus button
+//     $(".quantity__minus").click(function(e) {
+//         e.preventDefault();
+        
+//         // Get the input element and current quantity
+//         var input = $(this).closest('.Quantity').find('.quantity__input');
+//         var currentQuantity = parseInt(input.val());
+        
+//         // Decrease quantity if greater than 1
+//         if (currentQuantity > 1) {
+//             var newQuantity = currentQuantity - 1;
             
-            {
-              '_token': $('meta[name=csrf-token]').attr('content'),
-                quantity: quantity,
-            },
+//             // Update input value
+//             input.val(newQuantity);
             
-            function(response) {
-                // Update values on the page
-                $(".quantity__input").val(response.quantity);
-                // Update subtotal and total (assuming you get them in the response)
-                 $("#subtotal").text(response.subtotal);
-                 $("#total").text(response.total);
-            },
-             function(error) {
-                console.log(error);
-            }
-          )
-    }
-});
+//             // Get cart ID
+//             var cartId = input.attr('id');
+            
+//             // Send AJAX request to update cart
+//             updateCartQuantity(cartId, newQuantity);
+//         }
+//     });
+
+//     // Function to update cart quantity via AJAX
+//     function updateCartQuantity(cartId, newQuantity) {
+//         $.ajax({
+//             url: '/updateLoggedUserCart/' + cartId,
+//             method: 'POST',
+//             data: {
+//                 _token: $('meta[name="csrf-token"]').attr('content'),
+//                 quantity: newQuantity
+//             },
+//             success: function(response) {
+//                 // Update subtotal and total for the specific cart
+//                 $('#subtotal_' + cartId).text('total: $' + response.subtotal);
+//                 $('#total_' + cartId + ' span').text(response.total);
+//             },
+//             error: function(error) {
+//                 console.log(error);
+//             }
+//         });
+//     }
+// });
+
 </script>
 
 

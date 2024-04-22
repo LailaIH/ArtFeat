@@ -92,6 +92,18 @@
                         </div>
                     </a
                     >
+
+                    <div class="dropdown-divider m-0"></div>
+                    <a class="dropdown-item py-3" href="/"
+                    >
+                        <div class="icon-stack bg-primary-soft text-primary mr-4"><i
+                                class="fas fa-home"></i></div>
+                        <div>
+                            <div class="small text-gray">Landing Page</div>
+
+                        </div>
+                    </a
+                    >
             
                     <div class="dropdown-divider m-0"></div>
                     <a class="dropdown-item py-3" href="{{ route('logout') }}" onclick="event.preventDefault();

@@ -362,6 +362,8 @@ nav input[type="checkbox"] {
   
 }
 
+ 
+
 .wrapperDiscoverCards .DiscoverCard {
   max-width: 400px;
 
@@ -369,6 +371,7 @@ nav input[type="checkbox"] {
    max-width: calc(33.3333% - 16px);   */
   display: grid;
   row-gap: 28px;
+  
   text-align: center;
   border-radius: 8px;
   border: 1px solid rgba(68, 68, 68, 0.18);

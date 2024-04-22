@@ -135,10 +135,7 @@
                   role="tabpanel"
                   aria-labelledby="nav-Work-tab"
                 >
-                <div class="addnew">
-                    <a href="{{route('artists.showAddCollection')}}">
-                    <button>Add Collection</button></a>
-                  </div>
+                
                   <div class="flexbin flexbin-margin">
 
                   @if(!$products->isEmpty())
@@ -177,10 +174,13 @@
                     <button>Add Collection</button></a>
                   </div>
                   @if(!$collections->isEmpty())
+                  <div class="outerCollections">
+                    
+                  <div class="row row-cols-3">
                   @foreach($collections as $collection)
                  
-                  <div class="outerCollections">
-                    <div class="outerCard">
+                  <div class="col">
+                  <div class="outerCard mb-4">
                       <button class="delete">
                         <img src="/assets/img/Delete.svg" alt="" />
                       </button>
@@ -214,15 +214,17 @@
                       <div class="text">{{$collection->name}}</div>
                     
                       <div class="overLay">
-                      <a href="{{route('artists.showAddToCollection',['id'=>$collection['id']] )}}" class="btn btn-success btn-xs">
-                      add artwork
-                    </a>
+                     
                       </div>
                     
                     </div>
+                    <a href="{{route('artists.showAddToCollection',['id'=>$collection['id']] )}}" class="btn btn-success btn-xs mb-4 center">
+                      add artwork
+                    </a>
+                  </div>
                     
                   @endforeach 
-                  
+              </div>
                   @else
                   <h5  class="p-4">No Collections</h5>
                   @endif
@@ -239,7 +241,7 @@
                   <div class="outerFav">
                     <div class="innerFav">
                       <div class="FavCard">
-                        <img class="bg" src="/assets/f1.png" />
+                        <img class="bg" src="/assets/img/f1.png" />
                         <div class="info">
                           <div>
                             <div class="title">Art Title</div>
@@ -248,13 +250,13 @@
                           <div class="saves">
                             <div class="num">512</div>
                             <div class="icon">
-                              <img src="/assets/save_icon.svg" alt="" />
+                              <img src="/assets/img/save_icon.svg" alt="" />
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="FavCard">
-                        <img class="bg" src="/assets/f1.png" />
+                        <img class="bg" src="/assets/img/f1.png" />
                         <div class="info">
                           <div>
                             <div class="title">Art Title</div>
@@ -263,13 +265,13 @@
                           <div class="saves">
                             <div class="num">512</div>
                             <div class="icon">
-                              <img src="/assets/save_icon.svg" alt="" />
+                              <img src="/assets/img/save_icon.svg" alt="" />
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="FavCard">
-                        <img class="bg" src="/assets/f1.png" />
+                        <img class="bg" src="/assets/img/f1.png" />
                         <div class="info">
                           <div>
                             <div class="title">Art Title</div>
@@ -278,13 +280,13 @@
                           <div class="saves">
                             <div class="num">512</div>
                             <div class="icon">
-                              <img src="/assets/save_icon.svg" alt="" />
+                              <img src="/assets/img/save_icon.svg" alt="" />
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="FavCard">
-                        <img class="bg" src="/assets/f1.png" />
+                        <img class="bg" src="/assets/img/f1.png" />
                         <div class="info">
                           <div>
                             <div class="title">Art Title</div>
@@ -293,14 +295,14 @@
                           <div class="saves">
                             <div class="num">512</div>
                             <div class="icon">
-                              <img src="/assets/save_icon.svg" alt="" />
+                              <img src="/assets/img/save_icon.svg" alt="" />
                             </div>
                           </div>
                         </div>
                       </div>
 
                       <div class="FavCard">
-                        <img class="bg" src="/assets/f1.png" />
+                        <img class="bg" src="/assets/img/f1.png" />
                         <div class="info">
                           <div>
                             <div class="title">Art Title</div>
@@ -309,7 +311,7 @@
                           <div class="saves">
                             <div class="num">512</div>
                             <div class="icon">
-                              <img src="/assets/save_icon.svg" alt="" />
+                              <img src="/assets/img/save_icon.svg" alt="" />
                             </div>
                           </div>
                         </div>
@@ -359,19 +361,19 @@
                     <h3>Social Media</h3>
                     <div class="socials">
                       <div>
-                        <img src="/assets/Facebook2.svg" />
+                        <img src="/assets/img/Facebook2.svg" />
                         <div>ArtistnameonFacebook</div>
                       </div>
                       <div class="d-flex align-items-center">
-                        <img src="/assets/instagram.svg" />
+                        <img src="/assets/img/instagram.svg" />
                         <div>IGHandler</div>
                       </div>
                       <div class="d-flex align-items-center">
-                        <img src="/assets/website.svg" />
+                        <img src="/assets/img/website.svg" />
                         <div>www.websitename.com</div>
                       </div>
                       <div class="d-flex align-items-center">
-                        <img src="/assets/Behance.svg" />
+                        <img src="/assets/img/Behance.svg" />
                         <div>BehanceifTheyGotone</div>
                       </div>
                     </div>
@@ -400,14 +402,14 @@
   
 </script>
 
-<script>
+<!-- <script>
     $(document).ready(function(){
         $('#nav-tab a').on('click', function (e) {
             e.preventDefault();
             $(this).tab('show');
         });
     });
-</script>
+</script> -->
 
 
 @endsection

@@ -486,7 +486,7 @@ nav input[type="checkbox"] {
   align-items: center;
   position: relative;
 }
-.outerCart .innerCart .actions .Quantity .quantity a {
+.outerCart .innerCart .actions .Quantity .quantity  a {
   text-decoration: none;
   color: #000;
   font-size: 20px;
@@ -495,14 +495,30 @@ nav input[type="checkbox"] {
   width: 20px;
   height: 20px;
 }
+
+button.quantity__button {
+  border: none;
+  background: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer; /* Optional: to show a pointer when hovering over the button */
+}
+.alert {
+  text-align: center;
+  margin: 0 auto; /* This will center the alert */
+  max-width: 700px; /* Set your desired width */
+  
+}
+
 .outerCart .innerCart .actions .Quantity .quantity .quantity__minus {
   position: absolute;
-  left: 10px;
+  left: 14px;
   top: 2px;
+  
 }
 .outerCart .innerCart .actions .Quantity .quantity .quantity__plus {
   position: absolute;
-  right: 10px;
+  right: 14px;
   top: 2px;
 }
 .outerCart .innerCart .actions .Quantity input {

@@ -555,7 +555,7 @@ nav input[type="checkbox"] {
   row-gap: 12px;
 }
 .collections .outerCard {
-  width: 350px;
+  width: 370px;
   position: relative;
 }
 .collections .grid-container {
@@ -564,6 +564,12 @@ nav input[type="checkbox"] {
   grid-template-rows: repeat(2, 1fr);
   border-radius: 8px;
   overflow: hidden;
+ 
+ 
+  
+}
+.collections .grid-container .grid-item  {
+width: 100%;
   
 }
 .collections .grid-container .grid-item img {
@@ -607,6 +613,8 @@ nav input[type="checkbox"] {
   top: 0;
   border-radius: 8px;
 }
+
+
 
 .flexbin {
   display: flex;

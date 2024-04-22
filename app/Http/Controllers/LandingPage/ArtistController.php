@@ -250,7 +250,7 @@ class ArtistController extends Controller
 
         
         $product->user_id = auth()->user()->id;
-        $product->section_id = $request->input('section_id') ;
+        $product->section_id = $request->input('section_id');
         
         $product->save();
         return redirect()->route('artists.profile',auth()->user()->id)->with('success','artwork added successfully');

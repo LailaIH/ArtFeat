@@ -13,6 +13,18 @@
         <h1>Cart Details</h1>
       </div>
     </div>
+    @if (session('success'))
+                  <div class="alert alert-success ">{{ session('success') }}</div>
+        @endif
+
+
+    
+        @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+          @endif
+
     <div class="CartDetailsSection">
     <div class="pageContent">
     @if(session('cart'))
@@ -50,11 +62,15 @@
                 <div class="actions">
                   <div class="Quantity">
                     <div class="quantity d-flex">
+                      <form method="post" action="{{route('updateNonLoggedUserCart',$productDetails['product']->id)}}">
+                      @csrf 
+                      @method('PUT')
+                      <button type="submit" class="quantity__button" name="action" value="minus">
                       <a href="#" class="quantity__minus" data-product-id="{{ $key }}" data-action="minus">
                         <span>
                           <img src="/assets/img/minus.svg" alt="" />
                         </span>
-                      </a>
+                      </a></button>
                       <input
                         id="quantity_{{ $key }}"
                         name="quantity"
@@ -62,16 +78,22 @@
                         class="quantity__input"
                         value="{{$productDetails['quantity']}}"
                       />
+                      <button  class="quantity__button" type="submit" name="action" value="plus">
+
                       <a href="#" class="quantity__plus" data-product-id="{{ $key }}" data-action="plus">
                         <span>
                           <img src="/assets/img/plus.svg" alt="" />
                         </span>
-                      </a>
+                      </a></button>
+                      </form>
                     </div>
                   </div>
-                  <button class="remove">
+                  <form method="POST" action="{{route('removeFromCart',$productDetails['product']->id)}}">
+                 @csrf 
+                 @method('DELETE')
+                  <button type="submit" class="remove" onclick="return confirm('Are you sure you want to delete this cart?')">
                     <img src="/assets/img/minus-circle.svg" alt="" />
-                  </button>
+                  </button></form>
                 </div>
               </div>
             </div>

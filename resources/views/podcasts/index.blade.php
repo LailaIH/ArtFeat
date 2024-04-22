@@ -108,7 +108,7 @@
                                                 <form action="{{ route('podcasts.destroy', ['id'=>$podcast['id']]) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this section?')">Delete</button>
+                                                    <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this podcast?')">Delete</button>
                                                 </form>
                                             </td>
 

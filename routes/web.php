@@ -38,14 +38,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
 Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover');
-Route::get('/non/logged/user/add/to/cart/{id}', [UserCartsController::class, 'nonLoggedUserAddToCart'])->name('non_logged_add_to_cart');
-Route::get('/cart/details', [UserCartsController::class, 'nonLoggedUserCart'])->name('non_logged_cart');
 
+// landing page carts routes
+
+     // for non logged users
+Route::post('/non/logged/user/add/to/cart/{id}', [UserCartsController::class, 'nonLoggedUserAddToCart'])->name('non_logged_add_to_cart');
+Route::get('/cart/details', [UserCartsController::class, 'nonLoggedUserCart'])->name('non_logged_cart');
+Route::put('/update/non/logged/user/cart/{id}', [UserCartsController::class, 'updateNonLoggedUserCart'])->name('updateNonLoggedUserCart');
+Route::delete('/delete/non/logged/user/cart/{id}', [UserCartsController::class, 'removeFromCart'])->name('removeFromCart');
+
+
+     // for logged users
 Route::get('/cart/details/user/{id}', [UserCartsController::class, 'loggedUserCart'])->name('logged_user_cart')
 ->middleware('auth', 'checkUserCart');
-Route::get('/logged/user/add/to/cart/{id}', [UserCartsController::class, 'loggedUserAddToCart'])->name('logged_add_to_cart')
+Route::post('/logged/user/add/to/cart/{id}', [UserCartsController::class, 'loggedUserAddToCart'])->name('logged_add_to_cart')
 ->middleware('auth');
-Route::post('/updateLoggedUserCart/{id}', [UserCartsController::class, 'updateLoggedUserCart'])->name('updateLoggedUserCart');
+Route::put('/update/logged/user/cart/{id}', [UserCartsController::class, 'updateLoggedUserCart'])->name('updateLoggedUserCart');
+Route::delete('/delete/logged/user/cart/{id}', [UserCartsController::class, 'deleteLoggedUserCart'])->name('deleteLoggedUserCart');
 
 
 
@@ -162,7 +171,10 @@ Route::patch('/podcasts/{podcast}', [PodcastsController::class, 'updateStatus'])
 
 Auth::routes();
 //admin panel
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+->name('home')->middleware('check.admin');
+
+
 Route::get('/settings', [AuctionsController::class, 'showSettings']);
 
 Route::resource('tickets', TicketsController::class);
