@@ -131,7 +131,11 @@
                 <p id="total_{{$cart->id}}">$<span>{{$total}}</span></p>
               </div>
             </div>
-            <button>Continue to payment</button>
+            <form action="{{route('checkout')}}" method="POST">
+              @csrf
+            <button>
+              Continue to payment
+            </button></form>
           </div>
         </div>
       </div>

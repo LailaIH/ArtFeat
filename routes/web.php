@@ -15,6 +15,8 @@ use App\Http\Controllers\LandingPage\LandingController;
 use App\Http\Controllers\LandingPage\DiscoverController;
 use App\Http\Controllers\LandingPage\ArtistController;
 use App\Http\Controllers\LandingPage\UserCartsController;
+use App\Http\Controllers\LandingPage\StripeController;
+
 
 
 
@@ -266,6 +268,11 @@ Route::get('/non-artists/edit/{id}', [HomeController::class, 'editNonArtists'])-
 Route::put('/non-artists/update/{id}', [HomeController::class, 'updateNonArtists'])->name('users.nonArtists.update');
 
 
+// stripe
+Route::post('/checkout', [StripeController::class, 'checkout'])->name('checkout');
+Route::get('/success', [StripeController::class, 'success'])->name('success');
+Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
+Route::post('/webhook', [StripeController::class, 'webhook'])->name('webhook');
 
 
 

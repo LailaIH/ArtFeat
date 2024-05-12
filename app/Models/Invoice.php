@@ -18,6 +18,8 @@ class Invoice extends Model
         'order_id',
         'total_price',
         'status',
+        'session_id',
+        'is_online',
     ];
 
     public function user()

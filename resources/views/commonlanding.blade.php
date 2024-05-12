@@ -103,40 +103,40 @@
                 @auth
                     <div class="profile-dropdown">
                         <div onclick="toggle()" class="profile-dropdown-btn">
-                            <div class="profile-img"></div>
+                            <!-- <div class="profile-img"> <i class="fa-solid fa-circle"></i></div> -->
+                            
                             <span>{{auth()->user()->name}} <i class="fa-solid fa-angle-down"></i></span>
                         </div>
 
-                        <ul class="profile-dropdown-list">
+                        <ul class="profile-dropdown-list ">
                             @if(auth()->user()->is_artist == 1)  
-                                <li class="profile-dropdown-list-item">
+                                <li class="profile-dropdown-list-item ">
                                     <a href="{{ route('artists.profile', ['id' => auth()->user()->id]) }}">
-                                        <img src="{{ asset('assets/img/Profile.svg') }}" />
+                                        <img src="{{ asset('assets/img/Profile.svg') }}" /><hr/>
+                                       Profile
                                     </a>
                                 </li>
                             @endif 
 
                             <hr />
 
-                            <li class="profile-dropdown-list-item">
+                            <li class="profile-dropdown-list-item ">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                    
-                                    
                                     <button class="botton" type="submit" onclick="">
                                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                     Logout
                                 </button>                          
                                    </form>
                             </li>
-
+                     <hr/>
                             @if(auth()->user()->job_title_id!=null && auth()->user()->jobTitle->name=='admin')
-                            <li class="profile-dropdown-list-item">
-                                <a href="/home">
-                                <button class="botton" type="submit" onclick="">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                    Admin Panel
-                                </button>
+                            <li class="profile-dropdown-list-item ">
+                                
+                                    <a href="/home">
+                                    <i class="fa-solid fa-user"></i>
+                                    Admin 
+                               
                                 </a></li>
                                 @endif
                         </ul>

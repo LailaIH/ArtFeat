@@ -17,6 +17,8 @@ class Order extends Model
         'product_id',
         'status',
         'note',
+        'session_id',
+        'is_online',
     ];
 
     public function product()

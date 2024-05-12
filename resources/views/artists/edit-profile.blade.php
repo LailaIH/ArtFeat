@@ -25,7 +25,10 @@
               @csrf
               @method('PUT')
               <!-- Photo -->
-              <fieldset>
+              <div class="row gx-3 mb-3">
+              <div class="col-md-6">
+              
+              
                 <div class="grid-35">
                   <label for="avatar">Your Photo</label>
                 </div>
@@ -41,15 +44,16 @@
                     <input style="display: none;" id="img" type="file" name="img" class="btn" onchange="updateProfileImage(event);" />
                   </div>
                 </div>
-              </fieldset>
-              <fieldset>
+              </div>
+              <div class="col-md-6">
+              
                 <div class="grid-35">
                   <label for="name">Artist Name</label>
                 </div>
                 <div class="grid-65">
                   <input type="text" name="name" id="name" tabindex="1" value="{{$user->name}}" />
                 </div>
-              </fieldset>
+              </div></div>
               <fieldset>
                 <div class="grid-35">
                   <label for="store_name">Store Name</label>
