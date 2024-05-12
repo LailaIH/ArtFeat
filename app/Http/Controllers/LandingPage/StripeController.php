@@ -21,7 +21,8 @@ class StripeController extends Controller
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
 
         $user =  Auth::user(); 
-        $carts = $user->carts ;
+        //$carts = $user->carts ;
+        $carts = Cart::where('user_id',$user->id)->where('is_online',1)->get();
         if($carts){
             $products=[];
             foreach($carts as $cart){
@@ -85,7 +86,7 @@ class StripeController extends Controller
 
     }
 
-    public function commonOrderAndInvoice($sessionId){
+    private function commonOrderAndInvoice($sessionId){
 
         $orders = Order::where('session_id', $sessionId)->get();
         $invoices = Invoice::where('session_id', $sessionId)->get();
@@ -107,8 +108,18 @@ class StripeController extends Controller
 
             }
             
+            
     }
-           
+            
+
+       $user = Auth::user();  
+       $carts = Cart::where('user_id',$user->id)->where('is_online',1)->get();
+       foreach($carts as $cart){
+        $cart->is_online = 0;
+        $cart->save();
+       }
+       
+
 
             
 }
@@ -127,8 +138,24 @@ class StripeController extends Controller
                     throw new NotFoundHttpException('Invalid session ID.');
                 }
            $this->commonOrderAndInvoice($sessionId);
-          
-            return view('checkout-success'); 
+
+           $finalInvoices = Invoice::where('session_id', $sessionId)->where('is_online',0)->get();
+           $total = $finalInvoices->sum('total_price');
+           $products = [];
+           foreach($finalInvoices as $invoice){
+            $products[] = [
+                'name' => $invoice->order->product->name ,
+                'price' => $invoice->order->product->price ,
+                'quantity' => $invoice->total_price / $invoice->order->product->price ,
+                'invoice' => $invoice->total_price,
+                'image'=> $invoice->order->product->img,
+                
+                
+
+            ] ;
+           }
+
+            return view('checkout-success' , ['products'=>$products , 'total'=>$total])->with('success','payment has been completed successfully'); 
             }
         } 
 

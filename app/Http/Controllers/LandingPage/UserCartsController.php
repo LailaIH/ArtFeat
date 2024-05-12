@@ -112,7 +112,7 @@ class UserCartsController extends Controller
     public function loggedUserCart($id){
 
         $user = User::findOrFail($id);
-        $carts = $user->carts ;
+        $carts = Cart::where('user_id',$user->id)->where('is_online',1)->get();
         $total =0;
 
         foreach($carts as $cart){

@@ -11,16 +11,64 @@
       </div>
       <div class="header">
         
-        <h1>Cart Details</h1>
+        <h1>Invoice Details</h1>
       </div>
     </div>
   
 
     <div class="CartDetailsSection">
     <div class="pageContent">
+
+    @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
     
-    <h3>Success </h3>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+
+        <th>Product Name</th>
+        <th>Product Price</th>
+        <th>Quantity</th>
+        <th>Sub Total</th>
+        <th>Image</th>
+       
+
+        </tr>
+        
+        
+      </thead>
+
+      <tbody>
+    @foreach($products as $product)
+
+      <tr>
+
+
+        <td>{{$product['name']}}</td>
+        <td style="color: green;"><b>${{$product['price']}}</b></td>
+        <td>{{$product['quantity']}}</td>
+        <td style="color: green;"><b>${{$product['invoice']}}</b></td>
+        <td>
+        @if(isset($product['image']))
+                  <img src="{{ asset('productImages/'.$product['image']) }}" alt="Product Picture" width="60" height="60">
+        @else
+                  <img src="{{ asset('assets/img/a4.png') }}" alt="Product Picture" width="60" height="60">
+        @endif
+
+        </td>
+      </tr>
      
+
+    @endforeach
+    <tr>
+      <th>Total</th>
+      <td style="color: green;"><b>${{$total}}</b></td>
+      </tr>
+      </tbody>
+     </table>
+
+
     </div>
   </div>
 
