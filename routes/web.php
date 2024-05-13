@@ -57,7 +57,8 @@ Route::post('/logged/user/add/to/cart/{id}', [UserCartsController::class, 'logge
 ->middleware('auth');
 Route::put('/update/logged/user/cart/{id}', [UserCartsController::class, 'updateLoggedUserCart'])->name('updateLoggedUserCart');
 Route::delete('/delete/logged/user/cart/{id}', [UserCartsController::class, 'deleteLoggedUserCart'])->name('deleteLoggedUserCart');
-
+Route::get('/user/paid/invoices', [UserCartsController::class, 'paidInvoices'])->name('paidInvoices')
+->middleware('auth');
 
 
 

@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\Invoice;
 use Illuminate\Pagination\Paginator;
 
 
@@ -124,12 +125,24 @@ class UserCartsController extends Controller
     // add to cart for logged user
     public function loggedUserAddToCart($id){
         $cart = Cart::where('product_id', $id)
-                    ->where('user_id' , auth()->user()->id)->first(); 
+                    ->where('user_id' , auth()->user()->id)->latest()->first();
+                    
 
         if($cart){
+            if($cart->is_online === 0){
+                $cart = new Cart();
+                $cart->user_id = auth()->user()->id;
+                $cart->product_id = $id;
+                $cart->max_products = 0;
+                $cart->quantity = 1;
+                
+        
+                $cart->save();
+            }
+            else{
             $cart->quantity++ ;
             $cart->save();
-            
+            }
         }
         else{
         
@@ -182,7 +195,13 @@ class UserCartsController extends Controller
  }
 
 
+    public function paidInvoices(){
+       $invoices = Invoice::where('user_id',auth()->user()->id)->where('is_online',0)->get();
+       $total = $invoices->sum('total_price');
 
+
+       return view('user-paid-invoices',['invoices'=>$invoices,'total'=>$total]) ;
+    }
 
 
 

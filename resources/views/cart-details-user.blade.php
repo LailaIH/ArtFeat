@@ -135,12 +135,21 @@
               @csrf
             <button>
               Continue to payment
-            </button></form>
+            </button> 
+           
+          </form>
+          
+              <a class="btn btn-primary" style="text-decoration: none; color: white;" href="{{route('paidInvoices')}}">Show my paid invoices</a>
+            
+            
           </div>
         </div>
       </div>
       @else
-      <h3 style="color: #35ace8;">No Items</h3>
+      <h5 class="mt-4 mb-4" style="color: #35ace8;">No Items In Your Cart</h5>
+      
+              <a class="btn btn-primary btn-sm"   href="{{route('paidInvoices')}}">Show my paid invoices</a>
+            
       @endif
     </div>
   </div>

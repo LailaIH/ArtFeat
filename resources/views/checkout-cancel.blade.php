@@ -11,7 +11,7 @@
       </div>
       <div class="header">
         
-        <h1>Cart Details</h1>
+        <h1>Payment Details</h1>
       </div>
     </div>
   
