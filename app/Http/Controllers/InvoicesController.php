@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\User;
+use App\Models\Order;
+
+
 use Illuminate\Http\Request;
 
 class InvoicesController extends Controller
@@ -19,10 +23,7 @@ class InvoicesController extends Controller
      }
 
 
-    public function index()
-    {
-        //
-    }
+   
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +32,9 @@ class InvoicesController extends Controller
      */
     public function create()
     {
-        //
+        return view('invoices.create',[
+            'users'=>User::all(),
+            'orders'=>Order::all()]);
     }
 
     /**
@@ -51,10 +54,7 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -62,9 +62,11 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Invoice $invoice)
     {
-        //
+        return view('invoices.edit',['invoice'=>$invoice ,
+            'users'=>User::all(),
+            'orders'=>Order::all()]);
     }
 
     /**
@@ -74,9 +76,39 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Invoice $invoice)
     {
-        //
+        $request->validate([
+            'user_id'=>'required',
+            'order_id'=>'required',
+            'total_price'=>'required',
+            'status'=>'required',
+        ]);
+        $invoice->user_id = strip_tags($request->input('user_id'));
+        $invoice->order_id = strip_tags($request->input('order_id'));
+        $invoice->total_price = strip_tags($request->input('total_price'));
+        $invoice->status = strip_tags($request->input('status'));
+        $invoice->is_online = $request->input('status')==='paid'?0:1;
+
+
+        $invoice->save();
+
+        $order = $invoice->order ;
+        $order->is_online = $invoice->is_online;
+        if($invoice->status==='paid'){
+            $order->status = 'completed';
+        }
+        elseif($invoice->status==='unpaid'){
+            $order->status = 'pending';
+        }
+        elseif($invoice->status==='canceled'){
+            $order->status = 'canceled';
+        }
+        $order->save();
+
+        return redirect()->route('invoices.'.$invoice->status)->with('success','invoice has been updated successfully');
+
+        
     }
 
     /**
@@ -85,21 +117,18 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+   
+
+    public function showUnpaidInvoices()
     {
-        //
+        $pendingInvoices = Invoice::where('status', 'unpaid')->get();
+        return view('invoices.unpaid')->with('invoices', $pendingInvoices);
     }
 
-    public function showPendingInvoices()
+    public function showPaidInvoices()
     {
-        $pendingInvoices = Invoice::where('status', 'pending')->get();
-        return view('invoices.pending')->with('invoices', $pendingInvoices);
-    }
-
-    public function showCompletedInvoices()
-    {
-        $completedInvoices = Invoice::where('status', 'completed')->get();
-        return view('invoices.completed')->with('invoices', $completedInvoices);
+        $completedInvoices = Invoice::where('status', 'paid')->get();
+        return view('invoices.paid')->with('invoices', $completedInvoices);
     }
 
     public function showCanceledInvoices()

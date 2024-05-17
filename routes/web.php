@@ -38,8 +38,28 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Auth::routes();
+
+//public routes for landing pages
 Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
 Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover');
+
+
+Route::get('/live/join', function () {
+    return view('livejoin');
+});
+
+Route::get('/who/we/are', function () {
+    return view('who-we-are');
+});
+
+
+
+Route::get('/terms/conditions', function () {
+    return view('terms-and-conditions');
+});
+
+
 
 // landing page carts routes
 
@@ -57,17 +77,21 @@ Route::post('/logged/user/add/to/cart/{id}', [UserCartsController::class, 'logge
 ->middleware('auth');
 Route::put('/update/logged/user/cart/{id}', [UserCartsController::class, 'updateLoggedUserCart'])->name('updateLoggedUserCart');
 Route::delete('/delete/logged/user/cart/{id}', [UserCartsController::class, 'deleteLoggedUserCart'])->name('deleteLoggedUserCart');
-Route::get('/user/paid/invoices', [UserCartsController::class, 'paidInvoices'])->name('paidInvoices')
+Route::get('/user/paidd/invoices', [UserCartsController::class, 'paidInvoices'])->name('paidInvoices')
 ->middleware('auth');
 
 
-
+// artists landing page
 Route::get('/artists/signup', [ArtistController::class, 'signup'])->name('artists.signup');
 Route::post('/artists/create', [ArtistController::class, 'create'])->name('artists.create');
 Route::get('/artists/show/add/collection', [ArtistController::class, 'showAddCollection'])->name('artists.showAddCollection');
 Route::post('/artists/add/collection/{id}', [ArtistController::class, 'addCollection'])->name('artists.add_collection');
 Route::get('/artists/show/add/to/collection/{id}', [ArtistController::class, 'showAddToCollection'])->name('artists.showAddToCollection');
 Route::post('/artists/add/to/collection/{id}', [ArtistController::class, 'addArtToCollection'])->name('artists.add_to_collection');
+Route::post('/artists/add/expertise/{id}', [ArtistController::class, 'addExpert'])->name('artists.addExpert');
+Route::post('/artists/add/desc/{id}', [ArtistController::class, 'addDescription'])->name('artists.addDescription');
+Route::post('/artists/add/years/{id}', [ArtistController::class, 'addYears'])->name('artists.addYears');
+
 
 
 
@@ -92,22 +116,6 @@ Route::post('/artists/edit/background/picture/{id}', [ArtistController::class, '
 ->middleware('auth', 'checkArtistProfile');
 
 
-Route::get('/live/join', function () {
-    return view('livejoin');
-});
-
-Route::get('/who/we/are', function () {
-    return view('who-we-are');
-});
-
-Route::get('/terms/conditions', function () {
-    return view('terms-and-conditions');
-});
-
-
-
-
-
 
 
 Route::get('/landing/login', function () {
@@ -117,6 +125,14 @@ Route::get('/landing/login', function () {
 Route::get('/landing/signup', function () {
     return view('landing-signup');
 });
+
+// stripe
+Route::post('/checkout', [StripeController::class, 'checkout'])->name('checkout');
+Route::get('/success', [StripeController::class, 'success'])->name('success');
+Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
+Route::post('/webhook', [StripeController::class, 'webhook'])->name('webhook');
+
+Route::middleware(['auth', 'check.admin'])->group(function () {
 
 // Define resourceful routes for products
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
@@ -139,16 +155,13 @@ Route::delete('/orders/{order}', [OrdersController::class, 'destroy'])->name('or
 
 
 // Define resourceful routes for invoices
-Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices.index');
 Route::get('/invoices/create', [InvoicesController::class, 'create'])->name('invoices.create');
 Route::post('/invoices', [InvoicesController::class, 'store'])->name('invoices.store');
-Route::get('/invoices/{invoice}', [InvoicesController::class, 'show'])->name('invoices.show');
-Route::get('/invoices/{invoice}/edit', [InvoicesController::class, 'edit'])->name('invoices.edit');
-Route::put('/invoices/{invoice}', [InvoicesController::class, 'update'])->name('invoices.update');
-Route::delete('/invoices/{invoice}', [InvoicesController::class, 'destroy'])->name('invoices.destroy');
-Route::get('/invoices/pending', [InvoicesController::class, 'showPendingInvoices'])->name('invoices.pending');
-Route::get('/invoices/completed', [InvoicesController::class, 'showCompletedInvoices'])->name('invoices.completed');
-Route::get('/canceled_invoices', [InvoicesController::class, 'showCanceledInvoices'])->name('invoices.canceled');
+Route::get('/invoices/edit/{invoice}', [InvoicesController::class, 'edit'])->name('invoices.edit');
+Route::put('/invoices/update/{invoice}', [InvoicesController::class, 'update'])->name('invoices.update');
+Route::get('/invoices/unpaid', [InvoicesController::class, 'showUnpaidInvoices'])->name('invoices.unpaid');
+Route::get('/invoices/paid', [InvoicesController::class, 'showPaidInvoices'])->name('invoices.paid');
+Route::get('invoices/canceled', [InvoicesController::class, 'showCanceledInvoices'])->name('invoices.canceled');
 
 // Define resourceful routes for carts
 Route::get('/carts', [CartsController::class, 'index'])->name('carts.index');
@@ -172,13 +185,13 @@ Route::delete('/podcasts/destroy/{id}', [PodcastsController::class, 'destroy'])-
 Route::patch('/podcasts/{podcast}', [PodcastsController::class, 'updateStatus'])->name('podcasts.updateStatus');
 
 
-Auth::routes();
+
 //admin panel
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-->name('home')->middleware('check.admin');
+->name('home');
 
 
-Route::get('/settings', [AuctionsController::class, 'showSettings']);
+//Route::get('/settings', [AuctionsController::class, 'showSettings']);
 
 Route::resource('tickets', TicketsController::class);
 
@@ -267,13 +280,9 @@ Route::get('/users/profile/{id}', [HomeController::class, 'profile'])->name('use
 Route::get('/non-artists', [HomeController::class, 'showNonArtists'])->name('users.nonArtists');
 Route::get('/non-artists/edit/{id}', [HomeController::class, 'editNonArtists'])->name('users.nonArtists.edit');
 Route::put('/non-artists/update/{id}', [HomeController::class, 'updateNonArtists'])->name('users.nonArtists.update');
+});
 
 
-// stripe
-Route::post('/checkout', [StripeController::class, 'checkout'])->name('checkout');
-Route::get('/success', [StripeController::class, 'success'])->name('success');
-Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
-Route::post('/webhook', [StripeController::class, 'webhook'])->name('webhook');
 
 
 

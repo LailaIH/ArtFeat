@@ -19,7 +19,7 @@ class CheckAdmin
         if ( auth()->user()->job_title_id==null) {
             return redirect()->route('welcome')->withErrors(['fail' => 'UnAuthorized Access']);
         }
-            elseif(auth()->user()->jobTitle->name != 'admin'){
+        elseif(auth()->user()->jobTitle->name != 'admin'){
                 return redirect()->route('welcome')->withErrors(['fail' => 'UnAuthorized Access']);
 
             }

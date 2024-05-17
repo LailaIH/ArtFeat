@@ -21,6 +21,15 @@ class Artist extends Model
         'twitter',
         'tiktok',
         'user_id',
+        'description',
+        'years_of_experience',
+        'expertise',
+        'website',
+        'behance',
+    ];
+
+    protected $casts = [
+        'expertise' => 'array',
     ];
 
 

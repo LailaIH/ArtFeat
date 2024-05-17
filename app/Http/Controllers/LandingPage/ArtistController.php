@@ -164,6 +164,9 @@ class ArtistController extends Controller
         $artist->instagram = strip_tags($request->input('instagram'));
         $artist->tiktok = strip_tags($request->input('tiktok'));
         $artist->twitter = strip_tags($request->input('twitter'));
+        $artist->website = strip_tags($request->input('website'));
+        $artist->behance = strip_tags($request->input('behance'));
+
         $artist->save();
 
         return redirect()->route('artists.profile',$id)->with('success','profile updated successufully');
@@ -199,7 +202,10 @@ class ArtistController extends Controller
     //show add art to a collection
     public function showAddToCollection($id){
         $collection = Collection::findOrFail($id);
-        return view('artists.add-to-collection',['collection'=>$collection , 'sections'=>Section::all()]);
+        $products = $collection->products;
+        return view('artists.add-to-collection',['collection'=>$collection,
+        'products'=>$products
+         , 'sections'=>Section::all()]);
 
     }
 
@@ -248,6 +254,16 @@ class ArtistController extends Controller
             $product->img = $imageName;
         }
 
+
+        if ($request->hasFile('file-upload-field')) {
+            $file = $request->file('file-upload-field');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('digital_works', $fileName, 'public');
+    
+            // Update the product's digital_work_file column with the file path
+            $product->digital_work_file = $filePath;
+        }
+
         
         $product->user_id = auth()->user()->id;
         $product->section_id = $request->input('section_id');
@@ -257,6 +273,51 @@ class ArtistController extends Controller
       
 
         
+
+    }
+
+    // About Artist Section
+    public function addExpert(Request $request ,$id){
+       
+        $artist = Artist::findOrFail($id);
+        $newExpertise = $request->input('expertise');
+
+        // Append new expertise to the existing array if it exists
+        if (isset($artist->expertise)) {
+            $artist->expertise = array_merge($artist->expertise, $newExpertise);
+        } else {
+            $artist->expertise = $newExpertise; // Set expertise if it doesn't exist
+        }
+        $artist->save();
+    
+        return redirect()->back()->with('success', 'Expertise added successfully');
+    }
+
+    public function addDescription(Request $request , $id){
+        $artist = Artist::findOrFail($id);
+        $message = 'Description ';
+        if ($artist->description) {
+            $message .= 'updated';
+        } else {
+            $message .= 'added';
+        }
+        $artist->description = $request->input('description');
+        $artist->save();
+        return redirect()->back()->with('success', $message.' successfully');
+
+    }
+
+    public function addYears(Request $request , $id){
+        $artist = Artist::findOrFail($id);
+        $message = 'Years of experience ';
+        if ($artist->years_of_experience) {
+            $message .= 'updated';
+        } else {
+            $message .= 'added';
+        }
+        $artist->years_of_experience = $request->input('years');
+        $artist->save();
+        return redirect()->back()->with('success', $message.' successfully');
 
     }
 

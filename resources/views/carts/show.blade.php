@@ -67,6 +67,7 @@
                                         
                                         <th scope="col">Product</th>
                                         <th scope="col">Quantity</th>
+                                        <th>Paid At </th>
                                         <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -78,6 +79,7 @@
                                 
                                 <td class=" text-black"><b>{{$cart->product->name}}</b></td>
                                 <td>{{$cart->quantity}}</td>
+                                <td style="color: blueviolet;">{{   $cart->is_online? 'Not Paid Yet':$cart->updated_at->format('F j, Y, g:i a')       }}</td>
                                 <td>
                                 <a href="{{ route('carts.edit',  ['id'=>$cart['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
                                 <form action="{{ route('carts.destroy', ['id'=>$cart['id']]) }}" method="POST" class="d-inline">

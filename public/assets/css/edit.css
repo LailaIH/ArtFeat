@@ -383,6 +383,12 @@ label[for="avatar"] {
 fieldset {
   display: flex;
   align-items: center;
+  
+  
+}
+fieldset input{
+  margin-left: 15px;
+  
 }
 fieldset textarea,
 input {
@@ -443,32 +449,39 @@ input:focus {
   margin: 5px auto 15px auto;
 }
 select {
-  width: 80%;
+  width: 10%;
   padding: 7px 10px;
   background-color: #f5f5f5;
   border: none;
   border-radius: 2.5px;
   outline: 0;
 }
+.ddd{
+display: flex;
+}
 select option {
   padding: 5px;
 }
 fieldset {
   text-align: center;
-  /* background-color: rgba(0,0,0,0.01); */
   margin-bottom: 5px;
   padding: 5px;
   box-sizing: border-box;
+  gap: 50px;
+  
   
 }
+
 fieldset:last-child {
   border-bottom: none;
 }
 fieldset .justifyButtons {
   display: flex;
-  gap: 8px;
+  gap: 30px;
+  margin-left: 10px;
   
 }
+
 fieldset .justifyButtons button {
   display: flex;
   padding: 10px 25px;
@@ -545,10 +558,11 @@ input.cancel {
 
 .file-upload-wrapper::after {
   content: attr(data-text);
-  font-size: 18px;
+  font-size: 15px;
   position: absolute;
-  top: 0;
-  left: 0;
+  /* top: 0;
+  left: 0; */
+  
   background: #f8f8f8;
   padding: 10px 15px;
   display: block;
@@ -596,6 +610,12 @@ input.cancel {
   pointer-events: none;
   border-radius: 0 5px 5px 0;
 }
+.file-upload-wrapper::after {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .file-upload-wrapper input {
   opacity: 0;
   position: absolute;
@@ -666,17 +686,22 @@ input.cancel {
 .imagesSection .wrapperImages {
   margin-top: 24px;
   display: flex;
+  
   flex-wrap: wrap;
+  
   gap: 16px;
 }
 .imagesSection .outerImg {
   position: relative;
+  flex: 0 0 calc(50% - 8px); /* Each image container takes up 50% of the container width minus gap */
+  max-width: calc(50% - 8px); /* Set maximum width for each image container */
   height: 158px;
-  width: 158px;
+  margin-bottom: 16px; /* Adjust margin to create gap between rows */
 }
+
 .imagesSection .outerImg .myImg {
-  height: 158px;
-  width: 158px;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
   padding: 6px;
   border-radius: 2px;

@@ -20,13 +20,18 @@ class Product extends Model
         'stock_quantity',
         'img',
         'is_online',
-        'artist_id',
+        'artist_id', //refering to user id on users
         'collection_id',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function artist()
+    {
+        return $this->belongsTo(User::class, 'artist_id');
     }
 
     // public function artist()
@@ -48,5 +53,7 @@ class Product extends Model
     {
         return $this->hasMany(Cart::class);
     }
+
+    
 
 }

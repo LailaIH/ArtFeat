@@ -32,7 +32,7 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
                     
                     <div class="card">
-                    <div class="card-header">Canceled Invoices List</div>
+                    <div class="card-header">Unpaid Invoices List</div>
                     @if (session('success'))
 
                     <div class="alert alert-success m-3" role="alert">{{ session('success') }}</div>
@@ -70,7 +70,7 @@
                                             <td style="color: blue;">{{ $invoice->total_price }}</td>
                                             <td>{{$invoice->order->product->name}}</td>
                                             <td style="color: blue;">{{$invoice->total_price / $invoice->order->product->price }}</td>
-                                            <td style="color: red;">{{ $invoice->status }}</td>
+                                            <td style="color:#302e2e;">{{ $invoice->status }}</td>
                                             
                                             <td>
                                                 <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-primary btn-xs">Edit</a>

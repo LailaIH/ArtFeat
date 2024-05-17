@@ -38,7 +38,7 @@
                   <label for="type">Artwork Type</label>
                 </div>
                 <div class="grid-65">
-                  <select name="type" id="type" tabindex="8" required>
+                  <select name="type" id="type" tabindex="8" required class="form-select" aria-label="Default select example">
                     <option selected="selected" value="" disabled>---</option>
                     <option value="digital">Digital</option>
                     <option value="installation">Installation</option>
@@ -55,8 +55,9 @@
                   <label for="Type">Upload Digital Work File</label>
                 </div>
                 <div class="grid-65">
-                  <div class="file-upload-wrapper">
+                  <div class="file-upload-wrapper" id="fileUploadWrapper" >
                     <input
+                      id="fileUploadField"
                       name="file-upload-field"
                       type="file"
                       class="file-upload-field"
@@ -71,7 +72,7 @@
                   <label for="section">Artwork Category</label>
                 </div>
                 <div class="grid-65">
-                  <select name="section_id" id="section_id" tabindex="8">
+                  <select name="section_id" id="section_id" tabindex="8" class="form-select" aria-label="Default select example">
                     
                     <option selected="selected" value="" disabled>
                       Choose Category
@@ -87,12 +88,13 @@
                 <div class="grid-35"></div>
                 <div class="grid-65">
                   <div class="justifyButtons">
-                    <button>Photography</button>
-                    <button>Portrait</button>
+                    <button class="btn btn-outline-secondary">Photography</button>
+                    <button class="btn btn-outline-secondary">Portrait</button>
                   </div>
                 </div>
               </fieldset>
               <!-- Description-->
+             
               <fieldset>
                 <div class="grid-35">
                   <label for="Description">Description</label>
@@ -140,6 +142,7 @@
                 </div>
               </fieldset>
               <!-- Date of creation -->
+            
               <fieldset>
                 <div class="grid-35">
                   <label for="date">Date of creation</label>
@@ -152,6 +155,7 @@
                 </div>
               </fieldset>
               <!-- Artwork Dimensions -->
+              
               <fieldset>
                 <div class="grid-35">
                   <label for="Artwork Dimensions">Artwork Dimensions</label>
@@ -226,7 +230,7 @@
               </div>
             </div>
             <div class="imagesSection">
-              <div class="file-upload-wrapper file-upload-wrapper2 mt-4">
+              <div class="file-upload-wrapper file-upload-wrapper2 mt-4 " data-text="Add New Image">
                 <input
                   name="img"
                   id="img"
@@ -238,33 +242,27 @@
                 />
               </div>
               <div class="wrapperImages">
-                <div class="outerImg">
-                  <img  class="myImg" src="/assets/img/a1.png" alt="" />
-                  
-                  <button class="delete">
-                    <img cl src="/assets/Delete.svg" alt="" />
-                  </button>
-                </div>
 
+                @for($i=0;$i<3;$i++)
                 <div class="outerImg">
-                <div class="myImg" id="uploadedImage"></div>
-                  <button class="delete">
-                    <img cl src="/assets/Delete.svg" alt="" />
-                  </button>
-                </div>
-
-                <div class="outerImg">
+                  @if(isset($products[$i]))
+                  <img  class="myImg" src="{{ asset('productImages/'.$products[$i]->img) }}" alt="product img" />
+                  @else
                   <img class="myImg" src="/assets/img/a2.png" alt="" />
+                  @endif
                   <button class="delete">
-                    <img cl src="/assets/Delete.svg" alt="" />
+                    <img cl src="/assets/img/Delete.svg" alt="" />
                   </button>
                 </div>
-                <div class="outerImg">
-                  <img class="myImg" src="/assets/img/a3.png" alt="" />
-                  <button class="delete">
-                    <img cl src="/assets/Delete.svg" alt="" />
-                  </button>
-                </div>
+                @endfor
+
+
+                <!-- new img -->
+                <div class="outerImg" id="uploadedImageContainer">
+               
+                
+            </div>
+
               </div>
             </div>
           </form>
@@ -275,23 +273,42 @@
 
 
   <script>
-     function previewImage(event) {
-    var input = event.target;
-    var outerImg = document.querySelector('.outerImg');
-    var uploadedImage = document.getElementById('uploadedImage');
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var imgElement = document.createElement('img');
+        var buttonElement = document.createElement('button');
+        var deleteImg = document.createElement('img');
 
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
+        deleteImg.setAttribute('src','/assets/img/Delete.svg');
+        buttonElement.setAttribute('class','delete');
+        buttonElement.appendChild(deleteImg);
+        
+        imgElement.setAttribute('class', 'myImg');
+        imgElement.setAttribute('src', reader.result);
+        imgElement.setAttribute('alt', 'uploaded image');
+        document.getElementById('uploadedImageContainer').appendChild(imgElement);
+        document.getElementById('uploadedImageContainer').appendChild(buttonElement);
 
-      reader.onload = function(e) {
-        var img = document.createElement('img');
-        img.src = e.target.result;
-        uploadedImage.appendChild(img);
-      }
-
-      reader.readAsDataURL(input.files[0]);
     }
-  }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+
 </script> 
+
+<script>
+  // JavaScript to update file name in file upload wrapper
+document.addEventListener("DOMContentLoaded", function () {
+    var fileUploadField = document.getElementById("fileUploadField");
+    var fileUploadWrapper = document.getElementById("fileUploadWrapper");
+
+    fileUploadField.addEventListener("change", function () {
+        var fileName = this.files[0].name;
+        fileUploadWrapper.setAttribute("data-text", fileName);
+    });
+});
+
+</script>
 
 @endsection

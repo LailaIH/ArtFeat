@@ -68,12 +68,12 @@
                     </a>
                     <div class="collapse" id="collapseDashboards213" data-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="/invoices/pending">
-                                Pending Invoices
+                            <a class="nav-link" href="/invoices/unpaid">
+                                Unpaid Invoices
 
                             </a>
-                            <a class="nav-link" href="/invoices/completed">
-                                Completed Invoices
+                            <a class="nav-link" href="/invoices/paid">
+                                Paid Invoices
 
                             </a>
                             <a class="nav-link" href="/invoices/canceled">

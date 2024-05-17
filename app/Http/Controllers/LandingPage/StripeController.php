@@ -164,8 +164,8 @@ class StripeController extends Controller
             \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
             $sessionId = $request->query('session_id');
 
-            $orders = Order::where('session_id',$sessionId);
-            $invoices = Invoice::where('session_id',$sessionId);
+            $orders = Order::where('session_id',$sessionId)->get();
+            $invoices = Invoice::where('session_id',$sessionId)->get();
 
             if (!$orders || !$invoices) {
                 throw new NotFoundHttpException();
@@ -187,8 +187,7 @@ class StripeController extends Controller
     
         }
 
-
-            return view('checkout-cancel');
+                return redirect()->route('logged_user_cart',auth()->user()->id)->withErrors(['fail' => 'Payment process has been canceled']);
         }
 
 

@@ -39,6 +39,8 @@
         <th>Quantity</th>
         <th>Sub Total</th>
         <th>Image</th>
+        <th></th>
+        <th>Paid At</th>
        
 
         </tr>
@@ -67,6 +69,8 @@
         @endif
 
         </td>
+        <td></td>
+        <td style="color:blueviolet;">{{ $invoice->updated_at->format('F j, Y, g:i a') }}</td>
       </tr>
      
 

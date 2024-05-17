@@ -53,9 +53,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //for admin
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    //for artists
+    public function artworks()
+    {
+        return $this->hasMany(Product::class, 'artist_id');
     }
 
     public function orders()

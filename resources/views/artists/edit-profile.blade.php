@@ -25,133 +25,167 @@
               @csrf
               @method('PUT')
               <!-- Photo -->
-              <div class="row gx-3 mb-3">
+              <div class="row gx-3 mb-3 mydiv">
               <div class="col-md-6">
               
               
-                <div class="grid-35">
+                <div class="ddd">
                   <label for="avatar">Your Photo</label>
-                </div>
-                <div class="grid-65">
-                  <div>
+               
+                  
                     <span class="photo" title="Upload your Avatar!" >
                     <img id="profile-image"  src="{{ asset('userImages/'.$user->img) }}" alt="Avatar" class="avatar-image  " />
 
-                    </span>
+                    </span></div>
                     <label for="img" class="btn btn-primary">
                                             Upload New Image
                                         </label>
                     <input style="display: none;" id="img" type="file" name="img" class="btn" onchange="updateProfileImage(event);" />
-                  </div>
-                </div>
+               
+                
               </div>
               <div class="col-md-6">
               
-                <div class="grid-35">
-                  <label for="name">Artist Name</label>
-                </div>
-                <div class="grid-65">
+                <fieldset>
+                  
+                  <label  for="name">Artist Name</label>
+                
+                
                   <input type="text" name="name" id="name" tabindex="1" value="{{$user->name}}" />
-                </div>
+                  
+                </fieldset>
               </div></div>
-              <fieldset>
-                <div class="grid-35">
-                  <label for="store_name">Store Name</label>
-                </div>
-                <div class="grid-65">
+              <div class="row gx-3 mb-3 ">
+              <div class="col-6">
+              <fieldset class="mydiv">
+              
+                  <label for="store_name">Store </label>
+             
                   <input type="text" name="store_name" id="store_name" tabindex="2" value="{{$artist->store_name}}" />
-                </div>
-              </fieldset>
+              
+              </fieldset></div>
               <!-- Description about User -->
+              <div class="col-6">
               <fieldset>
-                <div class="grid-35">
+               
                   <label for="description">Country</label>
-                </div>
-                <div class="grid-65">
-                  <textarea
+                
+                  <input
                     name="country"
                     id=""
                     cols="30"
                     rows="auto"
                     tabindex="3"
-                  >{{$artist->country}}</textarea>
-                </div>
-              </fieldset>
+                    value="{{$artist->country}}"
+                  />
+               
+              </fieldset></div></div>
               <!-- Location -->
+              <div class="row gx-3 mb-3 ">
+              <div class="col-md-6">
               <fieldset>
-                <div class="grid-35">
+                
                   <label for="location">City</label>
-                </div>
-                <div class="grid-65">
+               
                   <input name="city" type="text" id="location" tabindex="4" value="{{$artist->city}}" />
-                </div>
-              </fieldset>
+                
+              </fieldset></div>
               <!-- Artwork provided -->
+              
+              <div class="col-md-6">
               <fieldset>
-                <div class="grid-35 ">
+                
                   <label for="forHire ">Artwork provided</label>
-                </div>
-                <div class="grid-65 ">
-                  <div class="justifyButtons">
+                
+                
+                  <div class="justifyButtons ">
                     
                     <button class="btn btn-outline-secondary ">
                         Photography
                     </button>
                     <button class="btn btn-outline-secondary">Portrait</button>
                   </div>
-                </div>
-              </fieldset>
+                
+              </fieldset></div></div>
               <!-- Language -->
+              
               <fieldset>
-                <div class="grid-35">
-                  <label for="Language">Language</label>
-                </div>
-                <div class="grid-65">
-                  <select name="language" id="language" tabindex="8">
+                
+                  <label class="me-5" for="Language">Language</label>
+                
+                  <select class="form-select" name="language" id="language" tabindex="8">
                     <option selected="selected" value="---" disabled>
                       ---
                     </option>
                     <option value="english" {{ $artist->language == 'english' ? 'selected' : '' }}>English</option>
                     <option value="arabic" {{ $artist->language == 'arabic' ? 'selected' : '' }}>Arabic</option>
                   </select>
-                </div>
+                
               </fieldset>
               <!-- Facebook URL -->
+              <div class="row gx-3 mb-3 mydiv">
+              <div class="col-md-6">
               <fieldset>
-                <div class="grid-35">
+                
                   <label for="Facebook">Facebook</label>
-                </div>
-                <div class="grid-65">
+                
                   <input name="facebook" value="{{$artist->facebook}}" type="Facebook" id="position" tabindex="11" />
-                </div>
-              </fieldset>
+                
+              </fieldset></div>
+
               <!-- Instagram URL -->
+              <div class="col-md-6">
               <fieldset>
-                <div class="grid-35">
+                
                   <label for="Instagram">Instagram</label>
-                </div>
-                <div class="grid-65">
+               
                   <input type="text" name="instagram" value="{{$artist->instagram}}" id="Instagram" tabindex="12" />
-                </div>
-              </fieldset>
+                
+              </fieldset></div></div>
               <!-- Tiktok URL -->
+              <div class="row gx-3 mb-3 mydiv">
+              <div class="col-md-6">
               <fieldset>
-                <div class="grid-35">
+                
                   <label for="Tiktok">Tiktok</label>
-                </div>
-                <div class="grid-65">
+                
                   <input type="text" name="tiktok" value="{{$artist->tiktok}}" id="Tiktok" tabindex="13" />
-                </div>
-              </fieldset>
+                
+              </fieldset></div>
               <!-- Website URL -->
+              <div class="col-md-6">
               <fieldset style="border-bottom: none">
-                <div class="grid-35">
+                
                   <label for="Twitter">Twitter</label>
-                </div>
-                <div class="grid-65">
-                  <input type="text" name="twitter" value="{{$artist->twitter}}" id="Twitter" tabindex="13" />
-                </div>
-              </fieldset>
+                
+                  <input type="text" name="twitter" value="{{$artist->twitter}}" id="Twitter" tabindex="14" />
+                
+              </fieldset></div></div>
+
+
+              <div class="row gx-3 mb-3 mydiv">
+              <div class="col-md-6">
+              <fieldset>
+                
+                  <label for="website">Website</label>
+                
+                  <input name="website" value="{{$artist->website}}" type="text" id="website" tabindex="15" />
+                
+              </fieldset></div>
+
+              <!-- Instagram URL -->
+              <div class="col-md-6">
+              <fieldset>
+                
+                  <label for="behance">Behance</label>
+               
+                  <input type="text" name="behance" value="{{$artist->behance}}" id="behance" tabindex="16" />
+                
+              </fieldset></div></div>
+
+
+
+
               <fieldset>
                 <div class="justifyButtons">
                   <input type="button" class="Btn cancel" value="Cancel" />

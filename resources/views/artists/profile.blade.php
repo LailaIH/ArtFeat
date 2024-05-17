@@ -2,6 +2,8 @@
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/profile.css')}}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 
 @if (session('success'))
        <div class="alert alert-success text-center m-3">{{ session('success') }}</div>
@@ -140,8 +142,8 @@
 
                   @if(!$products->isEmpty())
                   @foreach($products as $product)
-                    <div class="outerImage">
-                      <img src="{{ asset('productImages/'.$product->img) }}" />
+                    <div class="outerImage m-2">
+                      <img src="{{ asset('productImages/'.$product->img) }}" height="80%;" />
                       <div class="select">
                         <select name="cars" id="cars">
                           <option value="A">A</option>
@@ -327,54 +329,149 @@
                 >
                   <div>
                     <h3>About</h3>
-                    <p>
-                      Artist Description, which means about the artist and what
-                      does he do bla bla, Artist Description, which means about
-                      the artist and what does he do bla blaArtist Description,
-                      which means about the artist and what does he do bla
-                      blaArtist Description, which means about the artist and
-                      what does he do bla blaArtist Description, which means
-                      about the artist and what does he do bla bla
-                    </p>
+                    <p id="description_par">
+                      @if($artist->description !=null)
+                      
+                      {{$artist->description}}
+                        <button id="edit" class="mybutton">
+                        <i class="fa fa-pencil m-3" aria-hidden="true"></i>
+                        </button></p>
+                        <form id="editform" method="post" action="{{route('artists.addDescription',['id'=>$artist->id])}}">
+                      @csrf
+                      <textarea style="width: 70%;" name="description" class="form-control "  cols="2" rows="4">{{$artist->description}}</textarea>
+                        <br><button type="submit" class="btn btn-primary ">Save</button>
+                    </form>
+
+                      @else
+                      <form method="post" action="{{route('artists.addDescription',['id'=>$artist->id])}}">
+                      @csrf
+                      <textarea style="width: 70%;" name="description" class="form-control desc"  cols="2" rows="4"></textarea>
+                        <br><button type="submit" class="btn btn-primary desc">Save</button>
+                    </form>
+                      <button class="btn btn-primary" id="show">Add Description</button>
+                      @endif
+                    
                   </div>
                   <div>
                     <h3>Country</h3>
-                    <p>Palestine</p>
+                    @if($artist->country !=null)
+                    <p>{{$artist->country}}</p>
+                    @else
+                      Add your country by editing your profile 
+                    @endif
                   </div>
                   <div>
                     <h3>City</h3>
-                    <p>Gaza</p>
+                    @if($artist->city !=null)
+                    <p>{{$artist->city}}</p>
+                    @else
+                      Add your city by editing your profile 
+                    @endif
                   </div>
                   <div>
-                    <h3>Expertise</h3>
-                    <div class="experts">
-                      <div>Acrylic Paintings</div>
-                      <div>Acrylic Paintings</div>
-                      <div>On Demand Portraits</div>
-                    </div>
+                    <h3 class="mb-2">Expertise</h3>
+                    
+                      @if(isset($artist->expertise))
+                      <div class="experts">
+                      @foreach ($artist->expertise as $expertise)
+                      <div>{{$expertise}}</div>
+                      @endforeach </div>
+                      @endif
+                      
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add expert +</button>
+                      
+                          <!-- Modal -->
+                          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">New Expert</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form method="POST" action="{{route('artists.addExpert',['id'=>$artist->id])}}">
+                                    @csrf
+                                    <div class="mb-3">
+                                      <label for="recipient-name" class="col-form-label">Expert:</label>
+                                      <input name="expertise[]" type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                    
+                                  
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Add</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+
+                    
                   </div>
                   <div>
                     <h3>Years of Experience</h3>
-                    <p>The Artist has 12 years of experience.</p>
+                    <p id="exp_par">
+                      @if($artist->years_of_experience !=null)
+                      
+                     Th artist has  {{$artist->years_of_experience}}  years of experience
+                        <button id="edit_years" class="mybutton">
+                        <i class="fa fa-pencil m-3" aria-hidden="true"></i>
+                        </button></p>
+                        <form id="edit_years_form" method="post" action="{{route('artists.addYears',['id'=>$artist->id])}}">
+                      @csrf
+                      <input style="width: 30%;" type="number" name="years" class="form-control " value="{{$artist->years_of_experience}}"/>
+                        <br><button type="submit" class="btn btn-primary ">Save</button>
+                    </form>
+
+                      @else
+                      <form method="post" action="{{route('artists.addYears',['id'=>$artist->id])}}">
+                      @csrf
+                      <input style="width: 30%;" type="number" name="years" class="form-control years "/>
+                        <br><button type="submit" class="btn btn-primary years ">Save</button>
+                    </form>
+                      <button class="btn btn-primary" id="show_years">Add Experience Years</button>
+                      @endif
                   </div>
+
+
                   <div>
                     <h3>Social Media</h3>
                     <div class="socials">
                       <div>
                         <img src="/assets/img/Facebook2.svg" />
-                        <div>ArtistnameonFacebook</div>
+                        @if($artist->facebook !=null)
+                        <div>{{$artist->facebook}}</div>
+                        @else
+                        <div>Add your facebook by editing your profile</div>
+                         @endif
                       </div>
                       <div class="d-flex align-items-center">
                         <img src="/assets/img/instagram.svg" />
-                        <div>IGHandler</div>
+                        @if($artist->instagram !=null)
+                        <div>{{$artist->instagram}}</div>
+                        @else
+                        <div>Add your instagram by editing your profile</div>
+                        @endif
                       </div>
                       <div class="d-flex align-items-center">
                         <img src="/assets/img/website.svg" />
-                        <div>www.websitename.com</div>
+                        @if($artist->website !=null)
+                        <div>{{$artist->website}}</div>
+                        @else
+                        <div>Add your website by editing your profile</div>
+                        @endif
                       </div>
                       <div class="d-flex align-items-center">
                         <img src="/assets/img/Behance.svg" />
-                        <div>BehanceifTheyGotone</div>
+                        @if($artist->behance !=null)
+                        <div>{{$artist->behance}}</div>
+                        @else
+                        <div>Add your behance by editing your profile</div>
+                        @endif
                       </div>
                     </div>
                   </div>
@@ -411,5 +508,59 @@
     });
 </script> -->
 
+<script>
+const exampleModal = document.getElementById('exampleModal')
+exampleModal.addEventListener('show.bs.modal', event => {
+  // Button that triggered the modal
+  const button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  const recipient = button.getAttribute('data-bs-whatever')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  const modalTitle = exampleModal.querySelector('.modal-title')
+  const modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+  modalTitle.textContent = `New Expert`
+})
+</script>
+
+<script>
+      $(document).ready(function(){
+        $(".desc").hide();
+        $("#editform").hide();
+        $("#show").click(function(){
+          $(".desc").show();
+          $("#show").hide();
+        });
+
+        $("#edit").click(function(){
+    $("#editform").show();
+    $("#edit").hide();
+    $("#description_par").hide();
+  });
+
+      });
+</script>
+
+
+<script>
+      $(document).ready(function(){
+        $(".years").hide();
+        $("#edit_years_form").hide();
+        $("#show_years").click(function(){
+          $(".years").show();
+          $("#show_years").hide();
+        });
+
+    $("#edit_years").click(function(){
+    $("#edit_years_form").show();
+    $("#edit_years").hide();
+    $("#exp_par").hide();
+  });
+
+      });
+</script>
 
 @endsection

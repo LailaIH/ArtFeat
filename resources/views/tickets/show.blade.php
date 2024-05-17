@@ -39,7 +39,7 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
                     <div class="row gx-4">
-                    <div class="col-lg-8">
+                    <div class="col-12">
                     <div class="card mb-4">
                     <div class="card-header">
                     {{ $ticket->title }}
