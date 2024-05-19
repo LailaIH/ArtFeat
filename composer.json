@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
+        "outhebox/blade-flags": "^1.5",
         "stripe/stripe-php": "^14.5"
     },
     "require-dev": {

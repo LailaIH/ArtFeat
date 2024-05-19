@@ -7,7 +7,7 @@
       <div class="WhoFirstSection row">
         <div class="Right col-lg-5">
           <div class="header">
-            <h1>WHO WE ARE</h1>
+            <h1>{{__('mycustom.whoWeAreTitle')}}</h1>
             <h3>
               ArtFeat Is a platform Lorem ipsum dolor sit amet, consectetur
               adipiscing elit. Duis auctor efficitur velit at commodo.
@@ -45,7 +45,7 @@
         </div>
         <div class="Left col-lg-8">
           <div class="header">
-            <h1>Our Value</h1>
+            <h1>{{__('mycustom.ourValue')}}</h1>
           </div>
           <div class="content">
             <p>
@@ -67,7 +67,7 @@
       <div class="WhoFirstSection row">
         <div class="Right col-lg-6">
           <div class="header">
-            <h1>Join our Artists</h1>
+            <h1>{{__('mycustom.joinOurArtists')}}</h1>
           </div>
           <div class="content">
             <p>

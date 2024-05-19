@@ -51,23 +51,27 @@
                         <div class="row gx-3 mb-3">
 
                         <div class="col-md-6">
-                            <label class="small mb-1" for="user_id">User</label>
+                            <!-- <label class="small mb-1" for="user_id">User</label>
                             <select name="user_id" id="user_id" class="form-control form-control-solid" aria-label="Default select example" required>
                                 <option value="" disabled selected>Select a user</option>
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}" @if($invoice->user->id === $user->id) selected @endif>{{ $user->name }}</option>
                                 @endforeach
-                            </select>
+                            </select> -->
+                            <label class="small mb-1" for="user_id">User</label>
+                            <input value="{{$invoice->user->name}}" class="form-control" readonly/>
                         </div>
 
                         <div class="col-md-6">
                             <label class="small mb-1" for="product_id">Orders</label>
-                            <select name="order_id" id="order_id" class="form-control form-control-solid" aria-label="Default select example" required>
+                            <!-- <select name="order_id" id="order_id" class="form-control form-control-solid" aria-label="Default select example" required>
                                 <option value="" disabled selected>Select an order</option>
                                 @foreach ($orders as $order)
                                     <option value="{{ $order->id }}" @if($invoice->order->id === $order->id) selected @endif>{{ $order->id }}</option>
                                 @endforeach
-                            </select>
+                            </select> -->
+                            <input value="{{$invoice->order->id}}" class="form-control" readonly/>
+
                         </div>
                         </div>
                        

@@ -40,6 +40,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/languageConverter/{locale}', [LandingController::class, 'switch'])->name('languageConverter');
+
 //public routes for landing pages
 Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
 Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover');
@@ -48,6 +50,8 @@ Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover
 Route::get('/live/join', function () {
     return view('livejoin');
 });
+
+
 
 Route::get('/who/we/are', function () {
     return view('who-we-are');
@@ -145,18 +149,12 @@ Route::put('/products/update/{id}', [ProductsController::class, 'update'])->name
 
 // Define resourceful routes for orders
 Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
-Route::get('/orders/create', [OrdersController::class, 'create'])->name('orders.create');
-Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');
-Route::get('/orders/{order}', [OrdersController::class, 'show'])->name('orders.show');
-Route::get('/orders/{order}/edit', [OrdersController::class, 'edit'])->name('orders.edit');
-Route::put('/orders/{order}', [OrdersController::class, 'update'])->name('orders.update');
-Route::delete('/orders/{order}', [OrdersController::class, 'destroy'])->name('orders.destroy');
+Route::get('/orders/edit/{order}', [OrdersController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/update/{order}', [OrdersController::class, 'update'])->name('orders.update');
 
 
 
 // Define resourceful routes for invoices
-Route::get('/invoices/create', [InvoicesController::class, 'create'])->name('invoices.create');
-Route::post('/invoices', [InvoicesController::class, 'store'])->name('invoices.store');
 Route::get('/invoices/edit/{invoice}', [InvoicesController::class, 'edit'])->name('invoices.edit');
 Route::put('/invoices/update/{invoice}', [InvoicesController::class, 'update'])->name('invoices.update');
 Route::get('/invoices/unpaid', [InvoicesController::class, 'showUnpaidInvoices'])->name('invoices.unpaid');

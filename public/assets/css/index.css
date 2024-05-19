@@ -60,6 +60,7 @@ nav ul {
 nav ul .links {
   display: flex;
   align-items: center;
+  
 }
 nav ul li {
   transition: 500ms;
@@ -71,10 +72,16 @@ nav ul li a {
   font-weight: 400;
   font-size: 16px;
   transition: all 0.3s ease;
+  
 }
 nav ul li a.active,
 nav ul li a:hover {
   color: var(--primary-color);
+}
+.mydiv{
+  display: flex;
+  
+
 }
 
 .headerButtons {
@@ -84,6 +91,7 @@ nav ul li a:hover {
 .headerButtons .innerContent {
   display: flex;
   gap: 34px;
+  margin-left: 130px;
 }
 .headerButtons .innerContent .signUp {
   position: relative;
@@ -1057,7 +1065,7 @@ nav input[type="checkbox"] {
   overflow: hidden;
   text-transform: capitalize;
   cursor: pointer;
-  width: 55px;
+  width: 60px;
   height: 55px;
   flex-shrink: 0;
 }
@@ -1135,4 +1143,7 @@ nav input[type="checkbox"] {
   
   display: inline-block;
 }
+
+
+
 

@@ -30,12 +30,7 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('invoices.create',[
-            'users'=>User::all(),
-            'orders'=>Order::all()]);
-    }
+  
 
     /**
      * Store a newly created resource in storage.
@@ -43,10 +38,7 @@ class InvoicesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+
 
     /**
      * Display the specified resource.
@@ -79,13 +71,11 @@ class InvoicesController extends Controller
     public function update(Request $request, Invoice $invoice)
     {
         $request->validate([
-            'user_id'=>'required',
-            'order_id'=>'required',
+            
             'total_price'=>'required',
             'status'=>'required',
         ]);
-        $invoice->user_id = strip_tags($request->input('user_id'));
-        $invoice->order_id = strip_tags($request->input('order_id'));
+        
         $invoice->total_price = strip_tags($request->input('total_price'));
         $invoice->status = strip_tags($request->input('status'));
         $invoice->is_online = $request->input('status')==='paid'?0:1;

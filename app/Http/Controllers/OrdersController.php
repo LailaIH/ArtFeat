@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -16,52 +17,18 @@ class OrdersController extends Controller
      {
          $this->middleware('auth');
      }
-    public function index()
-    {
-        //
+  
+
+   
+    public function index(){
+
+        return view('orders.index',['orders'=>Order::all()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+  
+    public function edit(Order $order)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('orders.edit',['order'=>$order]);
     }
 
     /**
@@ -71,9 +38,34 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Order $order)
     {
-        //
+        $request->validate([
+            'status'=>'required',
+        ]);
+
+        $order->note = $request->has('note')? $request->input('note'):"order note";
+        $order->status = $request->input('status');
+        $order->is_online = $request->input('status')==='completed'?0:1;
+        $order->save();
+
+        $invoice = $order->invoice;
+        $invoice->is_online = $order->is_online;
+
+        if($order->status==='completed'){
+            $invoice->status = 'paid';
+        }
+        elseif($order->status==='pending'){
+            $invoice->status = 'unpaid';
+        }
+        elseif($order->status==='canceled'){
+            $invoice->status = 'canceled';
+        }
+        $invoice->save();
+
+        return redirect()->route('orders.index')->with('success','order has been updated successfully');
+
+
     }
 
     /**
@@ -82,8 +74,5 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+
 }

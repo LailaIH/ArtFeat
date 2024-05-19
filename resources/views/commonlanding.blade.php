@@ -36,44 +36,41 @@
     </label>
     <ul>
         <!-- Links -->
+        <div class="mydiv">
+        
         <div class="links">
-            <li><a href="#">Gallery</a></li>
-            <li><a href="{{route('discover')}}">Artists</a></li>
-            <li><a href="/who/we/are">Who we are</a></li>
-            <li><a href="#">I’m an Artist</a></li>
+        
+            <li ><a href="#">{{ __('mycustom.gallery')}}</a></li>
+            <li ><a href="{{route('discover')}}">{{ __('mycustom.artists')}}</a></li>
+            <li ><a href="/who/we/are">{{ __('mycustom.whoWeAre')}}</a></li>
+            <li ><a href="#">{{ __('mycustom.imAnArtist')}}</a></li>
+        
         </div>
-
+        
         <div class="headerButtons">
             <!-- Login buttons -->
             <div class="innerContent">
             
-                @auth
-                    <!-- <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <div class="signUp">
-                        <button class="botton" type="submit" onclick="">Logout</button>
-                        </div>
-                    </form> -->
-                @else
-                
+                @if(!Auth::user())
+                    <div style="display: flex; margin-left:25px; position:relative; left:80px; gap:35px;">
                       <li class="nav-item-btn">
                         <div class="signUp">
                         <a href="/landing/signup" style=" text-decoration: none;">
                         
-                        <button class="botton" type="submit" onclick="">Sign Up</button>
+                        <button class="botton" type="submit" onclick="">{{ __('mycustom.signup')}}</button>
                         
                         </a></div></li>
                         <li class="nav-item-btn">
                         <div class="signUp">
                         <a href="/landing/login" style=" text-decoration: none;">
                         
-                        <button class="botton " type="submit" onclick="">Log In</button>
+                        <button class="botton " type="submit" onclick="">{{ __('mycustom.login')}}</button>
                         
                         </a></div></li>
-                       
+                    </div>
                 
                
-                @endauth
+                @endif
                 
 
                 <div class="line"></div>
@@ -101,6 +98,30 @@
                         </a>
                     </li>
                 @endauth
+               
+                <li class="nav-item">
+                <div class="dropdown">
+                        <a class=" dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ __('mycustom.language')}}
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/languageConverter/en">
+                            <img src="{{ asset('vendor/blade-flags/country-us.svg') }}" width="30" height="30"/>
+                            {{ __('mycustom.english')}}
+                            </a></li>
+                            <li><a class="dropdown-item" href="/languageConverter/ar">
+                            <img src="{{ asset('vendor/blade-flags/country-sa.svg') }}" width="30" height="30"/>
+
+                            {{ __('mycustom.arabic')}}
+                            </a></li>
+                            
+                        </ul>
+                 </div>
+                </li>
+
+
+               
 
                 @auth
                     <div class="profile-dropdown">
@@ -146,6 +167,8 @@
                 @endauth
             </div>
         </div>
+        <!-- this below extra -->
+        </div> 
     </ul>
 </nav>
 
@@ -161,18 +184,19 @@
 <div class="searchBar">
     <div class="inner">
         <div class="links">
-            <a>Paintings</a>
-            <a>Photography</a>
-            <a>Drawings</a>
-            <a>Sculpture</a>
-            <a>Digital</a>
-            <a>Live</a>
+            <a>{{ __('mycustom.paintings')}}</a>
+            <a>{{ __('mycustom.photography')}}</a>
+            <a>{{ __('mycustom.drawings')}}</a>
+            <a>{{ __('mycustom.sculpture')}}</a>
+            <a>{{ __('mycustom.digital')}}</a>
+            <a>{{ __('mycustom.live')}}</a>
+           
         </div>
         
        
 
         
-        <input type="text" class="form-control " placeholder="Search anything here..." aria-label="Search" aria-describedby="search-icon"  />
+        <input type="text" class="form-control " placeholder="{{ __('mycustom.search')}}" aria-label="Search" aria-describedby="search-icon"  />
         
         <a href="#" class="search-icon">
                         <span>
@@ -202,29 +226,29 @@
                 <div>
                     <img src="{{asset('assets/img/logo.png')}}"/>
                 </div>
-                <p>Get the latest updates</p>
+                <p>{{ __('mycustom.getLatestUpdates')}}</p>
                 <div>
                     <div class="custom-input">
-                        <input type="text" class="custom-search-input" placeholder="Enter your email">
-                        <button class="input-botton" type="submit" onclick="">Go </button>
+                        <input type="text" class="custom-search-input" placeholder="{{ __('mycustom.enterEmail')}}">
+                        <button class="input-botton" type="submit" onclick="">{{ __('mycustom.go')}} </button>
                     </div>
                 </div>
             </div>
             <div class="innerContent">
-                <h2>About</h2>
-                <a>All Artworks</a>
-                <a>Virtual World</a>
-                <a>Artists</a>
+                <h2>{{ __('mycustom.about')}}</h2>
+                <a>{{ __('mycustom.allArtworks')}}</a>
+                <a>{{ __('mycustom.virtualWorld')}}</a>
+                <a>{{ __('mycustom.artists')}}</a>
             </div>
             <div class="innerContent">
-                <h2>More Info</h2>
-                <a>Become a Partners</a>
-                <a>FAQ</a>
-                <a>Support</a>
-                <a href="/terms/conditions">Privacy Policy</a>
+                <h2>{{ __('mycustom.moreInfo')}}</h2>
+                <a>{{ __('mycustom.becomeAPartners')}}</a>
+                <a>{{ __('mycustom.faq')}}</a>
+                <a>{{ __('mycustom.support')}}</a>
+                <a>{{ __('mycustom.privacyPolicy')}}</a>
             </div>
             <div class="followus">
-                <h2>Follow Us</h2>
+                <h2>{{ __('mycustom.followUs')}}</h2>
                 <div class="outer">
                     <a><img src="{{asset('assets/img/Facebook.svg')}}"/></a>
                     <a><img src="{{asset('assets/img/instagram.svg')}}"/></a>
@@ -235,11 +259,12 @@
         </div>
     </div>
     <div class="privacy">
-        ©2023 ArtFeat, All rights reserved
+        ©2023 ArtFeat, {{ __('mycustom.rightsReserved')}}
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-</body>
+                                                                                                    
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
+</body> 
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

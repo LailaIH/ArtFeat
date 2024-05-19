@@ -2,7 +2,7 @@
 @section('content')
 <div class="liveStream">
     <div class="innerLive">
-        <p>Live</p>
+        <p>{{ __('mycustom.live')}}</p>
         <img src="assets/img/livestream.svg" alt="">
     </div>
 </div>
@@ -25,12 +25,12 @@
                 <img src="assets/img/kofia.svg" />
                 <div class="title">
                
-                    <h1 class="card-title">Shop Most Beautiful</h1>
+                    <h1 class="card-title">{{ __('mycustom.shopPaintings')}}</h1>
                  
-                    <h1>Paintings Now</h1>
+                    <h1>{{ __('mycustom.paintingsNow')}}</h1>
                 </div>
-                <p class="card-text"><span>+100,000</span> of the best art pieces that will spoil your eyes</p>
-                <button href=""><span>Discover</span></button>
+                <p class="card-text"><span>+100,000</span> {{ __('mycustom.pricesDesc')}}</p>
+                <button href=""><span>{{ __('mycustom.discover')}}</span></button>
             </div>
             <img src="/assets/img/discover.png"/>
         </div>
@@ -46,7 +46,7 @@
 </div>
 <!-- Categories -->
 <section class="CategoriesSection">
-    <h1>shop by Category</h1>
+    <h1>{{ __('mycustom.shopByCategory')}}</h1>
     <div class="Categories">
         @foreach($sections as $section)
         <div class="card">
@@ -61,7 +61,7 @@
         @endforeach
     </div>
     <div class="footerButton">
-        <button>view all</button>
+        <button>{{ __('mycustom.viewAll')}}</button>
     </div>
 </section>
 
@@ -70,7 +70,7 @@
     <div class="outer">
         <div class="row">
             <div class="col-6">
-                <h3 class="mb-3">Last Paintings : </h3>
+                <h3 class="mb-3">{{ __('mycustom.lastPaintings')}}  </h3>
             </div>
             <div class="buttonss">
                 <a class="btn btn-primary" href="#carouselExampleIndicators2" role="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
@@ -105,20 +105,20 @@
                                             @endphp
                                             <h2>{{$product->name}}</h2>
                                             
-                                            <p><span>by: </span>{{$ownerArtist->name}}</p>
+                                            <p><span>{{ __('mycustom.by')}} </span>{{$ownerArtist->name}}</p>
                                         </div>
                                         <div class="footerBtn">
                                             @auth
                                             <form method="post" action="{{route('logged_add_to_cart',['id'=>$product['id']])}}" >
                                             @csrf
                                             
-                                            <button type="submit">ADD TO CART</button></form>
+                                            <button type="submit">{{ __('mycustom.addToCart')}}</button></form>
 
                                             @else
                                             <form method="post" action="{{route('non_logged_add_to_cart',['id'=>$product['id']])}}" >
                                             @csrf
                                            
-                                            <button>ADD TO CART</button></form>
+                                            <button>{{ __('mycustom.addToCart')}}</button></form>
                                             @endauth
                                         </div>
                                         
@@ -144,7 +144,7 @@
     <div class="outer">
         <div class="row">
             <div class="col-6">
-                <h3 class="mb-3">Best Seller  : </h3>
+                <h3 class="mb-3">{{ __('mycustom.bestSeller')}}   </h3>
             </div>
             <div class="buttonss">
                 <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators3" role="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide="prev">
@@ -166,10 +166,10 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            <button>{{ __('mycustom.addToCart')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -180,10 +180,10 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            <button>{{ __('mycustom.addToCart')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -194,10 +194,10 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            <button>{{ __('mycustom.addToCart')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -208,70 +208,10 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
-                                    <div class="outerCard">
-                                        <div class="cardImg">
-                                            <img src="assets/img/cardimg.svg"/>
-                                        </div>
-                                        <div class="info">
-                                            <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
-                                        </div>
-                                        <div class="footerBtn">
-                                            <button>ADD TO CART</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
-                                    <div class="outerCard">
-                                        <div class="cardImg">
-                                            <img src="assets/img/cardimg.svg"/>
-                                        </div>
-                                        <div class="info">
-                                            <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
-                                        </div>
-                                        <div class="footerBtn">
-                                            <button>ADD TO CART</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
-                                    <div class="outerCard">
-                                        <div class="cardImg">
-                                            <img src="assets/img/cardimg.svg"/>
-                                        </div>
-                                        <div class="info">
-                                            <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
-                                        </div>
-                                        <div class="footerBtn">
-                                            <button>ADD TO CART</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
-                                    <div class="outerCard">
-                                        <div class="cardImg">
-                                            <img src="assets/img/cardimg.svg"/>
-                                        </div>
-                                        <div class="info">
-                                            <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
-                                        </div>
-                                        <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            <button>{{ __('mycustom.addToCart')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -286,10 +226,10 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            <button>{{ __('mycustom.addToCart')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -300,10 +240,10 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            <button>{{ __('mycustom.addToCart')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -314,10 +254,10 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            <button>{{ __('mycustom.addToCart')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -328,10 +268,70 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>by: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
-                                            <button>ADD TO CART</button>
+                                            <button>{{ __('mycustom.addToCart')}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
+                                    <div class="outerCard">
+                                        <div class="cardImg">
+                                            <img src="assets/img/cardimg.svg"/>
+                                        </div>
+                                        <div class="info">
+                                            <h2>Autumn fallen leaves</h2>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
+                                        </div>
+                                        <div class="footerBtn">
+                                            <button>{{ __('mycustom.addToCart')}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
+                                    <div class="outerCard">
+                                        <div class="cardImg">
+                                            <img src="assets/img/cardimg.svg"/>
+                                        </div>
+                                        <div class="info">
+                                            <h2>Autumn fallen leaves</h2>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
+                                        </div>
+                                        <div class="footerBtn">
+                                            <button>{{ __('mycustom.addToCart')}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
+                                    <div class="outerCard">
+                                        <div class="cardImg">
+                                            <img src="assets/img/cardimg.svg"/>
+                                        </div>
+                                        <div class="info">
+                                            <h2>Autumn fallen leaves</h2>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
+                                        </div>
+                                        <div class="footerBtn">
+                                            <button>{{ __('mycustom.addToCart')}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
+                                    <div class="outerCard">
+                                        <div class="cardImg">
+                                            <img src="assets/img/cardimg.svg"/>
+                                        </div>
+                                        <div class="info">
+                                            <h2>Autumn fallen leaves</h2>
+                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
+                                        </div>
+                                        <div class="footerBtn">
+                                            <button>{{ __('mycustom.addToCart')}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -350,7 +350,7 @@
     <div class="outer">
         <div class="row">
             <div class="col-6">
-                <h3 class="mb-3">Popular Artists </h3>
+                <h3 class="mb-3">{{ __('mycustom.popularArtists')}} </h3>
             </div>
             <div class="buttonss">
                 <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators4" role="button" data-bs-target="#carouselExampleIndicators4" data-bs-slide="prev">
@@ -403,7 +403,7 @@
                                             </div>
                                             <div  class="info">
                                                 <h2>{{$artist->name}}</h2>
-                                                <p><span>255 </span>sales</p>
+                                                <p><span>255 </span>{{ __('mycustom.sales')}}</p>
                                                 <div class="ratting">
 
                                                 </div>
@@ -426,8 +426,8 @@
 
 <!-- Gallery -->
 <section class="GallerySection">
-    <h1>Gallery </h1>
-    <p data-aos="fade-down">The most beautiful paintings ...</p>
+    <h1>{{ __('mycustom.gallery')}} </h1>
+    <p data-aos="fade-down">{{ __('mycustom.theMostBeatifulpaintings')}}</p>
     <div class="image-grid">
         <div class="image-grid-col-2">
             <img style="background-size: cover;"   src="assets/img/a1.png" alt="Image 1">
@@ -449,7 +449,7 @@
         </div>
     </div>
     <div class="footerButton">
-        <button>view all</button>
+        <button>{{ __('mycustom.viewAll')}}</button>
     </div>
 </section>
 
@@ -458,16 +458,16 @@
     <div class=" row">
         <div class="col-lg-6">
             <div class="header">
-                <h1>Why ArtFeat</h1>
+                <h1>{{ __('mycustom.whyArtfeat')}}</h1>
             </div>
             <div class="content" data-aos="fade-up">
                 @if($whyArtfeatText)
-                <p>{{$whyArtfeatText}}</p>
+                <p>{{ __('mycustom.whyArtfeatText')}}</p>
                 @else<p>No Text</p>
                 @endif
             </div>
             <div class="learnMore">
-                <button class="botton" type="submit" onclick="">Learn More </button>
+                <button class="botton" type="submit" onclick="">{{ __('mycustom.learnMore')}}</button>
             </div>
         </div>
         <div class="LeftImages col-lg-6">
@@ -483,39 +483,39 @@
 <section class="Creators">
     <div class="inner">
         <div class="info">
-            <h1>Join Our </h1>
-            <h1> List of Creators</h1>
-            <button><span>Register now</span></button>
+            <h1>{{ __('mycustom.joinOur')}}</h1>
+            <h1>{{ __('mycustom.listCreators')}}</h1>
+            <button><span>{{ __('mycustom.registerNow')}}</span></button>
         </div>
         <div class="users">
             <div class="user1" >
                 <img src="assets/img/p1.png"/>
                 <div>
-                    <p>View profile</p>
+                    <p>{{ __('mycustom.viewProfile')}}</p>
                 </div>
             </div>
             <div class="user2">
                 <img  src="assets/img/p2.png"/>
                 <div>
-                    <p>View profile</p>
+                    <p>{{ __('mycustom.viewProfile')}}</p>
                 </div>
             </div>
             <div class="user3">
                 <img src="assets/img/p3.png"/>
                 <div>
-                    <p>View profile</p>
+                    <p>{{ __('mycustom.viewProfile')}}</p>
                 </div>
             </div>
             <div class="user4">
                 <img src="assets/img/p1.png"/>
                 <div>
-                    <p>View profile</p>
+                    <p>{{ __('mycustom.viewProfile')}}</p>
                 </div>
             </div>
             <div class="user5">
                 <img src="assets/img/p1.png"/>
                 <div>
-                    <p>View profile</p>
+                    <p>{{ __('mycustom.viewProfile')}}</p>
                 </div>
             </div>
         </div>

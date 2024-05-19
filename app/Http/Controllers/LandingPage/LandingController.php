@@ -9,8 +9,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Option;
 use Illuminate\Pagination\Paginator;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class LandingController extends Controller
 {
@@ -28,6 +27,23 @@ class LandingController extends Controller
         'whyArtfeatText'=>$whyArtfeatText,
     ]);
     }
+
+    public function switch ($locale) {
+        if(in_array($locale, ['ar', 'en'])){
+            
+           if (Auth::user()){
+               $user = User::findOrFail(auth()->user()->id);
+               $user->language = $locale;
+               $user->save();
+           }
+           else{
+            session()->put('locale', $locale);
+           }
+       
+   }
+        return redirect()->back(); 
+   
+   }
 
     public function discover(){
 
