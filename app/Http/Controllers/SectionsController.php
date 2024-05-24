@@ -43,7 +43,6 @@ class SectionsController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
             
         ]);
 
@@ -52,6 +51,14 @@ class SectionsController extends Controller
         $section->name = strip_tags($request->input('name'));
         $section->description = strip_tags($request->input('description'));
         $section->is_online = $request->has('is_online')?1:0;
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('sectionImages'), $imageName);
+            $section->img = $imageName;
+        }
+
         $section->save();
 
         return redirect()->route('sections.index')->with('success', 'Section created successfully!');
@@ -91,7 +98,7 @@ class SectionsController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            
             
         ]);
 
@@ -100,6 +107,15 @@ class SectionsController extends Controller
         $section->name = strip_tags($request->input('name'));
         $section->description = strip_tags($request->input('description'));
         $section->is_online = $request->has('is_online')?1:0;
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = time().'.'.$image->extension();
+            $image->move(public_path('sectionImages'), $imageName);
+            $section->img = $imageName;
+        }
+
+
         $section->save();
 
         return redirect()->route('sections.index')->with('success', 'Section Updated successfully.');; ;

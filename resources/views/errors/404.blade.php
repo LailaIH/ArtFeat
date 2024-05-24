@@ -16,13 +16,13 @@
       <div aria-label="Breadcrumb" class="breadcrumb">
         <ul>
           <li><a href="#">ArtFeat</a></li>
-          <li class=""><a href="#">Search</a></li>
+          <li class=""><a href="#">{{__('mycustom.searchh')}}</a></li>
         </ul>
       </div>
 
       <div class="errorPage">
-        <h3>no results found !! .. Please try another search</h3>
-        <a href="{{ route('welcome') }}"><button>HomePage</button></a>
+        <h3>{{__('mycustom.noResult')}}</h3>
+        <a href="{{ route('welcome') }}"><button>{{__('mycustom.homePage')}}</button></a>
       </div>
     </div>
    

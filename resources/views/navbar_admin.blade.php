@@ -11,8 +11,7 @@
                     </a>
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboardsrr" aria-expanded="false" aria-controls="collapseDashboardsrr">
-                        <div class="nav-link-icon"><i
-                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fa-solid fa-users text-gray-200"></i></div>
                         Users & Artists
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -37,7 +36,7 @@
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboardsrrr" aria-expanded="false" aria-controls="collapseDashboardsrrr">
                         <div class="nav-link-icon"><i
-                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                                class="fa-solid fa-list text-gray-200"></i></div>
                         Sections
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -55,14 +54,44 @@
                         </nav>
                     </div>
 
+
+
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards570" aria-expanded="false" aria-controls="collapseDashboards570">
+                        <div class="nav-link-icon"><i class="fa-solid fa-photo-film text-gray-200"></i></div>
+                        Collections
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseDashboards570" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="{{route('collections.index')}}">
+                                All Collections
+
+                            </a>
+                            <a class="nav-link" href="{{route('collections.create')}}">
+                                New Collection
+
+                            </a>
+
+                        </nav>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
                     <a class="nav-link" href="/orders">
                         <div class="nav-link-icon"><i class="fas fa-users text-gray-200"></i></div>
                         Orders
                     </a>
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards213" aria-expanded="false" aria-controls="collapseDashboards213">
-                        <div class="nav-link-icon"><i
-                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fa-solid fa-file-invoice text-gray-200"></i></div>
                         Invoices
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -114,8 +143,7 @@
 
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards21" aria-expanded="false" aria-controls="collapseDashboards21">
-                        <div class="nav-link-icon"><i
-                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fa-solid fa-podcast text-gray-200"></i></div>
                         Podcasts
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -163,8 +191,7 @@
                     </a>
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards2" aria-expanded="false" aria-controls="collapseDashboards2">
-                        <div class="nav-link-icon"><i
-                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fa-solid fa-palette text-gray-200"></i></div>
                         Products
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -185,8 +212,7 @@
 
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
-                        <div class="nav-link-icon"><i
-                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fa-solid fa-right-to-bracket text-gray-200"></i></div>
                         Subscriptions
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -205,8 +231,7 @@
                     </div>
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards55" aria-expanded="false" aria-controls="collapseDashboards55">
-                        <div class="nav-link-icon"><i
-                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fa-solid fa-list-ul text-gray-200"></i></div>
                         Options
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -312,8 +337,7 @@
                     </div>-->
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards7" aria-expanded="false" aria-controls="collapseDashboards7">
-                        <div class="nav-link-icon"><i
-                                class="fas fa-shopping-cart text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fa-solid fa-circle-user text-gray-200"></i></div>
                         Job Titles
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>

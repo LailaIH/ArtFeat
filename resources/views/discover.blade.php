@@ -10,14 +10,23 @@
             <img src="{{asset('assets/img/shadowBlue.svg')}}" />
         </div>
         <div class="header">
-            <h1>Discover our artists</h1>
+            <h1>{{__('mycustom.discoverOurArtists')}}</h1>
             <p>
-                Look for their artworks, read about their, and if you like the
-                artwork.. GET IT!
+               {{__('mycustom.discoverOurArtistsDes')}}
             </p>
-            
-            <input type="text" class="form-control" />
-            
+
+
+            <div class="custom-search">
+                <form method="post" action="{{route('artists.search')}}">
+                    @csrf
+                <input name="name" type="text" class="custom-search-input" placeholder="{{__('mycustom.descoverSaerch')}}">
+                <button class="custom-search-botton" type="submit" >{{__('mycustom.descoverSaerchButton')}}</button>  
+                </form>
+            </div>        
+       
+       
+       
+       
         </div>
     </div>
     <div class="pageContent">

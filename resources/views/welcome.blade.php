@@ -20,7 +20,7 @@
                                 <div class="alert alert-danger">
                                     {{ $errors->first('fail') }}
                                 </div>
-                            @endif
+                            @endif 
           
                 <img src="assets/img/kofia.svg" />
                 <div class="title">
@@ -51,17 +51,22 @@
         @foreach($sections as $section)
         <div class="card">
             <div class="overlay">
-                @if($section->name=='sculptures')
+            @if($section->img)
+                <img src="{{ asset('sectionImages/' . $section->img) }}" alt="section pic"/>
+
+                @else
                 <img src="{{asset('assets\img\sculptures.jpg')}}" alt="artist pic"/>
-@else
-                <img src="https://source.unsplash.com/featured/?{{$section->name}}"/>@endif
+                @endif
             </div>
             <p>{{$section->name}}</p>
         </div>
         @endforeach
     </div>
     <div class="footerButton">
-        <button>{{ __('mycustom.viewAll')}}</button>
+        <form method="get" action="{{route('allSections')}}">
+        @csrf
+             <button type="submit">{{ __('mycustom.viewAll')}}</button>
+        </form>
     </div>
 </section>
 
@@ -373,7 +378,7 @@
                                 @foreach($artChunk as $artist)
 
                                 @php
-                                $products = DB::table('products')->where('artist_id', $artist->id)->take(4)->get();
+                                $artistProducts = DB::table('products')->where('artist_id', $artist->id)->take(4)->get();
                                 @endphp
                                
                    
@@ -381,10 +386,10 @@
                                     <div class="ArtistCard">
                                         <div class="grid-container">
                                         @for ($i = 0; $i < 4; $i++)
-                                        @if (isset($products[$i]))
+                                        @if (isset($artistProducts[$i]))
                                             <div class="grid-item">
-                                                <img src="{{ asset('productImages/'.$products[$i]->img) }}" alt="painting" />
-                                            </div> 
+                                                <img src="{{ asset('productImages/'.$artistProducts[$i]->img) }}" alt="painting" />
+                                            </div>  
                                         @else
                                         <div class="grid-item">
                                         <img src="assets/img/a{{ $i + 1 }}.png" / alt="painting">

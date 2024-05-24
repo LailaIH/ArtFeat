@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\Product;
 use App\Models\Collection;
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\Artist;
+use App\Models\ArtworkProvided;
+
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -78,9 +81,12 @@ class ArtistController extends Controller
             $user->save();
         }
 
-        $collections = $artist->collections;
+        $collections = Collection::where('artist_id',$artist->id)->where('is_online',1)->get();
+        $carts = Cart::where('user_id',$user->id)->where('is_online',1)->get();
 
-        return view('artists.profile',['artist'=>$artist , 'user'=>$user , 'collections'=>$collections]);
+        return view('artists.profile',['artist'=>$artist , 'user'=>$user ,
+         'collections'=>$collections,
+        'carts'=>$carts]);
     }
 
     public function updateProfilePicture(Request $request ,$id){
@@ -129,7 +135,7 @@ class ArtistController extends Controller
             $user->is_artist = 1;
             $user->save();
         }
-        return view('artists.edit-profile',['artist'=>$artist , 'user'=>$user]);
+        return view('artists.edit-profile',['artist'=>$artist , 'user'=>$user,'artworksProvided'=>ArtworkProvided::all()]);
 
     }
 
@@ -166,6 +172,8 @@ class ArtistController extends Controller
         $artist->twitter = strip_tags($request->input('twitter'));
         $artist->website = strip_tags($request->input('website'));
         $artist->behance = strip_tags($request->input('behance'));
+        $artist->artwork_provided_id = $request->input('artwork_provided_id');
+
 
         $artist->save();
 
@@ -215,11 +223,11 @@ class ArtistController extends Controller
         $request->validate([
             'name'=>'required',
             'type'=>'required',
-            'description'=>'required',
             'date'=>'required|date',
             'dimensions'=>'required',
             'price'=>'required|numeric',
             'quantity'=>'required|numeric',
+            'img'=>'required',
         ]);
         $collection = Collection::findOrFail($id);
 
@@ -272,6 +280,23 @@ class ArtistController extends Controller
         return redirect()->route('artists.profile',auth()->user()->id)->with('success','artwork added successfully');
       
 
+        
+
+
+    }
+
+    public function disableCollection(Collection $collection){
+
+        $collection->is_online=0;
+        $collection->save();
+
+        $products = $collection->products;
+        foreach($products as $product){
+            $product->is_online = 0;
+            $product->save();
+        }
+
+        return redirect()->back()->withErrors(['fail' => 'Collection was removed']);
         
 
     }

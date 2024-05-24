@@ -60,6 +60,7 @@ nav ul {
 nav ul .links {
   display: flex;
   align-items: center;
+ margin-left:0px ;
   
 }
 nav ul li {
@@ -90,8 +91,10 @@ nav ul li a:hover {
 }
 .headerButtons .innerContent {
   display: flex;
+ 
   gap: 34px;
-  margin-left: 130px;
+  /* margin left was 130 */
+  margin-left:40px;
 }
 .headerButtons .innerContent .signUp {
   position: relative;

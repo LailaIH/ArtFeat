@@ -64,7 +64,10 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'checkArtistProfile' => \App\Http\Middleware\CheckArtistProfile::class,
+        'checkArtistProfile' => \App\Http\Middleware\CheckArtistProfile::class, 
+        'checkArtistAuth' => \App\Http\Middleware\CheckArtistAuth::class, //check if the user is an artist
+        'checkArtistCollection' => \App\Http\Middleware\CheckArtistCollection::class, 
+
         'checkUserCart' => \App\Http\Middleware\CheckUserCart::class,
         'check.admin' => \App\Http\Middleware\CheckAdmin::class,
 

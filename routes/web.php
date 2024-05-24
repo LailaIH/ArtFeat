@@ -10,6 +10,8 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PodcastsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionsController;
+use App\Http\Controllers\CollectionController;
+
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\LandingPage\LandingController;
 use App\Http\Controllers\LandingPage\DiscoverController;
@@ -44,11 +46,20 @@ Route::get('/languageConverter/{locale}', [LandingController::class, 'switch'])-
 
 //public routes for landing pages
 Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
+Route::get('/all/sections', [LandingController::class, 'allSections'])->name('allSections');
+
 Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover');
+Route::get('/one/card/{artist}', [DiscoverController::class, 'oneCard'])->name('one_card');
+
+Route::post('/artists/search', [DiscoverController::class, 'search'])->name('artists.search');
 
 
 Route::get('/live/join', function () {
     return view('livejoin');
+});
+
+Route::get('/test', function () {
+    return view('test');
 });
 
 
@@ -79,8 +90,8 @@ Route::get('/cart/details/user/{id}', [UserCartsController::class, 'loggedUserCa
 ->middleware('auth', 'checkUserCart');
 Route::post('/logged/user/add/to/cart/{id}', [UserCartsController::class, 'loggedUserAddToCart'])->name('logged_add_to_cart')
 ->middleware('auth');
-Route::put('/update/logged/user/cart/{id}', [UserCartsController::class, 'updateLoggedUserCart'])->name('updateLoggedUserCart');
-Route::delete('/delete/logged/user/cart/{id}', [UserCartsController::class, 'deleteLoggedUserCart'])->name('deleteLoggedUserCart');
+Route::put('/update/logged/user/cart/{id}', [UserCartsController::class, 'updateLoggedUserCart'])->name('updateLoggedUserCart')->middleware('auth');
+Route::delete('/delete/logged/user/cart/{id}', [UserCartsController::class, 'deleteLoggedUserCart'])->name('deleteLoggedUserCart')->middleware('auth');
 Route::get('/user/paidd/invoices', [UserCartsController::class, 'paidInvoices'])->name('paidInvoices')
 ->middleware('auth');
 
@@ -88,9 +99,13 @@ Route::get('/user/paidd/invoices', [UserCartsController::class, 'paidInvoices'])
 // artists landing page
 Route::get('/artists/signup', [ArtistController::class, 'signup'])->name('artists.signup');
 Route::post('/artists/create', [ArtistController::class, 'create'])->name('artists.create');
-Route::get('/artists/show/add/collection', [ArtistController::class, 'showAddCollection'])->name('artists.showAddCollection');
+Route::get('/artists/show/add/collection', [ArtistController::class, 'showAddCollection'])
+->name('artists.showAddCollection')->middleware('auth', 'checkArtistAuth');
 Route::post('/artists/add/collection/{id}', [ArtistController::class, 'addCollection'])->name('artists.add_collection');
-Route::get('/artists/show/add/to/collection/{id}', [ArtistController::class, 'showAddToCollection'])->name('artists.showAddToCollection');
+
+Route::get('/artists/show/add/to/collection/{id}', [ArtistController::class, 'showAddToCollection'])
+->name('artists.showAddToCollection')->middleware('auth', 'checkArtistCollection');
+
 Route::post('/artists/add/to/collection/{id}', [ArtistController::class, 'addArtToCollection'])->name('artists.add_to_collection');
 Route::post('/artists/add/expertise/{id}', [ArtistController::class, 'addExpert'])->name('artists.addExpert');
 Route::post('/artists/add/desc/{id}', [ArtistController::class, 'addDescription'])->name('artists.addDescription');
@@ -119,6 +134,9 @@ Route::post('/artists/edit/background/picture/{id}', [ArtistController::class, '
 ->name('artists.updateBackgroundPicture')
 ->middleware('auth', 'checkArtistProfile');
 
+Route::post('/collections/disable/{collection}', [ArtistController::class, 'disableCollection'])
+->name('artists.collectionsDisable');
+
 
 
 
@@ -136,7 +154,14 @@ Route::get('/success', [StripeController::class, 'success'])->name('success');
 Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
 Route::post('/webhook', [StripeController::class, 'webhook'])->name('webhook');
 
+// Admin Panel Routes
+
 Route::middleware(['auth', 'check.admin'])->group(function () {
+
+
+//admin panel
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+->name('home');    
 
 // Define resourceful routes for products
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
@@ -176,7 +201,7 @@ Route::delete('/carts/destroy/{id}', [CartsController::class, 'destroy'])->name(
 Route::get('/podcasts', [PodcastsController::class, 'index'])->name('podcasts.index');
 Route::get('/podcasts/create', [PodcastsController::class, 'create'])->name('podcasts.create');
 Route::post('/podcasts/store', [PodcastsController::class, 'store'])->name('podcasts.store');
-Route::get('/podcasts/{id}', [PodcastsController::class, 'show'])->name('podcasts.show');
+//Route::get('/podcasts/{id}', [PodcastsController::class, 'show'])->name('podcasts.show');
 Route::get('/podcasts/edit/{id}', [PodcastsController::class, 'edit'])->name('podcasts.edit');
 Route::put('/podcasts/update/{id}', [PodcastsController::class, 'update'])->name('podcasts.update');
 Route::delete('/podcasts/destroy/{id}', [PodcastsController::class, 'destroy'])->name('podcasts.destroy');
@@ -184,14 +209,11 @@ Route::patch('/podcasts/{podcast}', [PodcastsController::class, 'updateStatus'])
 
 
 
-//admin panel
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
-->name('home');
+
 
 
 //Route::get('/settings', [AuctionsController::class, 'showSettings']);
 
-Route::resource('tickets', TicketsController::class);
 
 
 
@@ -199,7 +221,7 @@ Route::resource('tickets', TicketsController::class);
 Route::get('/job_titles', [JobTitlesController::class, 'index'])->name('job_titles.index');
 Route::get('/job_titles/create', [JobTitlesController::class, 'create'])->name('job_titles.create');
 Route::post('/job_titles/store', [JobTitlesController::class, 'store'])->name('job_titles.store');
-Route::get('/job_titles/show/{id}', [JobTitlesController::class, 'show'])->name('job_titles.show');
+//Route::get('/job_titles/show/{id}', [JobTitlesController::class, 'show'])->name('job_titles.show');
 Route::get('/job_titles/edit/{id}', [JobTitlesController::class, 'edit'])->name('job_titles.edit');
 Route::put('/job_titles/update/{id}', [JobTitlesController::class, 'update'])->name('job_titles.update');
 Route::delete('/job_titles/destroy/{id}', [JobTitlesController::class, 'destroy'])->name('job_titles.destroy');
@@ -210,15 +232,10 @@ Route::patch('/job_titles/{jobTitle}', [JobTitlesController::class, 'updateStatu
 Route::get('/options', [OptionsController::class, 'index'])->name('options.index');
 Route::get('/options/create', [OptionsController::class, 'create'])->name('options.create');
 Route::post('/options/store', [OptionsController::class, 'store'])->name('options.store');
-Route::get('/options/{id}', [OptionsController::class, 'show'])->name('options.show');
+//Route::get('/options/{id}', [OptionsController::class, 'show'])->name('options.show');
 Route::get('/options/edit/{id}', [OptionsController::class, 'edit'])->name('options.edit');
 Route::put('/options/update/{id}', [OptionsController::class, 'update'])->name('options.update');
 Route::delete('/options/destroy/{id}', [OptionsController::class, 'destroy'])->name('options.destroy');
-
-
-
-
-
 
 
 
@@ -228,12 +245,10 @@ Route::delete('/options/destroy/{id}', [OptionsController::class, 'destroy'])->n
 Route::get('/sections', [SectionsController::class, 'index'])->name('sections.index');
 Route::get('/sections/create', [SectionsController::class, 'create'])->name('sections.create');
 Route::post('/sections/store', [SectionsController::class, 'store'])->name('sections.store');
-Route::get('/sections/{section}', [SectionsController::class, 'show'])->name('sections.show');
+//Route::get('/sections/{section}', [SectionsController::class, 'show'])->name('sections.show');
 Route::get('/sections/edit/{id}', [SectionsController::class, 'edit'])->name('sections.edit');
 Route::put('/sections/update/{id}', [SectionsController::class, 'update'])->name('sections.update');
 Route::delete('/sections/destroy/{id}', [SectionsController::class, 'destroy'])->name('sections.destroy');
-
-
 
 
 
@@ -256,6 +271,7 @@ Route::delete('/auctions/delete/{id}', [AuctionsController::class, 'destroy'])->
 
 
 // Route to show the ticket creation form
+Route::resource('tickets', TicketsController::class);
 Route::get('tickets/create', [TicketsController::class, 'create'])->name('tickets.create');
 Route::get('tickets', [TicketsController::class, 'index'])->name('tickets.index');
 Route::post('tickets/{parentTicketId}/reply', [TicketsController::class, 'storeReply'])->name('tickets.storeReply');
@@ -278,6 +294,19 @@ Route::get('/users/profile/{id}', [HomeController::class, 'profile'])->name('use
 Route::get('/non-artists', [HomeController::class, 'showNonArtists'])->name('users.nonArtists');
 Route::get('/non-artists/edit/{id}', [HomeController::class, 'editNonArtists'])->name('users.nonArtists.edit');
 Route::put('/non-artists/update/{id}', [HomeController::class, 'updateNonArtists'])->name('users.nonArtists.update');
+
+
+// collections routes
+Route::get('/collections', [CollectionController::class, 'index'])->name('collections.index');
+Route::get('/collections/create', [CollectionController::class, 'create'])->name('collections.create');
+Route::get('/collections/edit/{collection}', [CollectionController::class, 'edit'])->name('collections.edit');
+Route::post('/collections/store', [CollectionController::class, 'store'])->name('collections.store');
+Route::put('/collections/update/{collection}', [CollectionController::class, 'update'])->name('collections.update');
+
+
+
+
+
 });
 
 

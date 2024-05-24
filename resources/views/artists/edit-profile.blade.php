@@ -99,11 +99,22 @@
                 
                 
                   <div class="justifyButtons ">
-                    
-                    <button class="btn btn-outline-secondary ">
-                        Photography
-                    </button>
-                    <button class="btn btn-outline-secondary">Portrait</button>
+
+                  <!-- Hidden input to store the selected artwork ID -->
+                  <input type="hidden" name="artwork_provided_id" id="artwork_provided_id" value="{{ $artist->artwork_provided_id }}">
+
+                  @foreach($artworksProvided as $artwork)
+                      @if($artist->artwork_provided_id === $artwork->id)
+                          <button type="button" class="btn btn-secondary artwork-button" data-id="{{ $artwork->id }}">
+                              {{ $artwork->name }}
+                          </button>
+                      @else
+                          <button type="button" class="btn btn-outline-secondary artwork-button" data-id="{{ $artwork->id }}">
+                              {{ $artwork->name }}
+                          </button>
+                      @endif
+                  @endforeach
+
                   </div>
                 
               </fieldset></div></div>
@@ -211,6 +222,31 @@
 
         // Submit form after selecting image
     }
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.artwork-button');
+        const hiddenInput = document.getElementById('artwork_provided_id');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Remove 'btn-secondary' class from all buttons and add 'btn-outline-secondary'
+                buttons.forEach(btn => {
+                    btn.classList.remove('btn-secondary');
+                    btn.classList.add('btn-outline-secondary');
+                });
+
+                // Add 'btn-secondary' class to the clicked button and remove 'btn-outline-secondary'
+                this.classList.remove('btn-outline-secondary');
+                this.classList.add('btn-secondary');
+
+                // Update the hidden input value with the selected artwork ID
+                hiddenInput.value = this.getAttribute('data-id');
+            });
+        });
+    });
 </script>
 
 @endsection

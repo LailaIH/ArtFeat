@@ -9,6 +9,13 @@
        <div class="alert alert-success text-center m-3">{{ session('success') }}</div>
 @endif
 
+@if ($errors->has('fail'))
+      <div class="alert alert-danger text-center m-3">
+
+                {{ $errors->first('fail') }}
+      </div>
+@endif
+
 <section class="profileSection">
       <div class="outerProfile">
         <div class="innerProfile">
@@ -54,8 +61,11 @@
               
               <div><h3 class="name">{{$user->name}}</h3></div><br>
               @if($artist && $artist->store_name)
-              
-              <a class="name" style="margin-top:90px; color: #35ace8;" href='#'>Store:{{$artist->store_name}}</a>
+                @if($artist->website)
+                  <a class="name" style="margin-top:90px; color: #35ace8;" href='{{$artist->website}}' target="_blank" rel="noopener noreferrer">Store:{{$artist->store_name}}</a>
+                @else
+                  <a class="name" style="margin-top:90px; color: #35ace8;">Store:{{$artist->store_name}}</a>
+                @endif
               @endif
 
               <div class="actions mt-4">
@@ -65,11 +75,11 @@
                 @if($products->isEmpty())
                 <div><span>0</span>Artworks</div>
                 @else
-                <div><span>{{count($products)}}</span>Artworks</div>@endif
-                <div><span>4</span>followers</div>
-                <div><span>55</span>following</div>
+                <div><span>{{count($products)}}</span>{{__('mycustom.artworks')}}</div>@endif
+                <div><span>4</span>{{__('mycustom.followers')}}</div>
+                <div><span>55</span>{{__('mycustom.following')}}</div>
                 <a href="{{route('artists.edit_profile',['id'=>$user['id']] )}}">
-                <button>Edit Account</button></a>
+                <button{{__('mycustom.editAccount')}}</button></a>
               </div>
             </div>
           </div>
@@ -87,7 +97,7 @@
                     aria-controls="nav-Work"
                     aria-selected="true"
                   >
-                    Art Work
+                  {{__('mycustom.artwork')}}
                   </button>
                   <button
                     class="nav-link "
@@ -99,7 +109,7 @@
                     aria-controls="nav-Collections"
                     aria-selected="false"
                   >
-                    Collections
+                  {{__('mycustom.collections')}}
                   </button>
                   <button
                     class="nav-link"
@@ -111,7 +121,7 @@
                     aria-controls="nav-Favorites"
                     aria-selected="false"
                   >
-                    Favorites
+                  {{__('mycustom.favorite')}}
                   </button>
                   <button
                     class="nav-link"
@@ -123,13 +133,14 @@
                     aria-controls="nav-About"
                     aria-selected="false"
                   >
-                    About
+                  {{__('mycustom.about')}}
                   </button>
                 </div>
               </nav>
               <div class="tab-content mt-4" id="nav-tabContent">
                 @php 
-                $products = DB::table('products')->where('artist_id', $user->id)->get();
+                $products = DB::table('products')->where('artist_id', $user->id)
+                ->where('is_online',1)->get();
                 @endphp
                 <div
                   class="tab-pane fade show active artwork"
@@ -157,7 +168,7 @@
                     @endforeach
                     @else
                     
-                    <h5>No Art Work yet</h5>
+                    <h5>{{__('mycustom.noArtworks')}}</h5>
                     
                     @endif
                 
@@ -173,7 +184,7 @@
                 >
                   <div class="addnew">
                     <a href="{{route('artists.showAddCollection')}}">
-                    <button>Add Collection</button></a>
+                    <button>{{__('mycustom.addCollection')}}</button></a>
                   </div>
                   @if(!$collections->isEmpty())
                   <div class="outerCollections">
@@ -183,9 +194,12 @@
                  
                   <div class="col">
                   <div class="outerCard mb-4">
-                      <button class="delete">
+                    <form method="POST" action="{{route('artists.collectionsDisable',['collection'=>$collection])}}" onsubmit="return confirmDisable()">
+                      @csrf
+                      <button type="submit" class="delete">
                         <img src="/assets/img/Delete.svg" alt="" />
                       </button>
+                    </form>
                       <div class="grid-container">
                         
                     @if(count($collection->products) >= 1)
@@ -221,14 +235,14 @@
                     
                     </div>
                     <a href="{{route('artists.showAddToCollection',['id'=>$collection['id']] )}}" class="btn btn-success btn-xs mb-4 center">
-                      add artwork
+                    {{__('mycustom.addArtwork')}}
                     </a>
                   </div>
                     
                   @endforeach 
               </div>
                   @else
-                  <h5  class="p-4">No Collections</h5>
+                  <h5  class="p-4">{{__('mycustom.noCollections')}}</h5>
                   @endif
                     
                   
@@ -242,73 +256,15 @@
                 >
                   <div class="outerFav">
                     <div class="innerFav">
-                      <div class="FavCard">
-                        <img class="bg" src="/assets/img/f1.png" />
-                        <div class="info">
-                          <div>
-                            <div class="title">Art Title</div>
-                            <div class="name">Artist Name</div>
-                          </div>
-                          <div class="saves">
-                            <div class="num">512</div>
-                            <div class="icon">
-                              <img src="/assets/img/save_icon.svg" alt="" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="FavCard">
-                        <img class="bg" src="/assets/img/f1.png" />
-                        <div class="info">
-                          <div>
-                            <div class="title">Art Title</div>
-                            <div class="name">Artist Name</div>
-                          </div>
-                          <div class="saves">
-                            <div class="num">512</div>
-                            <div class="icon">
-                              <img src="/assets/img/save_icon.svg" alt="" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="FavCard">
-                        <img class="bg" src="/assets/img/f1.png" />
-                        <div class="info">
-                          <div>
-                            <div class="title">Art Title</div>
-                            <div class="name">Artist Name</div>
-                          </div>
-                          <div class="saves">
-                            <div class="num">512</div>
-                            <div class="icon">
-                              <img src="/assets/img/save_icon.svg" alt="" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="FavCard">
-                        <img class="bg" src="/assets/img/f1.png" />
-                        <div class="info">
-                          <div>
-                            <div class="title">Art Title</div>
-                            <div class="name">Artist Name</div>
-                          </div>
-                          <div class="saves">
-                            <div class="num">512</div>
-                            <div class="icon">
-                              <img src="/assets/img/save_icon.svg" alt="" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
 
+                    @if(isset($carts))
+                      @foreach($carts as $cart)
                       <div class="FavCard">
-                        <img class="bg" src="/assets/img/f1.png" />
+                        <img class="bg" src="{{ asset('productImages/'.$cart->product->img) }}" />
                         <div class="info">
                           <div>
-                            <div class="title">Art Title</div>
-                            <div class="name">Artist Name</div>
+                            <div class="title">{{$cart->product->name}}</div>
+                            <div class="name">{{$cart->product->artist->name}}</div>
                           </div>
                           <div class="saves">
                             <div class="num">512</div>
@@ -318,6 +274,14 @@
                           </div>
                         </div>
                       </div>
+                      @endforeach
+                    @else
+                      <h5>{{__('mycustom.noFavorite')}}</h5>
+                    @endif
+                     
+                    
+
+                     
                     </div>
                   </div>
                 </div>
@@ -328,7 +292,7 @@
                   aria-labelledby="nav-About-tab"
                 >
                   <div>
-                    <h3>About</h3>
+                    <h3>{{__('mycustom.aboutArtistDesc')}}</h3>
                     <p id="description_par">
                       @if($artist->description !=null)
                       
@@ -339,37 +303,37 @@
                         <form id="editform" method="post" action="{{route('artists.addDescription',['id'=>$artist->id])}}">
                       @csrf
                       <textarea style="width: 70%;" name="description" class="form-control "  cols="2" rows="4">{{$artist->description}}</textarea>
-                        <br><button type="submit" class="btn btn-primary ">Save</button>
+                        <br><button type="submit" class="btn btn-primary ">{{__('mycustom.save')}}</button>
                     </form>
 
                       @else
                       <form method="post" action="{{route('artists.addDescription',['id'=>$artist->id])}}">
                       @csrf
                       <textarea style="width: 70%;" name="description" class="form-control desc"  cols="2" rows="4"></textarea>
-                        <br><button type="submit" class="btn btn-primary desc">Save</button>
+                        <br><button type="submit" class="btn btn-primary desc">{{__('mycustom.save')}}</button>
                     </form>
-                      <button class="btn btn-primary" id="show">Add Description</button>
+                      <button class="btn btn-primary" id="show">{{__('mycustom.addDesc')}}</button>
                       @endif
                     
                   </div>
                   <div>
-                    <h3>Country</h3>
+                    <h3>{{__('mycustom.country')}}</h3>
                     @if($artist->country !=null)
                     <p>{{$artist->country}}</p>
                     @else
-                      Add your country by editing your profile 
+                    {{__('mycustom.addCountry')}}
                     @endif
                   </div>
                   <div>
-                    <h3>City</h3>
+                    <h3>{{__('mycustom.city')}}</h3>
                     @if($artist->city !=null)
                     <p>{{$artist->city}}</p>
                     @else
-                      Add your city by editing your profile 
+                    {{__('mycustom.addCity')}}
                     @endif
                   </div>
                   <div>
-                    <h3 class="mb-2">Expertise</h3>
+                    <h3 class="mb-2">{{__('mycustom.expertise')}}</h3>
                     
                       @if(isset($artist->expertise))
                       <div class="experts">
@@ -378,29 +342,29 @@
                       @endforeach </div>
                       @endif
                       
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add expert +</button>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">{{__('mycustom.addExpert')}} +</button>
                       
                           <!-- Modal -->
                           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">New Expert</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">{{__('mycustom.newExpert')}}</h5>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                   <form method="POST" action="{{route('artists.addExpert',['id'=>$artist->id])}}">
                                     @csrf
                                     <div class="mb-3">
-                                      <label for="recipient-name" class="col-form-label">Expert:</label>
+                                      <label for="recipient-name" class="col-form-label">{{__('mycustom.expert')}}:</label>
                                       <input name="expertise[]" type="text" class="form-control" id="recipient-name">
                                     </div>
                                     
                                   
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                  <button type="submit" class="btn btn-primary">Add</button>
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('mycustom.close')}}</button>
+                                  <button type="submit" class="btn btn-primary">{{__('mycustom.add')}}</button>
                                   </form>
                                 </div>
                               </div>
@@ -413,40 +377,40 @@
                     
                   </div>
                   <div>
-                    <h3>Years of Experience</h3>
+                    <h3>{{__('mycustom.yearsOfExperience')}}</h3>
                     <p id="exp_par">
                       @if($artist->years_of_experience !=null)
                       
-                     Th artist has  {{$artist->years_of_experience}}  years of experience
+                     {{__('mycustom.thisArtistHas')}}  {{$artist->years_of_experience}}  {{__('mycustom.yearsOfExperienceDes')}}
                         <button id="edit_years" class="mybutton">
                         <i class="fa fa-pencil m-3" aria-hidden="true"></i>
                         </button></p>
                         <form id="edit_years_form" method="post" action="{{route('artists.addYears',['id'=>$artist->id])}}">
                       @csrf
                       <input style="width: 30%;" type="number" name="years" class="form-control " value="{{$artist->years_of_experience}}"/>
-                        <br><button type="submit" class="btn btn-primary ">Save</button>
+                        <br><button type="submit" class="btn btn-primary ">{{__('mycustom.save')}}</button>
                     </form>
 
                       @else
                       <form method="post" action="{{route('artists.addYears',['id'=>$artist->id])}}">
                       @csrf
                       <input style="width: 30%;" type="number" name="years" class="form-control years "/>
-                        <br><button type="submit" class="btn btn-primary years ">Save</button>
+                        <br><button type="submit" class="btn btn-primary years ">{{__('mycustom.save')}}</button>
                     </form>
-                      <button class="btn btn-primary" id="show_years">Add Experience Years</button>
+                      <button class="btn btn-primary" id="show_years">{{__('mycustom.addExperienceYears')}}</button>
                       @endif
                   </div>
 
 
                   <div>
-                    <h3>Social Media</h3>
+                    <h3>{{__('mycustom.socialMedia')}}</h3>
                     <div class="socials">
                       <div>
                         <img src="/assets/img/Facebook2.svg" />
                         @if($artist->facebook !=null)
                         <div>{{$artist->facebook}}</div>
                         @else
-                        <div>Add your facebook by editing your profile</div>
+                        <div>{{__('mycustom.addFacebook')}}</div>
                          @endif
                       </div>
                       <div class="d-flex align-items-center">
@@ -454,7 +418,7 @@
                         @if($artist->instagram !=null)
                         <div>{{$artist->instagram}}</div>
                         @else
-                        <div>Add your instagram by editing your profile</div>
+                        <div>{{__('mycustom.addInstagram')}}</div>
                         @endif
                       </div>
                       <div class="d-flex align-items-center">
@@ -462,7 +426,7 @@
                         @if($artist->website !=null)
                         <div>{{$artist->website}}</div>
                         @else
-                        <div>Add your website by editing your profile</div>
+                        <div>{{__('mycustom.addWebsite')}}</div>
                         @endif
                       </div>
                       <div class="d-flex align-items-center">
@@ -470,7 +434,7 @@
                         @if($artist->behance !=null)
                         <div>{{$artist->behance}}</div>
                         @else
-                        <div>Add your behance by editing your profile</div>
+                        <div>{{__('mycustom.addBehance')}}</div>
                         @endif
                       </div>
                     </div>
@@ -561,6 +525,13 @@ exampleModal.addEventListener('show.bs.modal', event => {
   });
 
       });
+</script>
+
+
+<script>
+    function confirmDisable() {
+        return confirm('Are you sure you want to remove this collection?');
+    }
 </script>
 
 @endsection

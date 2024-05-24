@@ -174,7 +174,11 @@ class UserCartsController extends Controller
     elseif ($request->input('action') == 'minus'){
         if($cart->quantity > 1){
         $cart->quantity--;
-    }
+    }   
+        elseif($cart->quantity === 1){
+            return redirect()->back()->withErrors(['fail' => 'You need to delete the cart']);
+
+        }
 }
     
     

@@ -94,6 +94,12 @@
               </div>
             </form>
 
+            <div class="artist">
+            <span
+              >Are you an Artist?<a href="{{route('artists.signup')}}"><button>Let’s get you started</button></span
+            > </a>
+          </div>
+
             <div class="form-link">
               <span
                 >Already have an account?

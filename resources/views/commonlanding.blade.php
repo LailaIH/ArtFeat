@@ -36,7 +36,7 @@
     </label>
     <ul>
         <!-- Links -->
-        <div class="mydiv">
+    <div class="mydiv">
         
         <div class="links">
         
@@ -52,14 +52,14 @@
             <div class="innerContent">
             
                 @if(!Auth::user())
-                    <div style="display: flex; margin-left:25px; position:relative; left:80px; gap:35px;">
-                      <li class="nav-item-btn">
+                    <div style="display: flex; position:relative; left:40px; gap:7px;"> 
+                     <li class="nav-item-btn">
                         <div class="signUp">
                         <a href="/landing/signup" style=" text-decoration: none;">
                         
                         <button class="botton" type="submit" onclick="">{{ __('mycustom.signup')}}</button>
                         
-                        </a></div></li>
+                        </a></div></li> 
                         <li class="nav-item-btn">
                         <div class="signUp">
                         <a href="/landing/login" style=" text-decoration: none;">
@@ -67,7 +67,7 @@
                         <button class="botton " type="submit" onclick="">{{ __('mycustom.login')}}</button>
                         
                         </a></div></li>
-                    </div>
+                     </div> 
                 
                
                 @endif
@@ -75,6 +75,7 @@
 
                 <div class="line"></div>
                 
+                <div style="gap:-5px; display:flex;position:relative; right:80px;">
                 <li class="nav-item">
                     <button>
                         <img src="{{ asset('assets/img/Heart (1).svg') }}">
@@ -124,46 +125,44 @@
                
 
                 @auth
-                    <div class="profile-dropdown">
-                        <div onclick="toggle()" class="profile-dropdown-btn">
-                            <!-- <div class="profile-img"> <i class="fa-solid fa-circle"></i></div> -->
+                <li class="nav-item">
+                <div class="dropdown">
+                <a class=" dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration:none;">
+                        {{auth()->user()->name}}
+                    </a>
+                    <ul class="dropdown-menu">
+                        @if(auth()->user()->is_artist == 1)
+                        
+
+                             <li>
+                                <a class="dropdown-item" href="{{ route('artists.profile', ['id' => auth()->user()->id]) }}">
+                                <img src="{{ asset('assets/img/Profile.svg') }}" />
+                                Profile
+                                 
+                             </a>
+                            </li>
+                        @endif
+                        @if(auth()->user()->job_title_id!=null && auth()->user()->jobTitle->name=='admin')
+                        <li>
                             
-                            <span>{{auth()->user()->name}} <i class="fa-solid fa-angle-down"></i></span>
-                        </div>
-
-                        <ul class="profile-dropdown-list ">
-                            @if(auth()->user()->is_artist == 1)  
-                                <li class="profile-dropdown-list-item ">
-                                    <a href="{{ route('artists.profile', ['id' => auth()->user()->id]) }}">
-                                        <img src="{{ asset('assets/img/Profile.svg') }}" /><hr/>
-                                       Profile
-                                    </a>
-                                </li>
-                            @endif 
-
-                            <hr />
-
-                            <li class="profile-dropdown-list-item ">
-                            <form method="POST" action="{{ route('logout') }}">
+                            <a class="dropdown-item" href="/home">
+                            <i class="fa-solid fa-user"></i> Admin
+                        </a>
+                        </li>
+                        
+                        @endif
+                        <li>
+                        <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                     <button class="botton" type="submit" onclick="">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                     Logout
                                 </button>                          
-                                   </form>
-                            </li>
-                     <hr/>
-                            @if(auth()->user()->job_title_id!=null && auth()->user()->jobTitle->name=='admin')
-                            <li class="profile-dropdown-list-item ">
-                                
-                                    <a href="/home">
-                                    <i class="fa-solid fa-user"></i>
-                                    Admin 
-                               
-                                </a></li>
-                                @endif
-                        </ul>
-                    </div>
+                                   </form></li>
+                    </ul>
+                </div>
+                </li>
+                                  
+                            
                 @endauth
             </div>
         </div>

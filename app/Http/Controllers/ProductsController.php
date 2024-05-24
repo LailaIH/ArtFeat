@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Section;
 use App\Models\User;
+use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -89,40 +90,24 @@ class ProductsController extends Controller
         return redirect()->route('products.index')->with('success', 'Product created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
+   
     public function edit($id)
     {
         $sections = Section::all();
         $product = Product::findOrFail($id);
-        $artists = User::where('is_artist',true)->get();
+
+        $user=$product->artist; // get the user of that artist
+        $artist_id = $user->artist->id;
+        
+    $collections = Collection::where('artist_id',$artist_id)->where('is_online',1)->get(); // get the online collections of the product owner artist
         return view('products.edit',['product'=>$product , 'sections'=>$sections,
-        'artists'=>$artists
+        'collections'=>$collections,
+        
     ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -134,10 +119,9 @@ class ProductsController extends Controller
             'section_id' => 'required|exists:sections,id', // Validate the section_id exists in the sections table
         ]);
 
+       
 
         $product->section_id = $request->input('section_id');
-        $product->artist_id = $request->input('artist_id');
-
         if ($request->hasFile('img')) {
             $image = $request->file('img');
             $imageName = time().'.'.$image->extension();
@@ -148,9 +132,17 @@ class ProductsController extends Controller
         $product->description = strip_tags($request->input('description'));
         $product->price = strip_tags($request->input('price'));
         $product->stock_quantity = strip_tags($request->input('stock_quantity'));
+       
+      
+       
 
+        if($request->filled('collection_id')){
+            $product->collection_id = $request->input('collection_id');
+            }
 
-        $product->is_online =  $request->has('is_online') ? 1:0 ;
+        else{
+            $product->collection_id = null;
+            }
 
 
         $product->save();
@@ -160,14 +152,5 @@ class ProductsController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  
 }

@@ -26,6 +26,7 @@ class Artist extends Model
         'expertise',
         'website',
         'behance',
+        'artwork_provided_id',
     ];
 
     protected $casts = [
@@ -36,6 +37,11 @@ class Artist extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function artwork()
+    {
+        return $this->belongsTo(ArtworkProvided::class);
     }
 
     // public function products()

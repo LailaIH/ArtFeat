@@ -40,9 +40,9 @@
                 <div class="grid-65">
                   <select name="type" id="type" tabindex="8" required class="form-select" aria-label="Default select example">
                     <option selected="selected" value="" disabled>---</option>
-                    <option value="digital">Digital</option>
-                    <option value="installation">Installation</option>
-                    <option value="classic">Classic</option>
+                    <option value="digital" @if (old('type') === 'digital') selected @endif>Digital</option>
+                    <option value="installation" @if (old('type') === 'installation') selected @endif>Installation</option>
+                    <option value="classic" @if (old('type') === 'classic') selected @endif>Classic</option>
                   </select>
                   @error('type')
                 {{$message}}
@@ -74,25 +74,17 @@
                 <div class="grid-65">
                   <select name="section_id" id="section_id" tabindex="8" class="form-select" aria-label="Default select example">
                     
-                    <option selected="selected" value="" disabled>
+                    <option selected="selected" value="" disabled {{ old('section_id') == '' ? 'selected' : '' }}>
                       Choose Category
                     </option>
                     @foreach($sections as $section)
-                    <option value="{{$section->id}}">{{$section->name}}</option>
+                    <option value="{{$section->id}}" {{ old('section_id') == $section->id ? 'selected' : '' }}>{{$section->name}}</option>
                     @endforeach
                   </select>
                 </div>
               </fieldset>
               <!-- Artwork provided -->
-              <fieldset>
-                <div class="grid-35"></div>
-                <div class="grid-65">
-                  <div class="justifyButtons">
-                    <button class="btn btn-outline-secondary">Photography</button>
-                    <button class="btn btn-outline-secondary">Portrait</button>
-                  </div>
-                </div>
-              </fieldset>
+             
               <!-- Description-->
              
               <fieldset>
@@ -124,7 +116,7 @@
                   <div class="RadioButtons">
                     <div class="form">
                       <label
-                        ><input type="radio" class="input-radio" name="created" value="yes" />
+                        ><input type="radio" class="input-radio" name="created" value="yes" @if(old('geckoHatchling')==='yes') checked @endif  />
                         Yes</label
                       >
                       <label
@@ -134,6 +126,8 @@
                           checked
                           value="no"
                           name="created"
+                          @if(old('geckoHatchling')==='no') checked @endif
+                         
                         />
                         No</label
                       >
@@ -167,7 +161,7 @@
                     name="dimensions"
                     tabindex="11"
                     required
-                    value="{{old('dimension')}}"
+                    value="{{old('dimensions')}}"
                   />
                   @error('dimensions')
                 {{$message}}
@@ -224,7 +218,7 @@
             <div class="switcher">
               <div>Product Visibility</div>
               <div>
-                <input name="visibility" type="checkbox" id="switch" /><label for="switch"
+                <input name="visibility" type="checkbox" id="switch" {{ old('visibility') ? 'checked' : '' }} /><label for="switch"
                   >Toggle</label
                 >
               </div>
@@ -240,6 +234,7 @@
                   placeholder="Add Image"
                   onchange="previewImage(event)"
                 />
+              
               </div>
               <div class="wrapperImages">
 
@@ -250,12 +245,13 @@
                   @else
                   <img class="myImg" src="/assets/img/a2.png" alt="" />
                   @endif
-                  <button class="delete">
-                    <img cl src="/assets/img/Delete.svg" alt="" />
-                  </button>
+                 
                 </div>
                 @endfor
 
+                @error('img')
+                {{$message}}
+                @enderror
 
                 <!-- new img -->
                 <div class="outerImg" id="uploadedImageContainer">

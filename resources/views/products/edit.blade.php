@@ -14,8 +14,8 @@
                             <div class="page-header-subtitle text-white-75">This panel is shown only to those who have the special permission. Please be careful when using the options.</div>
                         </div>
                         <div class="col-12 col-md-6 mt-4 text-right">
-                            <a href="/options/settings" class="btn btn-outline-white rounded-pill btn-sm" role="button">Panel Settings <i class="fas fa-cog ml-1"></i></a>
-                            <a href="/home" class="btn btn-outline-white rounded-pill btn-sm ml-1" role="button">Exit <i class="fas fa-arrow-left ml-1"></i></a>
+                            <a href="/options" class="btn btn-outline-white rounded-pill btn-sm" role="button">Panel Settings <i class="fas fa-cog ml-1"></i></a>
+                            <a href="/" class="btn btn-outline-white rounded-pill btn-sm ml-1" role="button">Exit <i class="fas fa-arrow-left ml-1"></i></a>
                         </div>
                     </div>
                 </div>
@@ -101,15 +101,7 @@
                                             <div class="col-md-6">
                                             
                                             <label class="small mb-1" for="artist_id">Artist</label>
-                                            <select name="artist_id" id="artist_id" class="form-control form-control-solid" required >
-                                                <option value="" >Select an artist</option>
-                                                @foreach ($artists as $artist)
-                                                    <option value="{{ $artist->id }}" @if ($product->artist_id == $artist->id) selected @endif>{{ $artist->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('artist_id')
-                                         {{$message}}
-                                        @enderror
+                                          <input value="{{$product->artist->name}}" class="form-control" readonly/>
                                             </div></div>
 
                                             <div class="row gx-3 mb-3">
@@ -135,16 +127,43 @@
                                            </div>
                                        
                                            <div class="row gx-3 mb-3">
+
                                            <div class="col-12">
+
+                                          
+                                           <label class="small mb-1" for="artist_id">Collection</label>
+                                            
+                                           @if($product->collection_id != null && !$product->collection->is_online)
+                                           <input class="form-control" value="{{$product->collection->name}}" readonly/>
+                                           <input type="hidden" name="collection_id" value="{{ $product->collection_id }}">
+
+                                           @else
+                                           <select name="collection_id" id="collection_id" class="form-control form-control-solid" >
+                                                <option value="" >Select a collection of {{$product->artist->name}}'s collections</option>
+                                                @foreach ($collections as $collection)
+                                                    <option value="{{ $collection->id }}" @if($product->collection_id===$collection->id) selected @endif >{{ $collection->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('collection_id')
+                                         {{$message}}
+                                        @enderror
+                                        @endif 
+                                            </div>
+
+
+
+                                           <!-- <div class="col-md-6" style="margin-top:35px;">
 
 
                                             <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
                                             <input class="form-check-input ml-3" type="checkbox" name="is_online"  @if ($product->is_online) checked @endif>
 
-                                            </div></div>
+                                            </div>-->
+                                        </div> 
                                             <!-- Submit button-->
-                                            <div>
-                                            <button class="btn btn-primary" type="submit">Save changes</button></div>
+                                            <div class="row gx-3 mb-3">
+                                            <div class="col-12">
+                                            <button class="btn btn-primary" type="submit">Save changes</button></div></div>
                                         </form>
                                     </div>
                                 </div>
