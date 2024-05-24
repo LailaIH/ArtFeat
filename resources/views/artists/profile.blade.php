@@ -205,7 +205,7 @@
                     @if(count($collection->products) >= 1)
                       
                       @for($i=0;$i<4;$i++)
-                       @if(isset($collection->products[$i]))
+                       @if(isset($collection->products[$i]) && $collection->products[$i]->is_online)
                         <div class="grid-item">
                           <img src="{{ asset('productImages/'.$collection->products[$i]->img) }}" />
                         </div>

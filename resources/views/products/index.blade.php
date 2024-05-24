@@ -2,6 +2,15 @@
 
 @section('content')
 
+<style>
+.text-green{
+    color:green;
+} 
+.text-red{
+    color:red;
+}    
+</style>
+
 
     <main>
         <header class="page-header page-header-dark bg-danger pb-5">
@@ -63,7 +72,7 @@
                                         <th>Section Name</th>
                                         <th>Description</th>
                                         <th>Price</th>
-                                        <th>Stock Quantity</th>
+                                        <th>Is Online</th>
                                         <th>Image</th>
                                         <th>Actions</th>
 
@@ -78,7 +87,9 @@
                                             <td>{{ $product->section->name }}</td>
                                             <td>{{ $product->description }}</td>
                                             <td class="text-primary">{{ $product->price }}</td>
-                                            <td class="text-primary">{{ $product->stock_quantity }}</td>
+                                            <td class="text-{{ $product->is_online? 'green' : 'red'}}">
+                                                {{$product->is_online?'YES':'NO'}}
+                                            </td>
                                             <td>
                                             @if(isset($product->img))
                                             <img src="{{ asset('productImages/'.$product->img) }}" alt="Product Picture" width="100" height="100">
@@ -88,9 +99,16 @@
                                         </td>
                                             
                                             <td>
-                                                <a href="{{ route('products.edit', ['id'=>$product['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
-                                                <!-- Add delete form with CSRF token for deleting a product -->
-
+                                                @if($product->collection_id === null || $product->collection->is_online )
+                                                    @if($product->is_online)
+                                                         <a href="{{ route('products.edit', $product ) }}" class="btn btn-primary btn-xs">Edit</a>
+                                                    @else
+                                                         <a href="{{ route('products.show_offline', $product ) }}" class="btn btn-primary btn-xs">change</a>
+                                                    @endif
+                                                @else
+                                                <a href="{{ route('products.show_offline_product',$product) }}" class="btn btn-primary btn-xs">Show</a>
+                                                @endif
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

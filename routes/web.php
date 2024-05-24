@@ -168,9 +168,14 @@ Route::get('/products', [ProductsController::class, 'index'])->name('products.in
 Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
 Route::post('/products/store', [ProductsController::class, 'store'])->name('products.store');
 //Route::get('/products/{product}', [ProductsController::class, 'show'])->name('products.show');
-Route::get('/products/edit/{id}', [ProductsController::class, 'edit'])->name('products.edit');
-Route::put('/products/update/{id}', [ProductsController::class, 'update'])->name('products.update');
-//Route::delete('/products/destroy/{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
+Route::get('/products/edit/{product}', [ProductsController::class, 'edit'])->name('products.edit');
+Route::put('/products/update/{product}', [ProductsController::class, 'updateCollectionIdProduct'])->name('products.update');
+Route::get('/products/show/{product}', [ProductsController::class, 'showOfflineCollectionIdProduct'])->name('products.show_offline_product');
+
+Route::get('/products/show-offline/{product}', [ProductsController::class, 'showOfflineProduct'])->name('products.show_offline');
+Route::put('/products/update-is-online/{product}', [ProductsController::class, 'updateIsOnlineProduct'])->name('products.update_is_online');
+
+
 
 // Define resourceful routes for orders
 Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');

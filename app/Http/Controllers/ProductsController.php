@@ -92,10 +92,10 @@ class ProductsController extends Controller
 
  
    
-    public function edit($id)
+    public function edit(Product $product)
     {
         $sections = Section::all();
-        $product = Product::findOrFail($id);
+      
 
         $user=$product->artist; // get the user of that artist
         $artist_id = $user->artist->id;
@@ -108,9 +108,9 @@ class ProductsController extends Controller
     }
 
 
-    public function update(Request $request, $id)
-    {
-        $product = Product::findOrFail($id);
+    // update produt that doesn't have a collection id yet or has an online collection id
+    public function updateCollectionIdProduct(Request $request, Product $product){
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -118,8 +118,6 @@ class ProductsController extends Controller
             'stock_quantity' => 'required|integer',            
             'section_id' => 'required|exists:sections,id', // Validate the section_id exists in the sections table
         ]);
-
-       
 
         $product->section_id = $request->input('section_id');
         if ($request->hasFile('img')) {
@@ -132,16 +130,11 @@ class ProductsController extends Controller
         $product->description = strip_tags($request->input('description'));
         $product->price = strip_tags($request->input('price'));
         $product->stock_quantity = strip_tags($request->input('stock_quantity'));
-       
-      
-       
+
+        $product->is_online = $request->has('is_online')?1:0;
 
         if($request->filled('collection_id')){
             $product->collection_id = $request->input('collection_id');
-            }
-
-        else{
-            $product->collection_id = null;
             }
 
 
@@ -152,5 +145,26 @@ class ProductsController extends Controller
 
     }
 
-  
+    // view for offline products with no collection id yet or with collection that is online
+    public function showOfflineProduct(Product $product){
+
+        return view('products.show-offline-product',['product'=>$product]);
+    }
+
+    // update is online for the showOfflineProduct function (only update is online )
+    public function updateIsOnlineProduct(Request $request , Product $product){
+        $product->is_online = $request->has('is_online')?1:0;
+        $product->save();
+        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+
+    }
+
+
+
+    // show product that has a collection id but the collection is offline , so the product won't have is_online checkbox option
+    public function showOfflineCollectionIdProduct(Product $product){
+     
+        return view ('products.show-offline-collection-product',['product'=>$product]);
+      
+}
 }

@@ -38,13 +38,9 @@
                                         <!-- Profile picture help block-->
                                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                         <!-- Profile picture upload button-->
-                                        <form  method="POST" action="{{ route('products.update', $product ) }}" enctype="multipart/form-data" id="image-form">
+                                        <form action="{{route('products.update_is_online',$product)}}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <label for="img" class="custom-file-upload">
-                                            Upload New Image
-                                        </label>
-                                        <input style="display: none;" type="file" name="img" id="img" class="form-control-file" multiple onchange="updateProfileImage(event);">
                                     </div>
                                 </div>
                             </div>
@@ -60,22 +56,18 @@
                                                
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" for="name">Name</label>
-                                                    <input class="form-control" id="name" type="text" name="name" value="{{ $product->name }}" required />
-                                                    @error('name')
-                                                        {{$message}}
-                                                        @enderror
+                                                    <input class="form-control" value="{{ $product->name }}" readonly />
+                                                  
                                                
                                                 </div>
                                                 
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" for="description">Description</label>
-                                                    <textarea name="description" id="description" class="form-control" required>
+                                                    <textarea  class="form-control" readonly>
                                                         {{$product->description}}
                                                        
                                                     </textarea>  
-                                                    @error('description')
-                                                        {{$message}}
-                                                        @enderror                                      
+                                                                                     
                                                         </div>
                                             </div>
                                            
@@ -83,17 +75,8 @@
                                             <div class="col-md-6">
                                             
                                             <label class="small mb-1" for="section_id">Section</label>
-                                            <select name="section_id" id="section_id" class="form-control form-control-solid" required>
-                                                <option value="" >Select a section</option>
-                                                @foreach ($sections as $section)
-                                                    <option value="{{ $section->id }}" @if ($product->section_id == $section->id) selected @endif>{{ $section->name }}</option>
-                                                @endforeach
-                                           
-                                           
-                                            </select>
-                                            @error('section_id')
-                                            {{$message}}
-                                            @enderror
+                                            <input class="form-control" value="{{ $product->section->name }}" readonly />
+
 
                                             </div>
 
@@ -108,57 +91,46 @@
                                                
                                                <div class="col-md-6">
                                                    <label class="small mb-1" for="price">Price</label>
-                                                   <input class="form-control" id="price" type="number" name="price" value="{{ $product->price }}" required />
-                                               @error('price')
-                                            {{$message}}
-                                              @enderror
+                                                   <input class="form-control"  type="number" value="{{ $product->price }}" readonly />
+                                              
                                                
                                                 </div>
                                                
                                                <div class="col-md-6">
                                                    <label class="small mb-1" for="stock_quantity">Stock Quantity</label>
                                                   
-                                                   <input class="form-control" id="stock_quantity" type="number" name="stock_quantity" value="{{ $product->stock_quantity }}" required />
+                                                   <input class="form-control"  type="number"  value="{{ $product->stock_quantity }}" readonly />
 
-                                                   @error('stock_quantity')
-                                    {{$message}}
-                                    @enderror
+                                              
                                                        </div>
+
                                            </div>
                                        
                                            <div class="row gx-3 mb-3">
 
-                                           <div class="col-md-6">
+                                           <div class="col-md-6" style="margin-top:35px;">
 
-                                          
-                                           <label class="small mb-1" for="artist_id">Collection</label>
-                                            
-                                           <select name="collection_id" id="collection_id" class="form-control form-control-solid" >
-                                                <option value="" >Select a collection of {{$product->artist->name}}'s collections</option>
-                                                @foreach ($collections as $collection)
-                                                    <option value="{{ $collection->id }}" @if($product->collection_id===$collection->id) selected @endif >{{ $collection->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('collection_id')
-                                         {{$message}}
-                                        @enderror
+                                           <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
+                                           <input class="form-check-input ml-3" type="checkbox" name="is_online">
+
                                        
                                             </div>
 
 
 
-                                           <div class="col-md-6" style="margin-top:35px;">
+                                           <div class="col-md-6">
 
-
-                                            <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
-                                            <input class="form-check-input ml-3" type="checkbox" name="is_online"  @if ($product->is_online) checked @endif>
-
+                                           @if($product->collection)
+                                           <label class="small mb-1" for="artist_id">Collection</label>
+                                            <input class="form-control" value="{{ $product->collection->name }}" readonly />
+                                            @endif
+                                        
                                             </div>
                                         </div> 
-                                            <!-- Submit button-->
-                                            <div class="row gx-3 mb-3">
+                                        <div class="row gx-3 mb-3">
                                             <div class="col-12">
                                             <button class="btn btn-primary" type="submit">Save changes</button></div></div>
+                                      
                                         </form>
                                     </div>
                                 </div>
@@ -167,16 +139,5 @@
 
 </main>
 
-<script>
-    function updateProfileImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var output = document.getElementById('product-image');
-            output.src = reader.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
 
-        // Submit form after selecting image
-    }
-</script>
 @endsection                       
