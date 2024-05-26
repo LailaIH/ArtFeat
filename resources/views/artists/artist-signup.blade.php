@@ -6,9 +6,9 @@
     <link rel="icon" type="image/x-icon" href="{{asset('assets/img/fave.svg')}}">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/index.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/login.css')}}">
+    <link rel="stylesheet" type="text/css" href="/assets/css/index2.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/signup.css')}}">
 
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <title>ArtFeat</title>
@@ -19,22 +19,10 @@
     <div class="outerLogin">
       <div class="outerForm">
         <div class="form login">
-          <header>Create Account</header>
-          <h3>Be the spark of the artistry of ARTFEAT</h3>
-          <div class="media-options">
-            <a href="#" class="field facebook">
-              <span><img src="{{asset('assets/img/Google.svg')}}" /></span>
-              <span>Continue with Google</span>
-            </a>
-          </div>
-          <div class="media-options">
-            <a href="#" class="field google">
-              <span><img src="{{asset('assets/img/Apple.svg')}}" /></span>
-              <span>Sign in with Apple</span>
-            </a>
-          </div>
-          <div class="line"></div>
-          <div class="form-content">
+          <header>General Information</header>
+     
+          
+          <div class="form-content mt-3">
             <form method="POST" action="{{ route('artists.create') }}">
             @csrf
           <div class="row gx-3 mb-3">

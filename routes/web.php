@@ -42,10 +42,17 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
+
 Route::get('/languageConverter/{locale}', [LandingController::class, 'switch'])->name('languageConverter');
 
 //public routes for landing pages
 Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
+Route::get('/events', [LandingController::class, 'events'])->name('events');
+Route::get('/landing/auctions', [LandingController::class, 'auctions'])->name('auctions');
+Route::get('/privacy/policy', [LandingController::class, 'privacyPolicy'])->name('privacyPolicy');
+
+
 Route::get('/all/sections', [LandingController::class, 'allSections'])->name('allSections');
 
 Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover');
@@ -58,15 +65,19 @@ Route::get('/live/join', function () {
     return view('livejoin');
 });
 
-Route::get('/test', function () {
-    return view('test');
-});
+
 
 
 
 Route::get('/who/we/are', function () {
     return view('who-we-are');
 });
+
+Route::get('/proooo', function () {
+    return view('landing.profile');
+});
+
+
 
 
 
@@ -292,13 +303,14 @@ Route::put('/artists/update/{id}', [HomeController::class, 'updateArtists'])->na
 
 Route::get('/users/create', [HomeController::class, 'create'])->name('users.create');
 Route::post('/users/store', [HomeController::class, 'store'])->name('users.store');
-Route::delete('/users/delete/{id}', [HomeController::class, 'delete'])->name('users.delete');
+Route::delete('/users/delete/artist/{id}', [HomeController::class, 'deleteArtist'])->name('users.deleteArtist');
 Route::get('/users/profile/{id}', [HomeController::class, 'profile'])->name('users.profile');
 
 
 Route::get('/non-artists', [HomeController::class, 'showNonArtists'])->name('users.nonArtists');
 Route::get('/non-artists/edit/{id}', [HomeController::class, 'editNonArtists'])->name('users.nonArtists.edit');
 Route::put('/non-artists/update/{id}', [HomeController::class, 'updateNonArtists'])->name('users.nonArtists.update');
+Route::delete('/users/delete/{id}', [HomeController::class, 'deleteUser'])->name('users.deleteUser');
 
 
 // collections routes

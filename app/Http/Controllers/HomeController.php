@@ -109,21 +109,15 @@ class HomeController extends Controller
 
        $artistUser->is_ban = $request->has('is_ban') ? 1:0 ;
        $artistUser->is_dealer = $request->has('is_dealer') ? 1:0 ;
-       $artistUser->is_artist = $request->has('is_artist') ? 1:0 ;
        $artistUser->points = strip_tags(intval($request->input('points')));
 
        $artistUser->save();
 
-       $products = Product::where('artist_id', $artistUser->id)->delete();
 
-
-       if(!$artistUser->is_artist){
-        $artist = Artist::where('user_id',$artistUser->id)->first();
-        if($artist){
-            
-            Artist::destroy($artist->id);
+        if($id == auth()->user()->id){
+            return redirect()->route('users.profile',$id)->with('success','profile has been successfully updated'); 
         }
-       }
+    
 
        return redirect()->route('users.artists')->with('success', 'User updated successfully.') ;
 
@@ -133,12 +127,6 @@ class HomeController extends Controller
 
 
     }
-
-
-
-
-
-
 
 
 
@@ -220,15 +208,25 @@ class HomeController extends Controller
 
 
 
-    public function delete($id){
+    public function deleteArtist($id){
         $user = User::findOrFail($id);
+        $artist = $user->artist;
+        $products = Product::where('artist_id',$user->id)->get();
+        $collections = $artist->collections;
         User::destroy($id);
-        if($user->is_artist){
-            return redirect()->route('users.artists');
-            }
-            else{
-                return redirect()->route('users.nonArtists'); 
-            }
+        Artist::destroy($artist->id);
+        
+       
+            return redirect()->route('users.artists')->withErrors(['fail' => 'Artist and all of their products , collections have been deleted']);
+          
+    }
+
+    public function deleteUser($id){
+        $user = User::findOrFail($id);
+         User::destroy($id);
+       
+            return redirect()->route('users.nonArtists')->withErrors(['fail' => 'User has been deleted']);
+          
     }
 
 

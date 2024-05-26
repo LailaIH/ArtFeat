@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
+    @section('head')
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="icon" type="image/x-icon" href="Images/fave.svg">
+    <link rel="icon" type="image/x-icon" href="assets/img/fave.svg">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/index.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/index2.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <title>ArtFeat</title>
@@ -20,7 +21,9 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="{{asset('assets/css/profileMenue.css')}}" />
+    
+    <!-- <link rel="stylesheet" href="{{asset('assets/css/profileMenue.css')}}" /> -->
+    @show 
 </head>
 <body>
 <nav>
@@ -195,28 +198,20 @@
        
 
         
-        <input type="text" class="form-control " placeholder="{{ __('mycustom.search')}}" aria-label="Search" aria-describedby="search-icon"  />
+        <input />        
         
-        <a href="#" class="search-icon">
-                        <span>
-                        <i class="fa fa-search " aria-hidden="true">
-                        </i>                       
-                        </span>
-                        </a>
-       
-
-
-</div></div>
+</div>
+</div>
           
           
-    </div>
+</div>
 </div>
 
 
 @yield('content')
 
 
-
+@section('footer')
 <!-- FOOTER -->
 <div class="outerFooter">
     <div class="innerFooter">
@@ -244,7 +239,7 @@
                 <a>{{ __('mycustom.becomeAPartners')}}</a>
                 <a>{{ __('mycustom.faq')}}</a>
                 <a>{{ __('mycustom.support')}}</a>
-                <a>{{ __('mycustom.privacyPolicy')}}</a>
+                <a style="text-decoration:none;" href="{{route('privacyPolicy')}}">{{ __('mycustom.privacyPolicy')}}</a>
             </div>
             <div class="followus">
                 <h2>{{ __('mycustom.followUs')}}</h2>
@@ -267,39 +262,6 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="js/owl.carousel.js"></script>
-<script>
-
-    AOS.init({
-        duration: 1300,
-
-    })
-    const passwordInput = document.querySelector(".password-input")
-    const eyeBtn = document .querySelector(".eye-btn");
-
-    eyeBtn.addEventListener("click" , () =>{
-        if(passwordInput.type === "password"){
-            passwordInput.type = "text";
-            eyeBtn.innerHTML = "<i class='uil uil-eye'></i>";
-        }
-        else{
-            passwordInput.type = "password"
-            eyeBtn.innerHTML = "<i class='uil uil-eye-slash'></i>"
-        }
-    })
-
-
-</script>
-<script>
-let profileDropdownList = document.querySelector(".profile-dropdown-list");
-let btn = document.querySelector(".profile-dropdown-btn");
-
-let classList = profileDropdownList.classList;
-
-const toggle = () => classList.toggle("active");
-
-window.addEventListener("click", function (e) {
-  if (!btn.contains(e.target)) classList.remove("active");
-});
-</script>
+<script src="{{asset('js/script.js')}}"></script>
+@show
 </html>

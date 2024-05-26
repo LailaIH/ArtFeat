@@ -24,7 +24,11 @@
 
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-
+        @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif 
 
 
                   <div class="row m-5">
@@ -136,14 +140,7 @@
                                                        </div>
                                            </div>
                                        
-                                           <div class="row gx-3 mb-3">
-                                           <div class="col-12">
-
-
-                                            <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
-                                            <input class="form-check-input ml-3" type="checkbox" name="is_online" >
-
-                                            </div></div>
+             
                                             <!-- Submit button-->
                                             <div>
                                             <button class="btn btn-primary" type="submit">Save changes</button></div>

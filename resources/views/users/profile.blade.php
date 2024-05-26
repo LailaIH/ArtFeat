@@ -46,7 +46,12 @@
                                        
                                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                         <!-- Profile picture upload button-->
+                                        @if(!$user->is_artist)
                                         <form  method="POST" action="{{ route('users.nonArtists.update', ['id'=>$user['id']]) }}" enctype="multipart/form-data" id="image-form">
+                                        @else
+                                        <form  method="POST" action="{{ route('users.artists.update', ['id'=>$user['id']]) }}" enctype="multipart/form-data" id="image-form">
+                                        @endif
+                                        
                                         @csrf
                                         @method('PUT')
                                         
@@ -103,14 +108,18 @@
                                            
                   <br>
                                             <div class="row gx-3 mb-3">
-                                               <div class="col-md-4">
+                                            <div class="col-md-4">
+                                            @if(!$user->is_artist)
+                                               
                                                <label class="form-check-label small mb-1 " for="is_artist">Is Artist</label>
 
                                             <input class="form-check-input ml-3" type="checkbox" name="is_artist"  @if ($user->is_artist) checked @endif>
+                                            @else
+                                            Is Artist
 
-
+                                           
+                                            @endif
                                             </div> 
-
                                             
                                            
                                             <div class="col-md-4 form-check form-check-solid">

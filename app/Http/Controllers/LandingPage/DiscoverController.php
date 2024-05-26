@@ -19,7 +19,7 @@ class DiscoverController extends Controller
 
     public function discover(){
 
-        // $artists = User::where('is_artist', true)->get();
+        
          $artists = User::where('is_artist', true)->paginate(6);
  
  

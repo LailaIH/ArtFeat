@@ -24,7 +24,11 @@
 
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-
+        @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif 
 
 
                   <div class="row m-5">

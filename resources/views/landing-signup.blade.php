@@ -6,9 +6,9 @@
     <link rel="icon" type="image/x-icon" href="{{asset('assets/img/fave.svg')}}">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/index.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/index2.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/owl.carousel.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/login.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/signup.css')}}">
 
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <title>ArtFeat</title>
@@ -38,7 +38,8 @@
           <div class="form-content">
             <form method="POST" action="{{ route('register') }}">
             @csrf
-
+            <div class="row">
+            <div class="col-md-6">
             <div class="field input-field">
                 <input id="name" type="text" placeholder="Name" class="input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus />
                 @error('name')
@@ -47,13 +48,14 @@
                                     </span>
                                 @enderror
             </div>
+            </div>
 
 
 
 
 
-
-
+              
+              <div class="col-md-6">
               <div class="field input-field">
                 <input id="email" type="email" placeholder="Email" class="input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" />
                 @error('email')
@@ -62,6 +64,10 @@
                                     </span>
                                 @enderror
             </div>
+              </div></div>
+
+            <div class="row">
+            <div class="col-md-6">
               <div class="field input-field">
                 <input
                 id="password"
@@ -76,7 +82,9 @@
                                     </span>
                                 @enderror
                 <div class="eye-btn"><i class="uil uil-eye-slash"></i></div>
-              </div>
+              </div></div>
+
+              <div class="col-md-6">
               <div class="field input-field">
                 <input
                 id="password-confirm"
@@ -88,6 +96,7 @@
                 <div class="eye-btn"><i class="uil uil-eye-slash"></i></div>
                 <i class="bx bx-hide eye-icon"></i>
               </div>
+            </div></div>
               <div class="field button-field">
                 <a>Forgot password?</a>
                 <button>Signup</button>

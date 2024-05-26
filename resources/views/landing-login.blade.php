@@ -6,8 +6,8 @@
     <link rel="icon" type="image/x-icon" href="{{asset('assets/img/fave.svg')}}">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/index.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/index2.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/login.css')}}">
 
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -81,6 +81,7 @@
             <span
               >Are you an Artist?<a href="{{route('artists.signup')}}"><button>Let’s get you started</button></span
             > </a>
+
           </div>
         </div>
       </div>

@@ -95,7 +95,7 @@
                                         
 
                                         
-                                        <form class="d-inline" action="{{ route('users.delete', ['id'=>$nonArtist['id']]) }}" method="POST">
+                                        <form class="d-inline" action="{{ route('users.deleteUser', ['id'=>$nonArtist['id']]) }}" method="POST" onsubmit="return confirmDelete()">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-xs">Delete</button>
@@ -123,6 +123,12 @@
 
 <script>
     let table = new DataTable('#myTable');
+</script>
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this item?');
+    }
 </script>
 @endsection
 

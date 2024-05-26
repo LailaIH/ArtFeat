@@ -3,6 +3,12 @@
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/edit.css')}}">
 
+@if ($errors->has('fail'))
+    <div class="alert alert-danger">
+           {{ $errors->first('fail') }}
+      </div>
+ @endif 
+
 <div class="pageHeader">
       <img src="{{asset('assets/img/editprofile.png')}}" />
       <div class="overLay">

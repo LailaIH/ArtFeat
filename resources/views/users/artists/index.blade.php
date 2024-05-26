@@ -78,8 +78,10 @@
                                             @else<td>No Job Registered</td>
                                             @endif
                                             <td class="{{ $artist->is_ban ? 'text-green' : 'text-red' }}">
-    {{ $artist->is_ban ? 'Yes' : 'No' }}
-</td>                                            @if(isset($artist->points))
+                                                {{ $artist->is_ban ? 'Yes' : 'No' }}
+                                            </td>                               
+    
+                                            @if(isset($artist->points))
                                             <td class="text-primary">{{ $artist->points }}</td>
                                             @else
                                             <td class="text-primary">0</td>@endif
@@ -89,7 +91,7 @@
                                               </a>
                                         
                                             
-                                            <form class="d-inline" action="{{ route('users.delete', ['id'=>$artist['id']]) }}" method="POST">
+                                            <form class="d-inline" action="{{ route('users.deleteArtist', ['id'=>$artist['id']]) }}" method="POST" onsubmit="return confirmDelete()">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-xs">Delete</button>
@@ -113,6 +115,13 @@
 <script>
     let table = new DataTable('#myTable');
 </script>
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this item?');
+    }
+</script>
+
 
 @endsection
 

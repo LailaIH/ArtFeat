@@ -36,14 +36,14 @@
        
     <div class="wrapperDiscoverCards" >
         
-        <div class="row row-cols-3">
+        
            
             @php   
                 
-                $products = DB::table('products')->where('artist_id', $artist->id)->get();
+                $products = DB::table('products')->where('artist_id', $artist->id)->where('is_online', 1)->get();
             @endphp
             
-            <div class="col mb-4">
+           
             <div class="DiscoverCard" >
                 <div class="infoCard">
                     <div class="Avatar">
@@ -85,15 +85,13 @@
                 </div>
 
             </div>
-        </div>
+        
             
         </div>
         </div>
     </div>
 
-</div>
 
-</div>
 
 
 @endsection

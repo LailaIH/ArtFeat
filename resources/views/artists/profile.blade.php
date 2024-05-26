@@ -79,7 +79,7 @@
                 <div><span>4</span>{{__('mycustom.followers')}}</div>
                 <div><span>55</span>{{__('mycustom.following')}}</div>
                 <a href="{{route('artists.edit_profile',['id'=>$user['id']] )}}">
-                <button{{__('mycustom.editAccount')}}</button></a>
+                <button>{{__('mycustom.editAccount')}}</button></a>
               </div>
             </div>
           </div>
@@ -187,20 +187,20 @@
                     <button>{{__('mycustom.addCollection')}}</button></a>
                   </div>
                   @if(!$collections->isEmpty())
-                  <div class="outerCollections">
+                <div class="outerCollections">
                     
-                  <div class="row row-cols-3">
+                 
                   @foreach($collections as $collection)
                  
-                  <div class="col">
-                  <div class="outerCard mb-4">
+                  <div style="display:block;">
+                  <div class="outerCard ">
                     <form method="POST" action="{{route('artists.collectionsDisable',['collection'=>$collection])}}" onsubmit="return confirmDisable()">
                       @csrf
                       <button type="submit" class="delete">
                         <img src="/assets/img/Delete.svg" alt="" />
                       </button>
                     </form>
-                      <div class="grid-container">
+                    <div class="grid-container">
                         
                     @if(count($collection->products) >= 1)
                       
@@ -209,12 +209,13 @@
                         <div class="grid-item">
                           <img src="{{ asset('productImages/'.$collection->products[$i]->img) }}" />
                         </div>
-                        @else
+                       @else
                         <div class="grid-item">
                           <img src="/assets/img/a5.png" />
                         </div>
                         @endif 
                       @endfor
+                      
                     @else
                         @for($i=0;$i<4;$i++)
                         <div class="grid-item">
@@ -222,25 +223,26 @@
                         </div>
 
                         @endfor
-
+                        
                     @endif
+                    </div>
 
-
-                      </div>
+                      
                       <div class="text">{{$collection->name}}</div>
                     
-                      <div class="overLay">
+                      <div class="overLay"></div>
                      
                       </div>
                     
-                    </div>
-                    <a href="{{route('artists.showAddToCollection',['id'=>$collection['id']] )}}" class="btn btn-success btn-xs mb-4 center">
+                    <a href="{{route('artists.showAddToCollection',['id'=>$collection['id']] )}}" class="btn btn-success btn-xs mt-1 ">
                     {{__('mycustom.addArtwork')}}
-                    </a>
-                  </div>
+                    </a></div>
+
+                    
+                  
                     
                   @endforeach 
-              </div>
+              
                   @else
                   <h5  class="p-4">{{__('mycustom.noCollections')}}</h5>
                   @endif

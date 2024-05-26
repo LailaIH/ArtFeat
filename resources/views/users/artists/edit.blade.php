@@ -95,17 +95,8 @@
                                            
                   
                                             <div class="row gx-3 mb-3">
-                                               <div class="col-md-4">
-                                               <label class="form-check-label small mb-1 " for="is_artist">Is Artist</label>
-
-                                            <input class="form-check-input ml-3" type="checkbox" name="is_artist"  @if ($artist->is_artist) checked @endif>
-
-
-                                            </div> 
-
-                                            
-                                           
-                                            <div class="col-md-4 form-check form-check-solid">
+             
+                                            <div class="col-md-6 form-check form-check-solid">
                                             <label class="form-check-label small mb-1 "  for="is_ban" >Is Ban</label>
 
                                             <input class="form-check-input ml-3" id ="is_ban" name="is_ban" type="checkbox"  @if ($artist->is_ban) checked @endif>
@@ -114,7 +105,7 @@
                                             </div>
 
 
-                                            <div class="col-md-4 form-check form-check-solid">
+                                            <div class="col-md-6 form-check form-check-solid">
                                             <label class="form-check-label small mb-1 "  for="is_dealer" >Is Dealer</label>
 
                                             <input class="form-check-input ml-3" id ="is_dealer" name="is_dealer" type="checkbox" @if ($artist->is_dealer) checked @endif >

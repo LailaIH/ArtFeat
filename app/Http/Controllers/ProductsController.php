@@ -81,8 +81,9 @@ class ProductsController extends Controller
         $product->price = strip_tags($request->input('price'));
         $product->stock_quantity = strip_tags($request->input('stock_quantity'));
 
-
-        $product->is_online =  $request->has('is_online') ? 1:0 ;
+        if($request->input('price')<=0){
+            return redirect->back()->withErrors(['fail'=>'price can not be less than or equal to zero']);
+        }
 
 
         $product->save();
@@ -130,6 +131,10 @@ class ProductsController extends Controller
         $product->description = strip_tags($request->input('description'));
         $product->price = strip_tags($request->input('price'));
         $product->stock_quantity = strip_tags($request->input('stock_quantity'));
+
+        if($request->input('price')<=0){
+            return redirect->back()->withErrors(['fail'=>'price can not be less than or equal to zero']);
+        }
 
         $product->is_online = $request->has('is_online')?1:0;
 

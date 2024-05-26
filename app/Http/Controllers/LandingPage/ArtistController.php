@@ -248,6 +248,10 @@ class ArtistController extends Controller
         $product->artwork_dimensions = strip_tags($request->input('dimensions'));
         $product->price = strip_tags($request->input('price'));
 
+        if($request->input('price')<=0){
+            return redirect->back()->withErrors(['fail'=>'price can not be less than or equal to zero']);
+        }
+
         if($request->has('discount_price')){
             $product->price_after_discount =$request->input('discount_price');
         }

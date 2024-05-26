@@ -78,13 +78,13 @@
        
         <div class="wrapperDiscoverCards" >
         
-        <div class="row row-cols-3">
+        
             @foreach($artists as $artist)
             @php   
-                $products = DB::table('products')->where('artist_id', $artist->id)->get();
+                $products = DB::table('products')->where('artist_id', $artist->id)->where('is_online', 1)->get();
             @endphp
             
-            <div class="col mb-4">
+        
             <div class="DiscoverCard" >
                 <div class="infoCard">
                     <div class="Avatar">
@@ -93,7 +93,7 @@
                    @else
                    <img src="{{asset('assets\img\artist.png')}}" alt="artist pic"/>
                     @endif
-                </div>
+                   </div>
                     <div class="info">
                         <h2>{{$artist->name}}</h2>
                         <p>{{$artist->email}}</p>
@@ -113,7 +113,7 @@
                     <div>
                     @if(isset($products[$i]))
                         
-                        <img src="{{asset('productImages/'.$products[$i]->img)}}" alt="Image 2" />
+                      <img src="{{asset('productImages/'.$products[$i]->img)}}" alt="Image 2" />
                        
                     @else
                       
@@ -125,13 +125,13 @@
                     @endfor
                 </div>
 
-            </div></div>
+            </div>
             @endforeach
-        </div>
-        </div>
+        
+        
     </div>
 
-
+</div>
 
 </div>
 

@@ -560,7 +560,7 @@ nav input[type="checkbox"] {
   row-gap: 12px;
 }
 .collections .outerCard {
-  width: 370px;
+  width: 300px;
   position: relative;
 }
 .collections .grid-container {
@@ -573,10 +573,10 @@ nav input[type="checkbox"] {
  
   
 }
-.collections .grid-container .grid-item  {
+/* .collections .grid-container .grid-item  {
 width: 100%;
   
-}
+} */
 .collections .grid-container .grid-item img {
   width: 150px;
   height: 104px;

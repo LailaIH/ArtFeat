@@ -3,47 +3,77 @@
 <div class="liveStream">
     <div class="innerLive">
         <p>{{ __('mycustom.live')}}</p>
-        <img src="assets/img/livestream.svg" alt="">
+        <img src="{{asset('assets/img/livestream.svg')}}" alt="">
     </div>
 </div>
-<div id="carouselExampleIndicators" class="carousel slide Discover" data-bs-ride="carousel">
+<div id="carouselExampleIndicators" class="Discover carousel slide " data-bs-ride="carousel">
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
-        <div class="carousel-item active">
-        
-            <div class="card-body">
-            @if ($errors->has('fail'))
+      <div class="carousel-item active">
+        <div class="innerItems">
+        <div class="card-body">
+        @if ($errors->has('fail'))
                                 <div class="alert alert-danger">
                                     {{ $errors->first('fail') }}
                                 </div>
                             @endif 
-          
-                <img src="assets/img/kofia.svg" />
-                <div class="title">
-               
-                    <h1 class="card-title">{{ __('mycustom.shopPaintings')}}</h1>
-                 
-                    <h1>{{ __('mycustom.paintingsNow')}}</h1>
-                </div>
-                <p class="card-text"><span>+100,000</span> {{ __('mycustom.pricesDesc')}}</p>
-                <button href=""><span>{{ __('mycustom.discover')}}</span></button>
-            </div>
-            <img src="/assets/img/discover.png"/>
+          <img src="{{asset('assets/img/kofia.svg')}}" />
+          <div class="title">
+          <h1 class="card-title">{{ __('mycustom.shopPaintings')}}</h1>
+          <h1>{{ __('mycustom.paintingsNow')}}</h1>
+          </div>
+          <p class="card-text"><span>+100,000</span> {{ __('mycustom.pricesDesc')}}</p>
+          <button href=""><span>{{ __('mycustom.discover')}}</span></button>
         </div>
+        <img src="{{asset('assets/img/discover.png')}}"/>
+      </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+
+    <div class="carousel-item">
+        <div class="innerItems">
+          <div class="card-body">
+            <img src="{{asset('assets/img/kofia.svg')}}" />
+            <div class="title">
+            <h1 class="card-title">{{ __('mycustom.shopPaintings')}}</h1>
+            <h1>{{ __('mycustom.paintingsNow')}}</h1>
+            </div>
+            <p class="card-text"><span>+100,000</span>{{ __('mycustom.pricesDesc')}}</p>
+            <button href=""><span>{{ __('mycustom.discover')}}</span></button>
+          </div>
+          <img src="{{asset('assets/img/discover2.png')}}"/>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="innerItems">
+          <div class="card-body">
+            <img src="{{asset('assets/img/kofia.svg')}}" />
+            <div class="title">
+            <h1 class="card-title">{{ __('mycustom.shopPaintings')}}</h1>
+            <h1>{{ __('mycustom.paintingsNow')}}</h1>
+            </div>
+            <p class="card-text"><span>+100,000</span> {{ __('mycustom.pricesDesc')}}</p>
+            <button href=""><span>{{ __('mycustom.discover')}}</span></button>
+          </div>
+          <img src="{{asset('assets/img/discover3.png')}}"/>
+        </div>
+      </div>
+
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
     </button>
-</div>
+  </div>
 <!-- Categories -->
 <section class="CategoriesSection">
     <h1>{{ __('mycustom.shopByCategory')}}</h1>
@@ -57,11 +87,15 @@
                 @else
                 <img src="{{asset('assets\img\sculptures.jpg')}}" alt="artist pic"/>
                 @endif
-            </div>
-            <p>{{$section->name}}</p>
+               <div class="OverLay2">
+            <p class="Content">{{$section->name}}</p>
+        </div>
+        </div>
         </div>
         @endforeach
     </div>
+
+
     <div class="footerButton">
         <form method="get" action="{{route('allSections')}}">
         @csrf
@@ -69,6 +103,48 @@
         </form>
     </div>
 </section>
+
+
+<!--Coming Event  -->
+<section class="eventsSection p-3">
+    <div class="container p-5 justify-content-between">
+      <h2>Up coming Events</h2>
+      <div class="justify-content-between row event-div p-4">
+        <a href="#" class="col-md event-hover">
+          <div class="card text-bg-dark  col-md event-hover">
+            <img src="{{asset('assets/img/events/alina-grubnyak-IsxaFsXi2rs-unsplash.jpg')}}" class="card-img img-fluid event-pics" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <p class="card-text"><small>Last updated 3 mins ago</small></p>
+            </div>
+          </div>
+        </a>
+        
+        <a href="#" class="col-md event-hover"><div class="card text-bg-dark col-md">
+          <img src="{{asset('assets/img/events/anna-kolosyuk-D5nh6mCW52c-unsplash.jpg')}}" class="card-img" alt="..." class="card-img img-fluid event-pics">
+          <div class="card-img-overlay">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small>Last updated 3 mins ago</small></p>
+          </div>
+        </div></a>
+        <a href="#" class="col-md event-hover"> <div class="card text-bg-dark col-md">
+          <img src="{{asset('assets/img/events/portrait-woman-made-with-newspapers-paint-ai-generated.jpg')}}" class="card-img" alt="..." class="card-img img-fluid event-pics">
+          <div class="card-img-overlay">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small>Last updated 3 mins ago</small></p>
+          </div>
+        </div></a>
+        
+       
+      </div>
+    
+    
+    </div>
+    
+  </section>
 
 <!-- painting -->
 <section class="paintingSection">
@@ -86,14 +162,14 @@
                 </a>
             </div>
             <div class="col-12">
-                <div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                        @php
                        $chunkedProducts = $products->chunk(4); // Split products into chunks of 4
 
                        @endphp
                        @foreach ($chunkedProducts as $key => $chunk)
-                       <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                       <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
                             <div class="row">
                             @foreach ($chunk as $product)
                                 <div class="col-sm-12 col-md-6 col-lg-3  mb-3">
@@ -378,7 +454,7 @@
                                 @foreach($artChunk as $artist)
 
                                 @php
-                                $artistProducts = DB::table('products')->where('artist_id', $artist->id)->take(4)->get();
+                                $artistProducts = DB::table('products')->where('artist_id', $artist->id)->where('is_online', 1)->take(4)->get();
                                 @endphp
                                
                    
