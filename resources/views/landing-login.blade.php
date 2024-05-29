@@ -19,13 +19,13 @@
     <div class="outerLogin">
       <div class="outerForm">
         <div class="form login">
-          <header>Sign in</header>
-          <h3>Stay updated on the artistic world</h3>
+          <header>{{__('mycustom.signIn')}}</header>
+          <h3>{{__('mycustom.stayUpdatedOn')}}</h3>
           <div class="form-content">
             <form action="{{route('login')}}" method="POST">
             @csrf
               <div class="field input-field">
-                <input id="email" type="email" placeholder="Email" class="input @error('email') is-invalid @enderror" 
+                <input id="email" type="email" placeholder="{{__('mycustom.email')}}" class="input @error('email') is-invalid @enderror" 
                 name="email" value="{{ old('email') }}" required autocomplete="email" autofocus/>
                 @error('email')
                   <span class="invalid-feedback" role="alert">
@@ -39,7 +39,7 @@
               <div class="field input-field">
                 <input
                   type="password"
-                  placeholder="password"
+                  placeholder="{{__('mycustom.password')}}"
                   class="password-input @error('password') is-invalid @enderror"
                   id="password"
                   name="password" required autocomplete="current-password"
@@ -53,8 +53,8 @@
                 <div class="eye-btn"><i class="uil uil-eye-slash"></i></div>
               </div>
               <div class="field button-field">
-                <a>Forgot password?</a>
-                <button>Sign in</button>
+                <a>{{__('mycustom.forgotPassword')}}</a>
+                <button>{{__('mycustom.signIn')}}</button>
               </div>
             </form>
           </div>
@@ -62,24 +62,28 @@
           <div class="media-options">
             <a href="#" class="field facebook">
               <span><img src="{{asset('assets/img/Google.svg')}}" /></span>
-              <span>Continue with Google</span>
+              <span>{{__('mycustom.continueWithGoogle')}}</span>
             </a>
           </div>
           <div class="media-options">
             <a href="#" class="field google">
               <span><img src="{{asset('assets/img/Apple.svg')}}" /></span>
-              <span>Sign in with Apple</span>
+              <span>{{__('mycustom.signInWithApple')}}</span>
             </a>
           </div>
-          <div class="form-link">
+          <div class="form-link " dir="rtl">
             <span
-              >New to ArtFeat?
-              <a href="/landing/signup" class="link login-link">Join now</a></span
+              >{{__('mycustom.newToArtfeat')}} 
+              <a href="/landing/signup" class="link login-link">{{__('mycustom.joinNow')}}</a></span
             >
           </div>
-          <div class="artist">
+          @if(App::getLocale()==='ar')
+          <div class="artist" dir="rtl">
+          @else
+          <div class="artist" dir="ltr">
+          @endif
             <span
-              >Are you an Artist?<a href="{{route('artists.signup')}}"><button>Let’s get you started</button></span
+              >{{__('mycustom.areYouAnArtist')}}<a href="{{route('artists.signup')}}"><button>{{__('mycustom.letsGetYouStarted')}}</button></span
             > </a>
 
           </div>

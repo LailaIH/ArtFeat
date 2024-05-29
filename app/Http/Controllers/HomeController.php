@@ -181,7 +181,17 @@ class HomeController extends Controller
             return redirect()->route('users.profile',$id)->with('success','profile has been successfully updated'); 
         }
 
-        return redirect()->route('users.nonArtists')->with('success', 'User Updated successfully.');; ;
+        else{
+            if($nonArtistUser->is_artist){
+                return redirect()->route('users.artists')->with('success', 'User Updated successfully.');; ;
+
+            }
+            else{
+                return redirect()->route('users.nonArtists')->with('success', 'User Updated successfully.');; ;
+
+            }
+        }
+
 
 
 

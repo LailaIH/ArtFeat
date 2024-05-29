@@ -15,7 +15,7 @@ class LandingController extends Controller
 {
     public function welcome()
     {
-        $sections = Section::take(4)->get(); // get the first 5 sections
+        $sections = Section::where('is_online',1)->take(4)->get(); // get the first 5 sections
         $products = Product::where('is_online',1)->orderBy('created_at', 'desc')->take(40)->get(); // get the last 40 products
         $artists = User::where('is_artist', true)->get();
         $whyArtfeatText = Option::where('key', 'why_artfeat_text')->value('value');
@@ -58,7 +58,7 @@ class LandingController extends Controller
 
     public function allSections(){
         
-        return view('all-sections',['sections'=>Section::all()]);
+        return view('all-sections',['sections'=>Section::where('is_online',1)->get()]);
     }
 
 

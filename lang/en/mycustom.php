@@ -37,8 +37,16 @@ return [
 
     // who we are page
     'whoWeAreTitle'=>'WHO WE ARE',
+    'expressYour'=>'Express your artistic touch with ARTFEAT.',
+    'newlyEstablished'=>'A newly established Palestinian startup, we\'re here to provide a comprehensive platform that brings together creativity, excellence, and inspiration in the world of art. We gather talent and inspiration from Palestinian creators to proudly showcase it to the world. We\'re here to help you fulfill your dreams and provide you with the digital space to showcase and market your artwork proudly. We believe in the power and impact of art. Our spirit is restless, and inside us, the rebellious joy says: "Create a masterpiece from your imagination and let it come to life."',
+    'indeedYour'=>'"Indeed, you\'re right. We speak openly and directly here, why? Because we consider direct and candid communication essential. We care about fostering an environment based on direct communication and respect among everyone."',
+    'creativityIs'=>'Creativity is at the core of our work, we support authentic artistic expression and celebrate works that reflect innovation and excellence. We adhere to the highest quality standards to preserve the authenticity and beauty of artworks, and we are committed to meticulously protecting the intellectual property rights of artists.',
+    'weStrive'=>'"We strive to enhance the dynamic interaction between artists and art enthusiasts, fostering an active and connected community. We pay special attention to supporting Palestinian artists, helping them reach a global audience and strengthen their presence on the international stage. Transparency is the foundation of our operations, as we work with clarity and integrity to build mutual trust with our users."',
+    'theseValues'=>'"These values form the foundation upon which we build everything we do at Artfeat, enabling us to offer a distinctive and exciting artistic experience."',
+    
     'ourValue'=>'Our Value',
     'joinOurArtists'=>'Join Our Artists',
+    'joinDesc'=>'Are you an artist looking for a platform to showcase your talents? Look no further! Join our vibrant community of artists and connect with a global audience eager to discover unique creations. Whether you are a painter, sculptor, photographer, or any other type of visual artist, we welcome you to share your unique perspective with our diverse audience. Join us today and let your creativity shine!',
 
     // main welcome page
     'shopPaintings'=>'Shop Most Beatiful',
@@ -46,6 +54,7 @@ return [
     'pricesDesc'=>'of the best art pieces that will spoil your eyes',
     'discover'=>'Discover',
     'shopByCategory'=>'Shop By Category',
+    'upcomingEvents'=>'Upcoming Events',
     'viewAll'=>'view all',
     'lastPaintings'=>'Last Paintings:',
     'addToCart'=>'add to cart',
@@ -181,4 +190,100 @@ return [
     'noResult'=>'no results found !! .. Please try another search',
     'homePage'=>'HomePage',
     'searchh'=>'search',
+
+
+    // privacy policy
+    'privacyPolicy'=>'Privacy Policy',
+    'usWeOrOur'=>'Lorem Ipsum Ltd ("us", "we", or "our") operates the website [Website URL] (the "Service").',
+    'thisPage'=>'This page informs you of our policies regarding the collection, use, and disclosure of Personal Information when you use our Service.',
+    'weWillNot'=>'We will not use or share your information with anyone except as described in this Privacy Policy.',
+    'weUseYour'=>'We use your Personal Information for providing and improving the Service. By using the Service, you agree to the collection and use of information in accordance with this policy.
+
+    ',
+    'infoCollection'=>'Information Collection And Use',
+
+    'whileUsingOur'=>'While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you. Personally identifiable information may include, but is not limited to, your name, email address, postal address, and phone number ("Personal Information").',
+
+
+    'cookies'=>'Cookies',
+    'cookiesAreFiles'=>'Cookies are files with a small amount of data, which may include an anonymous unique identifier. Cookies are sent to your browser from a web site and transferred to your device. We use cookies to collect information to improve our services. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.',
+    'logData'=>'Log Data',
+    'weCollectInfo'=>'We collect information that your browser sends whenever you visit our Service ("Log Data"). This Log Data may include information such as your computer\'s Internet Protocol ("IP") address, browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, and other statistics.',
+    'serviceProvider'=>'Service Providers',
+    'weMayEmploy'=>'We may employ third-party companies and individuals due to the following
+    reasons:',
+    'toFacilitate'=>'To facilitate our Service',
+    'toProvide'=>'To provide the Service on our behalf',
+    'toPerform'=>'To perform Service-related services',
+    'toAssist'=>'To assist us in analyzing how our Service is used',
+    'weWantToInform'=>'We want to inform our Service users that these third parties have access
+    to your Personal Information. The reason is to perform the tasks
+    assigned to them on our behalf. However, they are obligated not to
+    disclose or use the information for any other purpose.',
+    'security'=>'Security',
+    'theSecurityOfYourPersonal'=>'The security of your Personal Information is important to us, but
+    remember that no method of transmission over the Internet or method of
+    electronic storage is 100% secure. While we strive to use commercially
+    acceptable means to protect your Personal Information, we cannot
+    guarantee its absolute security.',
+    
+    'otherSites'=>'Other Sites',
+    'ourServiceMayContainLinks'=>'   Our Service may contain links to other sites that are not operated by
+    us. If you click on a third-party link, you will be directed to that
+    third party\'s site. We strongly advise you to review the Privacy Policy
+    of every site you visit. We have no control over and assume no
+    responsibility for the content, privacy policies, or practices of any
+    third-party sites or services.',
+
+    
+    'childrenPrivacy'=>'Children\'s Privacy',
+    'ourServiceDoesnt'=>'Our Service does not address anyone under the age of 13 ("Children"). We
+    do not knowingly collect personally identifiable information from
+    children under 13. If you are a parent or guardian and you are aware
+    that your Children has provided us with Personal Information, please
+    contact us. If we become aware that we have collected Personal
+    Information from a child under the age of 13 without verification of
+    parental consent, we take steps to remove that information from our
+    servers.',
+    'changesToThis'=>'Changes To This Privacy Policy',
+    'weMayUpdate'=>' We may update our Privacy Policy from time to time. We will notify you
+    of any changes by posting the new Privacy Policy on this page. You are
+    advised to review this Privacy Policy periodically for any changes.
+    Changes to this Privacy Policy are effective when they are posted on
+    this page.',
+    'contactUs'=>'Contact Us',
+    'ifYouHaveAnyQuestions'=>'If you have any questions about this Privacy Policy, please contact us:
+        ',
+    'byEmail'=>'By email: [Email Address]',
+    'byVisitingThisPage'=>'By visiting this page on our website: [Website URL]',
+
+  // sign in
+  'signIn'=>'Sign in',
+  'stayUpdatedOn'=>'Stay updated on the artistic world
+  ',
+  'email'=>'Email',
+  'password'=>'password',
+  'forgotPassword'=>'Forgot password?',
+  'or'=>'or',
+  'continueWithGoogle'=>'Continue with Google',
+  'signInWithApple'=>'Sign in with Apple',
+  'newToArtfeat'=>'new To ArtFeat?',
+  'joinNow'=>'Join now',
+  'areYouAnArtist'=>'Are you an Artist?',
+  'letsGetYouStarted'=>'Let’s get you started',
+
+
+
+  
+    // landign signup
+    'createAnAccount'=>'Create Account',
+    'beTheSpark'=>'Be the spark of the artistry of',
+    'name'=>'Name',
+    'confirmPassword'=>'Confirm password',
+    'alreadyHaveAccount'=>'Already have an account?',
+    'login'=>'Login',
+
+
+
+
 ];

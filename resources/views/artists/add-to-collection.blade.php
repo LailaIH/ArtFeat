@@ -3,11 +3,7 @@
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/edit.css')}}">
 
-@if ($errors->has('fail'))
-    <div class="alert alert-danger">
-           {{ $errors->first('fail') }}
-      </div>
- @endif 
+
 
 <div class="pageHeader">
       <img src="{{asset('assets/img/editprofile.png')}}" />
@@ -20,6 +16,11 @@
     </div>
     <div class="EditProfileSection">
     <div class="pageContent">
+    @if ($errors->has('fail'))
+    <div class="alert alert-danger">
+           {{ $errors->first('fail') }}
+      </div>
+ @endif 
       <a href="{{route('artists.profile',auth()->user()->id)}}">Back to Profile</a>
       <h3>Add New Artwork To Your Collection</h3>
       <div class="outerEditProfile addNewWork">
@@ -282,9 +283,7 @@ function previewImage(event) {
         var buttonElement = document.createElement('button');
         var deleteImg = document.createElement('img');
 
-        deleteImg.setAttribute('src','/assets/img/Delete.svg');
-        buttonElement.setAttribute('class','delete');
-        buttonElement.appendChild(deleteImg);
+       
         
         imgElement.setAttribute('class', 'myImg');
         imgElement.setAttribute('src', reader.result);

@@ -108,7 +108,7 @@
 <!--Coming Event  -->
 <section class="eventsSection p-3">
     <div class="container p-5 justify-content-between">
-      <h2>Up coming Events</h2>
+      <h2>{{__('mycustom.upcomingEvents')}}</h2>
       <div class="justify-content-between row event-div p-4">
         <a href="#" class="col-md event-hover">
           <div class="card text-bg-dark  col-md event-hover">

@@ -3,33 +3,18 @@
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/WhoWeAre.css')}}">
 
-    <div class="WhoWeAre">
+    <div class="WhoWeAre" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
       <div class="WhoFirstSection row">
         <div class="Right col-lg-5">
           <div class="header">
             <h1>{{__('mycustom.whoWeAreTitle')}}</h1>
             <h3>
-              ArtFeat Is a platform Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Duis auctor efficitur velit at commodo.
+            {{__('mycustom.expressYour')}}
             </h3>
           </div>
           <div class="content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-              auctor efficitur velit at commodo. Proin rutrum ante a urna
-              gravida commodo. Suspendisse potenti. Aliquam erat volutpat. Morbi
-              id posuere ligula. In euismod purus id sapien bibendum, in congue
-              lacus ultrices. Sed a eleifend ipsum. Pellentesque habitant morbi
-              tristique senectus et netus et malesuada fames ac turpis egestas.
-              Vestibulum semper, nibh eu consequat accumsan, tellus metus tempor
-              velit, nec lacinia velit mauris vitae urna. Proin non urna sit
-              amet metus vulputate bibendum. Duis id mauris lobortis, finibus
-              purus sed, semper mi. Aliquam id facilisis enim, vel consequat
-              nulla. Curabitur condimentum, ante at mollis dapibus, neque mauris
-              iaculis augue, ac ullamcorper felis lacus sit amet massa.
-              Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-              posuere cubilia Curae; Nullam pharetra sapien in metus placerat,
-              nec faucibus velit rutrum.
+            {{__('mycustom.newlyEstablished')}}
             </p>
           </div>
         </div>
@@ -49,18 +34,19 @@
           </div>
           <div class="content">
             <p>
-              Pellentesque habitant morbi tristique senectus et netus et
-              malesuada fames ac turpis egestas. Vestibulum semper, nibh eu
-              consequat accumsan, tellus metus tempor velit, nec lacinia velit
-              mauris vitae urna. Proin non urna sit amet metus vulputate
-              bibendum. Duis id mauris lobortis, finibus purus sed, semper mi.
-              Aliquam id facilisis enim, vel consequat nulla. Curabitur
-              condimentum, ante at mollis dapibus, neque mauris iaculis augue,
-              ac ullamcorper felis lacus sit amet massa. Vestibulum ante ipsum
-              primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-              Nullam pharetra sapien in metus placerat, nec faucibus velit
-              rutrum.
+            {{__('mycustom.indeedYour')}}
             </p>
+            <p>
+            {{__('mycustom.creativityIs')}}
+            </p>
+
+            <p>
+            {{__('mycustom.weStrive')}}
+            </p>
+            <p>
+            {{__('mycustom.theseValues')}}
+            </p>
+
           </div>
         </div>
       </div>
@@ -71,17 +57,8 @@
           </div>
           <div class="content">
             <p>
-              Pellentesque habitant morbi tristique senectus et netus et
-              malesuada fames ac turpis egestas. Vestibulum semper, nibh eu
-              consequat accumsan, tellus metus tempor velit, nec lacinia velit
-              mauris vitae urna. Proin non urna sit amet metus vulputate
-              bibendum. Duis id mauris lobortis, finibus purus sed, semper mi.
-              Aliquam id facilisis enim, vel consequat nulla. Curabitur
-              condimentum, ante at mollis dapibus, neque mauris iaculis augue,
-              ac ullamcorper felis lacus sit amet massa. Vestibulum ante ipsum
-              primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-              Nullam pharetra sapien in metus placerat, nec faucibus velit
-              rutrum.
+            {{__('mycustom.joinDesc')}}
+            
             </p>
           </div>
         </div>

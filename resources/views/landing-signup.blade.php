@@ -20,18 +20,18 @@
       <div class="outerForm">
         <div class="form login">
           
-          <header>Create Account</header>
-          <h3>Be the spark of the artistry of ARTFEAT</h3>
+          <header>{{__('mycustom.createAnAccount')}}</header>
+          <h3>{{__('mycustom.beTheSpark')}} ARTFEAT</h3>
           <div class="media-options">
             <a href="#" class="field facebook">
               <span><img src="{{asset('assets/img/Google.svg')}}" /></span>
-              <span>Continue with Google</span>
+              <span>{{__('mycustom.continueWithGoogle')}}</span>
             </a>
           </div>
           <div class="media-options">
             <a href="#" class="field google">
               <span><img src="{{asset('assets/img/Apple.svg')}}" /></span>
-              <span>Sign in with Apple</span>
+              <span>{{__('mycustom.signInWithApple')}}</span>
             </a>
           </div>
           <div class="line"></div>
@@ -41,7 +41,7 @@
             <div class="row">
             <div class="col-md-6">
             <div class="field input-field">
-                <input id="name" type="text" placeholder="Name" class="input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus />
+                <input id="name" type="text" placeholder="{{__('mycustom.name')}}" class="input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus />
                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -57,7 +57,7 @@
               
               <div class="col-md-6">
               <div class="field input-field">
-                <input id="email" type="email" placeholder="Email" class="input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" />
+                <input id="email" type="email" placeholder="{{__('mycustom.email')}}" class="input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" />
                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -72,7 +72,7 @@
                 <input
                 id="password"
                   type="password"
-                  placeholder="password"
+                  placeholder="{{__('mycustom.password')}}"
                   class="password-input @error('password') is-invalid @enderror"
                   name="password" required autocomplete="new-password"
                 />
@@ -89,7 +89,7 @@
                 <input
                 id="password-confirm"
                   type="password"
-                  placeholder="Confirm password"
+                  placeholder="{{__('mycustom.confirmPassword')}}"
                   class="password-input2"
                   name="password_confirmation" required autocomplete="new-password"
                 />

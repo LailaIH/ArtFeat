@@ -49,10 +49,11 @@
                                             Upload Product Image
                                         </label>
                                         <input style="display: none;" type="file" name="img" id="img" class="form-control-file" multiple onchange="updateProfileImage(event);" required>
-                                        @error('img')
+                                       
+                                    </div>
+                                    @error('img')
                                               {{$message}}
                                             @enderror
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-xl-8">
