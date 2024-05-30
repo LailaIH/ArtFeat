@@ -8,16 +8,16 @@
         <img src="/assets/img/shadowBlue.svg" />
       </div>
       <div class="header">
-        <h1>Add New Collection</h1>
+        <h1>{{__('mycustom.addNewCollection')}}</h1>
       </div>
     </div>
     <div class="EditProfileSection">
 
     <div class="pageContent">
       <div>
-      <a href="{{route('artists.profile',['id'=>auth()->user()->id])}}"> < Back to Profile</a>
+      <a href="{{route('artists.profile',['id'=>auth()->user()->id])}}"> {{__('mycustom.backToProfile')}}</a>
       </div> <br>
-      <h3>Your Collection Details</h3>
+      <h3>{{__('mycustom.yourCollectionDetails')}}</h3>
       <div class="outerEditProfile" style="justify-content: center;
         align-items: center;">
         <div class="profile">
@@ -26,7 +26,7 @@
               @csrf
               
                 <div>
-                  <label for="name">Collection Name</label>
+                  <label for="name">{{__('mycustom.collectionName')}}</label>
                   <input style="width:300px; margin-left:20px;" type="text" name="name" id="name" tabindex="1" value="{{old('name')}}" />
                   @error('name')
                       {{$message}}
@@ -36,8 +36,8 @@
             
               <fieldset>
                 <div class="justifyButtons ">
-                  <input type="button" class="Btn cancel" value="Cancel" />
-                  <input type="submit" class="Btn " value="Create Collection" />
+                  <input type="button" class="Btn cancel" value="{{__('mycustom.cancel')}}" />
+                  <input type="submit" class="Btn " value="{{__('mycustom.createCollection')}}" />
                 </div>
               </fieldset>
             </form>

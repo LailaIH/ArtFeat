@@ -69,6 +69,8 @@ Route::get('/live/join', function () {
 
 
 
+
+
 Route::get('/who/we/are', function () {
     return view('who-we-are');
 });

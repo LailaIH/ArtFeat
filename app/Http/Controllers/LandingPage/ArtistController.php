@@ -84,9 +84,12 @@ class ArtistController extends Controller
         $collections = Collection::where('artist_id',$artist->id)->where('is_online',1)->get();
         $carts = Cart::where('user_id',$user->id)->where('is_online',1)->get();
 
+        $products = Product::where('artist_id', $user->id)
+        ->where('is_online',1)->get();
         return view('artists.profile',['artist'=>$artist , 'user'=>$user ,
          'collections'=>$collections,
-        'carts'=>$carts]);
+        'carts'=>$carts,
+         'products'=>$products]);
     }
 
     public function updateProfilePicture(Request $request ,$id){

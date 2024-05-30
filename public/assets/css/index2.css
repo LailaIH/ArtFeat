@@ -290,6 +290,7 @@ nav input[type="checkbox"] {
   cursor: pointer;
   transition: 500ms;
 }
+
 .liveStream:hover {
   width: 110px;
   background-color: #1b2741;
@@ -3353,6 +3354,12 @@ nav input[type="checkbox"] {
   width: 55px;
   height: 55px;
   flex-shrink: 0;
+}
+/* added by me */
+/* Styles for Arabic language */
+:lang(ar) .outerFooter .content .input-botton {
+  right: auto;
+  left: 3px;
 }
 .outerFooter .content .input-botton p {
   margin-top: 10px;

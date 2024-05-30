@@ -364,7 +364,16 @@ nav input[type="checkbox"] {
 .outerProfile .innerProfile .header .name {
   position: absolute;
   left: 250px;
+
 }
+
+/* Styles for RTL direction */
+:dir(rtl) .outerProfile .innerProfile .header .name {
+  left: auto; /* Reset left position */
+  right: 250px; /* Apply right position */
+}
+
+
 .outerProfile .innerProfile .header .actions {
   display: flex;
   align-items: center;
@@ -511,9 +520,15 @@ nav input[type="checkbox"] {
 }
 .collections .addnew {
   position: absolute;
-  top: -90px;
+  top: -80px;
   right: 50px;
 }
+/* my adding */
+:dir(rtl) .collections .addnew {
+  right: auto; /* Reset right position */
+  left: 50px;  /* Apply left position */
+}
+
 .artwork .addnew {
   position: absolute;
   top: -90px;

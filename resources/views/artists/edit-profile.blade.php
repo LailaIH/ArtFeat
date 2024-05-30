@@ -8,16 +8,16 @@
         <img src="/assets/img/shadowBlue.svg" />
       </div>
       <div class="header">
-        <h1>Profile Details</h1>
+        <h1>{{__('mycustom.profileDetails')}}</h1>
       </div>
     </div>
     <div class="EditProfileSection">
 
     <div class="pageContent">
       <div>
-      <a href="{{route('artists.profile',['id'=>$user->id])}}"> < Back to Profile</a>
+      <a href="{{route('artists.profile',['id'=>$user->id])}}"> {{__('mycustom.backToProfile')}}</a>
       </div> <br>
-      <h3>Your Profile Details</h3>
+      <h3>{{__('mycustom.yourProfileDetails')}}</h3>
       <div class="outerEditProfile">
         <div class="profile">
           <div class="content">
@@ -30,7 +30,7 @@
               
               
                 <div class="ddd">
-                  <label for="avatar">Your Photo</label>
+                  <label for="avatar">{{__('mycustom.yourPhoto')}}</label>
                
                   
                     <span class="photo" title="Upload your Avatar!" >
@@ -38,7 +38,7 @@
 
                     </span></div>
                     <label for="img" class="btn btn-primary">
-                                            Upload New Image
+                    {{__('mycustom.uploadNewImage')}}
                                         </label>
                     <input style="display: none;" id="img" type="file" name="img" class="btn" onchange="updateProfileImage(event);" />
                
@@ -48,7 +48,7 @@
               
                 <fieldset>
                   
-                  <label  for="name">Artist Name</label>
+                  <label  for="name">{{__('mycustom.artistName')}}</label>
                 
                 
                   <input type="text" name="name" id="name" tabindex="1" value="{{$user->name}}" />
@@ -59,7 +59,7 @@
               <div class="col-6">
               <fieldset class="mydiv">
               
-                  <label for="store_name">Store </label>
+                  <label for="store_name">{{__('mycustom.store')}}</label>
              
                   <input type="text" name="store_name" id="store_name" tabindex="2" value="{{$artist->store_name}}" />
               
@@ -68,7 +68,7 @@
               <div class="col-6">
               <fieldset>
                
-                  <label for="description">Country</label>
+                  <label for="description">{{__('mycustom.country')}}</label>
                 
                   <input
                     name="country"
@@ -85,7 +85,7 @@
               <div class="col-md-6">
               <fieldset>
                 
-                  <label for="location">City</label>
+                  <label for="location">{{__('mycustom.city')}}</label>
                
                   <input name="city" type="text" id="location" tabindex="4" value="{{$artist->city}}" />
                 
@@ -95,7 +95,7 @@
               <div class="col-md-6">
               <fieldset>
                 
-                  <label for="forHire ">Artwork provided</label>
+                  <label for="forHire ">{{__('mycustom.artworkProvided')}}</label>
                 
                 
                   <div class="justifyButtons ">
@@ -122,7 +122,7 @@
               
               <fieldset>
                 
-                  <label class="me-5" for="Language">Language</label>
+                  <label class="me-5" for="Language">{{__('mycustom.language')}}</label>
                 
                   <select class="form-select" name="language" id="language" tabindex="8">
                     <option selected="selected" value="---" disabled>
@@ -138,7 +138,7 @@
               <div class="col-md-6">
               <fieldset>
                 
-                  <label for="Facebook">Facebook</label>
+                  <label for="Facebook">{{__('mycustom.facebook')}}</label>
                 
                   <input name="facebook" value="{{$artist->facebook}}" type="Facebook" id="position" tabindex="11" />
                 
@@ -148,7 +148,7 @@
               <div class="col-md-6">
               <fieldset>
                 
-                  <label for="Instagram">Instagram</label>
+                  <label for="Instagram">{{__('mycustom.instagram')}}</label>
                
                   <input type="text" name="instagram" value="{{$artist->instagram}}" id="Instagram" tabindex="12" />
                 
@@ -158,7 +158,7 @@
               <div class="col-md-6">
               <fieldset>
                 
-                  <label for="Tiktok">Tiktok</label>
+                  <label for="Tiktok">{{__('mycustom.tiktok')}}</label>
                 
                   <input type="text" name="tiktok" value="{{$artist->tiktok}}" id="Tiktok" tabindex="13" />
                 
@@ -167,7 +167,7 @@
               <div class="col-md-6">
               <fieldset style="border-bottom: none">
                 
-                  <label for="Twitter">Twitter</label>
+                  <label for="Twitter">{{__('mycustom.twitter')}}</label>
                 
                   <input type="text" name="twitter" value="{{$artist->twitter}}" id="Twitter" tabindex="14" />
                 
@@ -178,7 +178,7 @@
               <div class="col-md-6">
               <fieldset>
                 
-                  <label for="website">Website</label>
+                  <label for="website">{{__('mycustom.website')}}</label>
                 
                   <input name="website" value="{{$artist->website}}" type="text" id="website" tabindex="15" />
                 
@@ -188,7 +188,7 @@
               <div class="col-md-6">
               <fieldset>
                 
-                  <label for="behance">Behance</label>
+                  <label for="behance">{{__('mycustom.behance')}}</label>
                
                   <input type="text" name="behance" value="{{$artist->behance}}" id="behance" tabindex="16" />
                 
@@ -199,8 +199,8 @@
 
               <fieldset>
                 <div class="justifyButtons">
-                  <input type="button" class="Btn cancel" value="Cancel" />
-                  <input type="submit" class="Btn" value="Save Changes" />
+                <a href="{{route('artists.profile',auth()->user()->id)}}"> <input type="button" class="Btn cancel" value="{{__('mycustom.cancel')}}" /></a>
+                  <input type="submit" class="Btn" value="{{__('mycustom.saveChanges')}}" />
                 </div>
               </fieldset>
             </form>

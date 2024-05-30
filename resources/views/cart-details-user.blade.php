@@ -11,7 +11,7 @@
       </div>
       <div class="header">
         
-        <h1>Cart Details</h1>
+        <h1>{{__('mycustom.cartDetails')}}</h1>
       </div>
     </div>
     @if (session('success'))
@@ -29,7 +29,7 @@
     <div class="CartDetailsSection">
     <div class="pageContent">
     @if(!$carts->isEmpty())
-      <h3>Cart</h3>
+      <h3>{{__('mycustom.cart')}}</h3>
       <div class="cartSection">
         <div class="wrapperCards">
 
@@ -57,7 +57,7 @@
                   </div>
                   <div class="price">
                     <p>$<span>{{$cart->product->price}}</span></p>
-                    <div id="subtotal_{{$cart->id}}" class="mydiv">total:${{$cart->product->price*$cart['quantity']}}</div>
+                    <div id="subtotal_{{$cart->id}}" class="mydiv">{{__('mycustom.total')}}:${{$cart->product->price*$cart['quantity']}}</div>
                   </div>
                 </div>
                 <div class="actions">
@@ -108,47 +108,47 @@
         </div>
         <div class="saleDetails">
           <div class="saleCard" id="saleCard_{{$cart->id}}">
-            <header>Order summary</header>
+            <header>{{__('mycustom.orderSummary')}}</header>
             <div>
               <div class="info">
                 <div class="subTotal">
-                  <p>Subtotal</p>
+                  <p>{{__('mycustom.subtotal')}}</p>
                   <p>$ <span>27.44</span></p>
                 </div>
                 <div class="Shipping">
-                  <p>Shipping</p>
+                  <p>{{__('mycustom.shipping')}}</p>
                   <p>$ <span>7.44</span></p>
                 </div>
               </div>
               <div class="divider"></div>
               <div class="subInfo">
-                <div class="item">This Item Is A Gift</div>
-                <div class="item">Add Frame</div>
+                <div class="item">{{__('mycustom.thisItemIsAGift')}}</div>
+                <div class="item">{{__('mycustom.addFrame')}}</div>
               </div>
               <div class="divider"></div>
               <div class="total">
-                <p>Total</p>
+                <p>{{__('mycustom.Total')}}</p>
                 <p id="total_{{$cart->id}}">$<span>{{$total}}</span></p>
               </div>
             </div>
             <form action="{{route('checkout')}}" method="POST">
               @csrf
             <button>
-              Continue to payment
+            {{__('mycustom.continueToPayment')}}
             </button> 
            
           </form>
           
-              <a class="btn btn-primary" style="text-decoration: none; color: white;" href="{{route('paidInvoices')}}">Show my paid invoices</a>
+              <a class="btn btn-primary" style="text-decoration: none; color: white;" href="{{route('paidInvoices')}}">{{__('mycustom.showMyPaidInvoices')}}</a>
             
             
           </div>
         </div>
       </div>
       @else
-      <h5 class="mt-4 mb-4" style="color: #35ace8;">No Items In Your Cart</h5>
+      <h5 class="mt-4 mb-4" style="color: #35ace8;">{{__('mycustom.noItemsInYourCart')}}</h5>
       
-              <a class="btn btn-primary btn-sm"   href="{{route('paidInvoices')}}">Show my paid invoices</a>
+              <a class="btn btn-primary btn-sm"   href="{{route('paidInvoices')}}">{{__('mycustom.showMyPaidInvoices')}}</a>
             
       @endif
     </div>

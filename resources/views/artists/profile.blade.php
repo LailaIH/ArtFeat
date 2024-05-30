@@ -69,9 +69,7 @@
               @endif
 
               <div class="actions mt-4">
-              @php 
-                $products = DB::table('products')->where('artist_id', $user->id)->get();
-              @endphp
+              
                 @if($products->isEmpty())
                 <div><span>0</span>Artworks</div>
                 @else
@@ -138,10 +136,7 @@
                 </div>
               </nav>
               <div class="tab-content mt-4" id="nav-tabContent">
-                @php 
-                $products = DB::table('products')->where('artist_id', $user->id)
-                ->where('is_online',1)->get();
-                @endphp
+                
                 <div
                   class="tab-pane fade show active artwork"
                   id="nav-Work"
@@ -181,10 +176,11 @@
                   id="nav-Collections"
                   role="tabpanel"
                   aria-labelledby="nav-Collections-tab"
+                  
                 >
                   <div class="addnew">
                     <a href="{{route('artists.showAddCollection')}}">
-                    <button>{{__('mycustom.addCollection')}}</button></a>
+                    <button >{{__('mycustom.addCollection')}}</button></a>
                   </div>
                   @if(!$collections->isEmpty())
                 <div class="outerCollections">

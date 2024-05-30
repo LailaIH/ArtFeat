@@ -11,7 +11,7 @@
       </div>
       <div class="header">
         
-        <h1>Invoice Details</h1>
+        <h1>{{__('mycustom.invoiceDetails')}}</h1>
       </div>
     </div>
    
@@ -34,13 +34,13 @@
       <thead>
         <tr>
 
-        <th>Product Name</th>
-        <th>Product Price</th>
-        <th>Quantity</th>
-        <th>Sub Total</th>
-        <th>Image</th>
+        <th>{{__('mycustom.productName')}}</th>
+        <th>{{__('mycustom.productPrice')}}</th>
+        <th>{{__('mycustom.Quantity')}}</th>
+        <th>{{__('mycustom.subtotal')}}</th>
+        <th>{{__('mycustom.Image')}}</th>
         <th></th>
-        <th>Paid At</th>
+        <th>{{__('mycustom.PaidAt')}}</th>
        
 
         </tr>
@@ -76,7 +76,7 @@
 
     @endforeach
     <tr>
-      <th>Total</th>
+      <th>{{__('mycustom.Total')}}</th>
       <td style="color: green;"><b>${{$total}}</b></td>
       </tr>
       </tbody>

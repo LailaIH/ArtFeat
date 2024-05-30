@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -98,21 +98,21 @@
               </div>
             </div></div>
               <div class="field button-field">
-                <a>Forgot password?</a>
-                <button>Signup</button>
+                <a>{{__('mycustom.forgotPassword')}}</a>
+                <button>{{__('mycustom.signup')}}</button>
               </div>
             </form>
 
             <div class="artist">
             <span
-              >Are you an Artist?<a href="{{route('artists.signup')}}"><button>Let’s get you started</button></span
+              >{{__('mycustom.areYouAnArtist')}}<a href="{{route('artists.signup')}}"><button>{{__('mycustom.letsGetYouStarted')}}</button></span
             > </a>
           </div>
 
             <div class="form-link">
               <span
-                >Already have an account?
-                <a href="/landing/login" class="link login-link">Login</a></span
+                >{{__('mycustom.alreadyHaveAccount')}}
+                <a href="/landing/login" class="link login-link">{{__('mycustom.login')}}</a></span
               >
             </div>
           </div>

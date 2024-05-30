@@ -1,7 +1,7 @@
 @extends('commonlanding')
 @section('content')
 <div class="liveStream">
-    <div class="innerLive">
+    <div class="innerLive" >
         <p>{{ __('mycustom.live')}}</p>
         <img src="{{asset('assets/img/livestream.svg')}}" alt="">
     </div>
@@ -75,7 +75,7 @@
     </button>
   </div>
 <!-- Categories -->
-<section class="CategoriesSection">
+<section class="CategoriesSection" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
     <h1>{{ __('mycustom.shopByCategory')}}</h1>
     <div class="Categories">
         @foreach($sections as $section)
@@ -106,7 +106,7 @@
 
 
 <!--Coming Event  -->
-<section class="eventsSection p-3">
+<section class="eventsSection p-3" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
     <div class="container p-5 justify-content-between">
       <h2>{{__('mycustom.upcomingEvents')}}</h2>
       <div class="justify-content-between row event-div p-4">
@@ -149,16 +149,16 @@
 <!-- painting -->
 <section class="paintingSection">
     <div class="outer">
-        <div class="row">
+        <div class="row"> 
             <div class="col-6">
                 <h3 class="mb-3">{{ __('mycustom.lastPaintings')}}  </h3>
             </div>
             <div class="buttonss">
-                <a class="btn btn-primary" href="#carouselExampleIndicators2" role="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
-                    <i class="fa fa-arrow-left"></i>
+                <a class="btn btn-primary" href="#carouselExampleIndicators2" role="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="{{app()->getLocale()==='en'?'prev':'next'}}">
+                    <i class="fa fa-arrow-{{app()->getLocale()==='en'?'left':'right'}}"></i>
                 </a>
-                <a class="btn btn-primary " href="#carouselExampleIndicators2" role="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="next">
-                    <i class="fa fa-arrow-right"></i>
+                <a class="btn btn-primary " href="#carouselExampleIndicators2" role="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="{{app()->getLocale()==='en'?'next':'prev'}}">
+                    <i class="fa fa-arrow-{{app()->getLocale()==='en'?'right':'left'}}"></i>
                 </a>
             </div>
             <div class="col-12">
@@ -228,11 +228,11 @@
                 <h3 class="mb-3">{{ __('mycustom.bestSeller')}}   </h3>
             </div>
             <div class="buttonss">
-                <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators3" role="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide="prev">
-                    <i class="fa fa-arrow-left"></i>
+                <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators3" role="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide="{{app()->getLocale()==='en'?'prev':'next'}}">
+                    <i class="fa fa-arrow-{{app()->getLocale()==='en'?'left':'right'}}"></i>
                 </a>
-                <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators3" role="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide="next">
-                    <i class="fa fa-arrow-right"></i>
+                <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators3" role="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide="{{app()->getLocale()==='en'?'next':'prev'}}">
+                    <i class="fa fa-arrow-{{app()->getLocale()==='en'?'right':'left'}}"></i>
                 </a>
             </div>
             <div class="col-12">
@@ -247,7 +247,7 @@
                                         </div>
                                         <div class="info">
                                             <h2>Autumn fallen leaves</h2>
-                                            <p><span>{{ __('mycustom.by')}}: </span>Horace Cooper</p>
+                                            <p><span>{{ __('mycustom.by')}} </span>Horace Cooper</p>
                                         </div>
                                         <div class="footerBtn">
                                             <button>{{ __('mycustom.addToCart')}}</button>
@@ -434,11 +434,11 @@
                 <h3 class="mb-3">{{ __('mycustom.popularArtists')}} </h3>
             </div>
             <div class="buttonss">
-                <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators4" role="button" data-bs-target="#carouselExampleIndicators4" data-bs-slide="prev">
-                    <i class="fa fa-arrow-left"></i>
+                <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators4" role="button" data-bs-target="#carouselExampleIndicators4" data-bs-slide="{{app()->getLocale()==='en'?'prev':'next'}}">
+                    <i class="fa fa-arrow-{{app()->getLocale()==='en'?'left':'right'}}"></i>
                 </a>
-                <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators4" role="button" data-bs-target="#carouselExampleIndicators4" data-bs-slide="next">
-                    <i class="fa fa-arrow-right"></i>
+                <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators4" role="button" data-bs-target="#carouselExampleIndicators4" data-bs-slide="{{app()->getLocale()==='en'?'next':'prev'}}">
+                    <i class="fa fa-arrow-{{app()->getLocale()==='en'?'right':'left'}}"></i>
                 </a>
             </div>
             <div class="col-12">

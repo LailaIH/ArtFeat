@@ -3,7 +3,7 @@
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/termsAndConditions.css')}}">
 
-    <div class="pageHeader">
+    <div class="pageHeader" >
       <img src="/assets/img/termsconditions.svg" />
       <div class="overLay">
         <img src="/assets/img/shadowBlue.svg" />
@@ -12,7 +12,7 @@
         <h1>{{__('mycustom.termsAndConditions')}}</h1>
       </div>
     </div>
-    <div class="outerPrivacy">
+    <div class="outerPrivacy" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
     <div class="pageContent">
       <div aria-label="Breadcrumb" class="breadcrumb">
         <ul>

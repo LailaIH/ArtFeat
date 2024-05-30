@@ -11,26 +11,26 @@
         <img src="{{asset('assets/img/shadowBlue.svg')}}" />
       </div>
       <div class="header">
-        <h1>Add Artwork </h1>
+        <h1>{{__('mycustom.addArtwork')}}</h1>
       </div>
     </div>
-    <div class="EditProfileSection">
+    <div class="EditProfileSection" >
     <div class="pageContent">
     @if ($errors->has('fail'))
     <div class="alert alert-danger">
            {{ $errors->first('fail') }}
       </div>
  @endif 
-      <a href="{{route('artists.profile',auth()->user()->id)}}">Back to Profile</a>
-      <h3>Add New Artwork To Your Collection</h3>
-      <div class="outerEditProfile addNewWork">
+      <a href="{{route('artists.profile',auth()->user()->id)}}">{{__('mycustom.backToProfile')}}</a>
+      <h3>{{__('mycustom.addNewArtwork')}}</h3>
+      <div class="outerEditProfile addNewWork" >
         <div class="profile">
           <div class="content">
             <form action="{{route('artists.add_to_collection',['id'=>$collection['id']])}}" method="POST" enctype="multipart/form-data" id="image-form">
               @csrf
              <fieldset>
                 <div class="grid-35">
-                  <label for="name">Image Title</label>
+                  <label for="name">{{__('mycustom.imgTitle')}}</label>
                 </div>
                 <div class="grid-65">
                   <input name="name" type="text" id="name" tabindex="1" value="{{old('name')}}" required />
@@ -42,7 +42,7 @@
               <!-- Type -->
               <fieldset>
                 <div class="grid-35">
-                  <label for="type">Artwork Type</label>
+                  <label for="type">{{__('mycustom.artworkType')}}</label>
                 </div>
                 <div class="grid-65">
                   <select name="type" id="type" tabindex="8" required class="form-select" aria-label="Default select example">
@@ -59,7 +59,7 @@
               <!-- Upload Digital Work File -->
               <fieldset>
                 <div class="grid-35">
-                  <label for="Type">Upload Digital Work File</label>
+                  <label for="Type">{{__('mycustom.uploadDigital')}}</label>
                 </div>
                 <div class="grid-65">
                   <div class="file-upload-wrapper" id="fileUploadWrapper" >
@@ -76,13 +76,13 @@
               <!-- Artwork Category -->
               <fieldset>
                 <div class="grid-35">
-                  <label for="section">Artwork Category</label>
+                  <label for="section">{{__('mycustom.artworkCategory')}}</label>
                 </div>
                 <div class="grid-65">
                   <select name="section_id" id="section_id" tabindex="8" class="form-select" aria-label="Default select example">
                     
                     <option selected="selected" value="" disabled {{ old('section_id') == '' ? 'selected' : '' }}>
-                      Choose Category
+                    {{__('mycustom.chooseCategory')}}
                     </option>
                     @foreach($sections as $section)
                     <option value="{{$section->id}}" {{ old('section_id') == $section->id ? 'selected' : '' }}>{{$section->name}}</option>
@@ -96,7 +96,7 @@
              
               <fieldset>
                 <div class="grid-35">
-                  <label for="Description">Description</label>
+                  <label for="Description">{{__('mycustom.description')}}</label>
                 </div>
                 <div class="grid-65">
                   <textarea
@@ -117,14 +117,14 @@
               </fieldset>
               <fieldset>
                 <div class="grid-35">
-                  <label for="">Did you create this art piece?</label>
+                  <label for="">{{__('mycustom.didYouCreate')}}</label>
                 </div>
                 <div class="grid-65">
                   <div class="RadioButtons">
                     <div class="form">
                       <label
                         ><input type="radio" class="input-radio" name="created" value="yes" @if(old('geckoHatchling')==='yes') checked @endif  />
-                        Yes</label
+                        {{__('mycustom.yes')}}</label
                       >
                       <label
                         ><input
@@ -136,7 +136,7 @@
                           @if(old('geckoHatchling')==='no') checked @endif
                          
                         />
-                        No</label
+                        {{__('mycustom.no')}}</label
                       >
                     </div>
                   </div>
@@ -146,7 +146,7 @@
             
               <fieldset>
                 <div class="grid-35">
-                  <label for="date">Date of creation</label>
+                  <label for="date">{{__('mycustom.dateOfCreation')}}</label>
                 </div>
                 <div class="grid-65">
                   <input name="date" type="date" id="date" tabindex="11" required value="{{old('date')}}" />
@@ -159,7 +159,7 @@
               
               <fieldset>
                 <div class="grid-35">
-                  <label for="Artwork Dimensions">Artwork Dimensions</label>
+                  <label for="Artwork Dimensions">{{__('mycustom.artworkDimensions')}}</label>
                 </div>
                 <div class="grid-65">
                   <input
@@ -178,7 +178,7 @@
               <!-- Price -->
               <fieldset>
                 <div class="grid-35">
-                  <label for="price">Price</label>
+                  <label for="price">{{__('mycustom.price')}}</label>
                 </div>
                 <div class="grid-65">
                   <input name="price" type="number" id="price" tabindex="12" required value="{{old('price')}}" />
@@ -190,7 +190,7 @@
               <!-- Price After Discount -->
               <fieldset>
                 <div class="grid-35">
-                  <label for="discount_price">Price After Discount</label>
+                  <label for="discount_price">{{__('mycustom.priceAfterDiscount')}}</label>
                 </div>
                 <div class="grid-65">
                   <input name="discount_price" type="number" id="discount_price" tabindex="13" value="{{old('discount_price')}}" />
@@ -202,7 +202,7 @@
               <!--Quantity -->
               <fieldset style="border-bottom: none">
                 <div class="grid-35">
-                  <label for="quantity">Quantity</label>
+                  <label for="quantity">{{__('mycustom.quantity')}}</label>
                 </div>
                 <div class="grid-65">
                   <input name="quantity" type="number" id="quantity" tabindex="13" value="{{old('quantity')}}" required />
@@ -213,8 +213,8 @@
               </fieldset>
               <fieldset>
                 <div class="justifyButtons">
-                  <input type="button" class="Btn cancel" value="Cancel" />
-                  <input type="submit" class="Btn" value="Save Changes" />
+                <a href="{{route('artists.profile',auth()->user()->id)}}"><input type="button" class="Btn cancel" value="{{__('mycustom.cancel')}}" /></a>
+                  <input type="submit" class="Btn" value="{{__('mycustom.saveChanges')}}" />
                 </div>
               </fieldset>
             
@@ -223,7 +223,7 @@
         <div class="content">
           
             <div class="switcher">
-              <div>Product Visibility</div>
+              <div>{{__('mycustom.productVisibility')}}</div>
               <div>
                 <input name="visibility" type="checkbox" id="switch" {{ old('visibility') ? 'checked' : '' }} /><label for="switch"
                   >Toggle</label
@@ -231,7 +231,7 @@
               </div>
             </div>
             <div class="imagesSection">
-              <div class="file-upload-wrapper file-upload-wrapper2 mt-4 " data-text="Add New Image">
+              <div class="file-upload-wrapper file-upload-wrapper2 mt-4 " data-text="{{__('mycustom.addNewImage')}}">
                 <input
                   name="img"
                   id="img"

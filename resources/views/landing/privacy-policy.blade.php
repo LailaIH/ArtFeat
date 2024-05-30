@@ -9,7 +9,7 @@
         <h1>{{__('mycustom.privacyPolicy')}}</h1>
       </div>
     </div>
-    <div class="outerPrivacy">
+    <div class="outerPrivacy" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
     <div class="pageContent">
       <div aria-label="Breadcrumb" class="breadcrumb">
         <ul>

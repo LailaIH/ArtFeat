@@ -1,7 +1,7 @@
 <?php
 return [
 
-    //header
+    //header and footer
     'gallery'=> 'Gallary',
     'signup'=>'Sign Up',
     'artists'=>'Artists',
@@ -283,6 +283,87 @@ return [
     'alreadyHaveAccount'=>'Already have an account?',
     'login'=>'Login',
 
+    // artist signup
+    'generalInfo'=>'General Information',
+    'storeName'=>'Store Name',
+    'selectCountry'=>'Select a Country',
+    'selectCity'=>'Select a City',
+    'isYourBusinessRegistered'=>'Is your business registered?',
+    'yes'=>'Yes',
+    'no'=>'No',
+
+      // edit profile
+      'yourProfileDetails'=>'Your Profile Details
+      ',
+      'yourPhoto'=>'Your Photo',
+      'uploadNewImage'=>'Upload New Image',
+      'artistName'=>'Artist Name',
+      'store'=>'Store',
+      'country'=>'Country',
+      'city'=>'City',
+      'artworkProvided'=>'Artwork Provided',
+      'language'=>'Language',
+      'facebook'=>'Facebook',
+      'instagram'=>'Instagram',
+      'tiktok'=>'Tiktok',
+      'twitter'=>'Twitter',
+      'website'=>'Website',
+      'behance'=>'Behance',
+      'backToProfile'=>'< Back to Profile',
+      'profileDetails'=>'Profile Details',
+      'cancel'=>'Cancel',
+      'saveChanges'=>'Save Changes',
+
+    // add to collection
+    'addNewArtwork'=>'Add New Artwork To Your Collection
+
+    ',
+    'imgTitle'=>'Image Title',
+    'artworkType'=>'Artwork Type',
+    'uploadDigital'=>'Upload Digital Work File',
+    'artworkCategory'=>'Artwork Category',
+    'description'=>'Description',
+    'didYouCreate'=>'Did you create this art piece?',
+    'dateOfCreation'=>'Date of creation',
+    'artworkDimensions'=>'Artwork Dimensions',
+    'price'=>'Price',
+    'priceAfterDiscount'=>'Price After Discount',
+    'quantity'=>'Quantity',
+    'productVisibility'=>'Product Visibility',
+    'upload'=>'Upload',
+    'addNewImage'=>'Add New Image',
+    'add'=>'Add',
+    'chooseCategory'=>'Choose Category',
+    'addArtwork'=>'Add Artwork',
+
+    // cart
+       'cartDetails'=>'Cart Details',
+       'cart'=>'Cart',
+       'noItemsInYourCart'=>'No Items In Your Cart',
+       'orderSummary'=>'Order summary',
+       'total'=>'total',
+       'subtotal'=>'Subtotal',
+       'shipping'=>'Shipping',
+       'thisItemIsAGift'=>'This Item Is A Gift',
+       'addFrame'=>'Add Frame',
+       'Total'=>'Total',
+       'continueToPayment'=>'Continue to payment',
+       'showMyPaidInvoices'=>'Show my paid Invoices',
+
+       
+    // paid invoices
+    'invoiceDetails'=>'Invoice Details',
+    'productName'=>'Product Name',
+    'productPrice'=>'Product Price',
+    'Quantity'=>'Quantity',
+    'Image'=>'Image',
+    'PaidAt'=>'Paid At',   
+    
+    // add collection
+        'addNewCollection'=>'Add New Collection',
+        'yourCollectionDetails'=>'Your Collection Details',
+        'collectionName'=>'Collection Name',
+        'createCollection'=>'Create Collection',
 
 
 
