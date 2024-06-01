@@ -68,6 +68,50 @@
           </div>
         </div>
       </div>
+
+
+
+      <div class="WhoSecondSection row">
+        <div class="RightImage col-lg-3">
+          <div class="overLay"><img src="{{asset('assets/img/supporters.jpg')}}" alt="img" /></div>
+        </div>
+        <div class="Left col-lg-8">
+          <div class="header">
+            <h3>{{__('mycustom.supporters')}}</h3>
+          </div>
+        
+        </div>
+      </div>
+
+      <div class="WhoFirstSection row">
+        <div class="Right col-lg-5">
+          <div class="header">
+            <h1>{{__('mycustom.Dedication')}}</h1>
+           
+          </div>
+          <div class="content">
+            <p>
+            {{__('mycustom.weDedicate')}}
+            </p>
+            <p>
+            {{__('mycustom.weAreCommited')}}
+            </p>
+
+            <p>
+            {{__('mycustom.weBelieveThat')}}
+            </p>
+          </div>
+        </div>
+        <div class="LeftImages col-lg-6">
+          <div>
+
+            <img class="mt-4" src="{{asset('assets/img/kareem.jpg')}}" width="320" height="320" alt="" />
+            <p dir="rtl">المهندس كريم جرادة</p>
+          </div>
+        </div>
+      </div>
+
+
     </div>
 
 @endsection

@@ -355,6 +355,49 @@
                         </nav>
                     </div>
 
+
+
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards77" aria-expanded="false" aria-controls="collapseDashboards77">
+                        <div class="nav-link-icon"><i class="fa-solid fa-circle-user text-gray-200"></i></div>
+                        Countries
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseDashboards77" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="{{route('countries.index')}}">
+                                All Countries
+
+                            </a>
+                            <a class="nav-link" href="{{route('countries.create')}}">
+                                New Country
+
+                            </a>
+
+                        </nav>
+                    </div>
+
+
+
+
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards777" aria-expanded="false" aria-controls="collapseDashboards777">
+                        <div class="nav-link-icon"><i class="fa-solid fa-circle-user text-gray-200"></i></div>
+                        Shipping Companies
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseDashboards777" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="{{route('shipping-companies.index')}}">
+                                All Shipping Companies 
+
+                            </a>
+                            <a class="nav-link" href="{{route('shipping-companies.create')}}">
+                                New Shipping Company
+
+                            </a>
+
+                        </nav>
+                    </div>
+
 <!--                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards8" aria-expanded="false" aria-controls="collapseDashboards8">
                         <div class="nav-link-icon"><i
                                 class="fas fa-shopping-cart text-gray-200"></i></div>

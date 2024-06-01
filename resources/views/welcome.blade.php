@@ -570,7 +570,7 @@
         </div>
         <div class="users">
             <div class="user1" >
-                <img src="assets/img/p1.png"/>
+                <img src="assets/img/moh.jpg"/>
                 <div>
                     <p>{{ __('mycustom.viewProfile')}}</p>
                 </div>

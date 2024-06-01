@@ -48,6 +48,12 @@ return [
     'joinOurArtists'=>'Join Our Artists',
     'joinDesc'=>'Are you an artist looking for a platform to showcase your talents? Look no further! Join our vibrant community of artists and connect with a global audience eager to discover unique creations. Whether you are a painter, sculptor, photographer, or any other type of visual artist, we welcome you to share your unique perspective with our diverse audience. Join us today and let your creativity shine!',
 
+    'supporters'=>'Partners and supporters',
+    'Dedication'=>'Dedication',
+    'weDedicate'=>'We dedicate this work to the Palestinian entrepreneurs we lost in this war, to the Palestinian artist Handala, and to all Palestinian artists who express the voice of struggle and steadfastness through their art. We also dedicate this work to the members of the technical team who rose in this war, and who always hoped to create a digital platform that shows Palestinian art to the world in its most beautiful light.',
+    'weAreCommited'=>'We are committed to honoring their sacrifices and conveying the message of Palestinian art to the global arena, believing that creativity and art are powerful means of preserving Palestinian identity and spreading our rich and diverse culture. Through Artfeat, we strive to ensure that their dreams continue and that Palestinian art remains a source of inspiration and global influence.',
+    'weBelieveThat'=>'We believe that art is the language of humanity, and that through it we can build bridges of communication and understanding between people. We call on every Palestinian artist to continue their creativity, united in their message, to paint a brighter future for all of us. Let us build together a strong platform for Palestinian art that reflects the beauty of our history and the splendor of our heritage to the entire world. Through Artfeat, we strive to ensure that their dreams live on and that Palestinian art continues to inspire people around the world.',
+
     // main welcome page
     'shopPaintings'=>'Shop Most Beatiful',
     'paintingsNow'=>'Paintings Now',

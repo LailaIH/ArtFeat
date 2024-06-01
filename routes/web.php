@@ -11,7 +11,8 @@ use App\Http\Controllers\PodcastsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionsController;
 use App\Http\Controllers\CollectionController;
-
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\ShippingCompanyController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\LandingPage\LandingController;
 use App\Http\Controllers\LandingPage\DiscoverController;
@@ -166,6 +167,8 @@ Route::post('/checkout', [StripeController::class, 'checkout'])->name('checkout'
 Route::get('/success', [StripeController::class, 'success'])->name('success');
 Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
 Route::post('/webhook', [StripeController::class, 'webhook'])->name('webhook');
+
+
 
 // Admin Panel Routes
 
@@ -323,6 +326,21 @@ Route::post('/collections/store', [CollectionController::class, 'store'])->name(
 Route::put('/collections/update/{collection}', [CollectionController::class, 'update'])->name('collections.update');
 
 
+// Countries Routes
+Route::get('/countries', [CountryController::class, 'index'])->name('countries.index');
+Route::get('/countries/create', [CountryController::class, 'create'])->name('countries.create');
+Route::get('/countries/edit/{uuid}', [CountryController::class, 'edit'])->name('countries.edit');
+Route::post('/countries/store', [CountryController::class, 'store'])->name('countries.store');
+Route::put('/countries/update/{uuid}', [CountryController::class, 'update'])->name('countries.update');
+
+
+// Shipping Companies Routes
+Route::get('/shipping/companies', [ShippingCompanyController::class, 'index'])->name('shipping-companies.index');
+Route::get('/shipping/companies/create', [ShippingCompanyController::class, 'create'])->name('shipping-companies.create');
+Route::get('/shipping/companies/edit/{uuid}', [ShippingCompanyController::class, 'edit'])->name('shipping-companies.edit');
+Route::post('/shipping/companies/store', [ShippingCompanyController::class, 'store'])->name('shipping-companies.store');
+Route::put('/shipping/companies/update/{uuid}', [ShippingCompanyController::class, 'update'])->name('shipping-companies.update');
+Route::get('/shipping/companies/show/offline/{uuid}', [ShippingCompanyController::class, 'showOffline'])->name('shipping-companies.show_offline');
 
 
 

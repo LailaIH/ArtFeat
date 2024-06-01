@@ -117,4 +117,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Collection::class);
     }
+
+    public function shippingCompanies(){
+        return $this->hasMany(ShippingCompany::class);
+    } 
+    public function countries(){
+        return $this->hasMany(Country::class);
+    } 
 }
