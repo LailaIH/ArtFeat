@@ -69,7 +69,7 @@
                                                 
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" for="description">Description</label>
-                                                    <textarea name="description" id="description" class="form-control" >
+                                                    <textarea name="description" id="description" class="form-control" required >
                                                         
                                                        
                                                     </textarea>  

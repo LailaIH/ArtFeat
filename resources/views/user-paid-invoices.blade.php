@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/cartDetail.css')}}">
@@ -25,6 +25,12 @@
                             <div class="alert alert-success">{{ session('success') }}</div>
                         @endif
 
+                        @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif
+
 
     @if($invoices->isEmpty())
     <h5 class="mt-4 mb-4" style="color: #35ace8;">No Paid Invoices</h5>      
@@ -40,6 +46,7 @@
         <th>{{__('mycustom.subtotal')}}</th>
         <th>{{__('mycustom.Image')}}</th>
         <th></th>
+        <th>{{__('mycustom.paymentType')}}</th>
         <th>{{__('mycustom.PaidAt')}}</th>
        
 
@@ -70,6 +77,17 @@
 
         </td>
         <td></td>
+
+        <td>
+         @if($invoice->status =='paid')
+          {{__('mycustom.visa')}}
+         @elseif($invoice->status =='paid wallet')
+         {{__('mycustom.wallet')}}
+         @else 
+         {{__('mycustom.unknown')}}
+         @endif
+
+        </td>
         <td style="color:blueviolet;">{{ $invoice->updated_at->format('F j, Y, g:i a') }}</td>
       </tr>
      

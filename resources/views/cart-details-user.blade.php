@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/cartDetail.css')}}">
@@ -138,9 +138,46 @@
             </button> 
            
           </form>
+
+
+         <form method="get" action="{{route('showConfirmPayment')}}">
+          @csrf
+         <button id="confirm-payment-button" type="submit" class="btn btn-primary" style=" color: white;">{{__('mycustom.showConfirmPayment')}}</button>
+         </form>
+
+                  <!-- confirm payment with wallet modal -->
+                           
+                  <div class="modal fade" id="exampleModalWallet" tabindex="-1" aria-labelledby="exampleModalLabelWallet" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelWallet">{{ __('mycustom.confirmPayment') }}</h5>
+                </div>
+                <div class="modal-body">
+                    <h4 id="total-pay" style="color: green;"></h4>
+                </div>
+                <div class="modal-footer">
+                    <form id="pay-now-form" class="mt-3" method="get" action="{{ route('payWithWallet') }}">
+                        @csrf
+                        <input name="session_id" type="hidden" id="pay-now-session-id" />
+                        <button type="submit" class="btn btn-success">{{ __('mycustom.payNow') }}</button>
+                    </form>
+                    <form id="cancel-form" class="mt-3" method="get" action="{{ route('cancelWallet') }}">
+                        @csrf
+                        <input name="session_id" type="hidden" id="cancel-session-id" />
+                        <button type="submit" style="background-color: #bd1717;">{{ __('mycustom.cancel') }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>                      <!-- end modal -->
           
-              <a class="btn btn-primary" style="text-decoration: none; color: white;" href="{{route('paidInvoices')}}">{{__('mycustom.showMyPaidInvoices')}}</a>
-            
+
+         <form method="get" action="{{route('paidInvoices')}}">
+          @csrf
+        
+          <button type="submit" style="text-decoration: none; background-color: #198754;">{{__('mycustom.showMyPaidInvoices')}}</button>
+         </form>
             
           </div>
         </div>
@@ -148,8 +185,19 @@
       @else
       <h5 class="mt-4 mb-4" style="color: #35ace8;">{{__('mycustom.noItemsInYourCart')}}</h5>
       
-              <a class="btn btn-primary btn-sm"   href="{{route('paidInvoices')}}">{{__('mycustom.showMyPaidInvoices')}}</a>
+          <a class="btn btn-success btn-sm"   href="{{route('paidInvoices')}}">{{__('mycustom.showMyPaidInvoices')}}</a>
             
+
+
+
+
+
+
+
+
+
+
+
       @endif
     </div>
   </div>
@@ -222,6 +270,26 @@
 // });
 
 </script>
-
+<script>
+document.getElementById('confirm-payment-button').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default button action
+    fetch("{{ route('showConfirmPayment') }}", {
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('total-pay').textContent = `{{ __('mycustom.totalPay') }} ${data.total}`;
+        document.getElementById('pay-now-session-id').value = data.session_id;
+        document.getElementById('cancel-session-id').value = data.session_id;
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModalWallet'), {});
+        myModal.show();
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
 
 @endsection

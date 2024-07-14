@@ -1,7 +1,40 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
+<style>
+    .custom-search {
+  position: relative;
+  width: 100%;
+}
+.custom-search-input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+  padding: 10px 100px 10px 20px; 
+  line-height: 1;
+  box-sizing: border-box;
+  outline: none;
+}
+.custom-search-botton {
+  position: absolute;
+  right: 3px; 
+  top: 3px;
+  bottom: 3px;
+  border: 0;
+  background:#00a5f2;
+  color: #fff;
+  outline: none;
+  margin: 0;
+  padding: 0 10px;
+  border-radius: 12px;
+  z-index: 2;
+}
 
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/discover.css')}}">
+html[dir="rtl"] .custom-search-botton {
+  right: auto;
+  
+  left: 3px;
+}
+</style>
 
 <div class="discoverSection">
     <div class="pageHeader">
@@ -17,18 +50,30 @@
 
 
             <div class="custom-search">
-                <form method="post" action="{{route('artists.search')}}">
+                <form method="get" action="{{route('artists.search')}}">
                     @csrf
                 <input name="name" type="text" class="custom-search-input" placeholder="{{__('mycustom.descoverSaerch')}}">
                 <button class="custom-search-botton" type="submit" >{{__('mycustom.descoverSaerchButton')}}</button>  
                 </form>
             </div>        
        
-       
+          
        
        
         </div>
     </div>
+
+    @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+
+
+    @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif
     <div class="pageContent">
         <div aria-label="Page navigation example">
         <ul class="pagination">
@@ -85,6 +130,8 @@
             @endphp
             
         
+        <a style="text-decoration: none;" href="{{ route('artists.showArtist', ['id' => $artist->id]) }}">
+
             <div class="DiscoverCard" >
                 <div class="infoCard">
                     <div class="Avatar">
@@ -95,8 +142,10 @@
                     @endif
                    </div>
                     <div class="info">
-                        <h2>{{$artist->name}}</h2>
-                        <p>{{$artist->email}}</p>
+
+                        <h2>{{ $artist->name }}</h2>
+                                         
+                    <p>{{$artist->email}}</p>
                         
                     </div>
                 </div>
@@ -125,7 +174,7 @@
                     @endfor
                 </div>
 
-            </div>
+            </div></a>
             @endforeach
         
         

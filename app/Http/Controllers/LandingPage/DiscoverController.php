@@ -34,6 +34,7 @@ class DiscoverController extends Controller
     {
         
         $artist = User::where('name', 'LIKE', "%{$request->input('name')}%")->first();
+        
 
        return view('oneCard', ['artist'=>$artist]);
 

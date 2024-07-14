@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+
 
 class RegisterController extends Controller
 {
@@ -69,4 +71,18 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     } 
+
+    protected function registered(Request $request, $user)
+    {
+        $result = session('url.intended');
+        // Check if there's a previous URL in the session indicating payment attempt
+        if ($result && $result==1) {
+            // $urlIntended = $request->session()->pull('url.intended');
+
+            // Redirect to specific route for cart details with user ID
+            return redirect()->route('logged_user_cart',$user->id);
+        }
+
+        return redirect($this->redirectPath());
+    }
 }

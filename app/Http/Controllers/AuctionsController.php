@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Option;
 use Illuminate\Http\Request;
 use App\Models\Auction;
+use App\Models\User;
 
 class AuctionsController extends Controller
 {
@@ -140,5 +141,51 @@ class AuctionsController extends Controller
         $option = Option::firstOrFail();
         //dd($option); // Debugging statement
         return view('options.settings');
+    }
+
+
+
+
+
+
+
+    // show users who added end prices for a specific auction
+
+    public function showPrices($id){
+        $auction = Auction::findOrFail($id);
+       
+        return view('auctions.show-added-prices', compact('auction'));
+
+
+    }
+
+
+
+    // show the view for a user to add a price
+    public function showAddPrice($id){
+        $auction = Auction::findOrFail($id);
+        $users = User::all();
+        return view('auctions.show-price-add',compact('auction','users'));
+    }
+
+    // add price by a user to an auction
+    public function addPrice(Request $request , $id){
+        $auction = Auction::findOrFail($id);
+        $endPrice = $request->input('ending_price');
+
+        if (($auction->ending_price == 0 && $endPrice > $auction->starting_price) || ($auction->ending_price!=0 && $endPrice > max($auction->ending_price , $auction->starting_price))) {  // max is for : if the admin changes start price to a number that is larger than the current ending price     
+            $auction->participants()->attach($request->input('user_id'),  ['ending_price' => $endPrice]);
+           
+                $auction->ending_price = $endPrice;
+                $auction->save();
+            
+        }
+
+        else{
+            return back()->withErrors(['fail'=>'enter a price that is greater than the current price']);
+        }
+
+        return redirect()->route('auctions.showPrices',$id)->with('success','price added successfully');
+
     }
 }

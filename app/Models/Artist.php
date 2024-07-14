@@ -27,6 +27,7 @@ class Artist extends Model
         'website',
         'behance',
         'artwork_provided_id',
+        'followers',
     ];
 
     protected $casts = [
@@ -52,5 +53,9 @@ class Artist extends Model
     public function collections()
     {
         return $this->hasMany(Collection::class);
+    }
+
+    public function followings(){
+        return $this->hasMany(Following::class);
     }
 }

@@ -97,6 +97,8 @@ class HomeController extends Controller
             'name'=>'required',
        ] );
 
+       $artist = Artist::where('user_id',$artistUser->id)->first();
+
        if ($request->hasFile('img')) {
         $image = $request->file('img');
         $imageName = time().'.'.$image->extension();
@@ -110,7 +112,8 @@ class HomeController extends Controller
        $artistUser->is_ban = $request->has('is_ban') ? 1:0 ;
        $artistUser->is_dealer = $request->has('is_dealer') ? 1:0 ;
        $artistUser->points = strip_tags(intval($request->input('points')));
-
+       $artist->description = strip_tags($request->input('description'));
+       $artist->save();
        $artistUser->save();
 
 

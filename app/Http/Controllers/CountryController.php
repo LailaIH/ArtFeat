@@ -48,9 +48,9 @@ class CountryController extends Controller
         $country->is_online = $request->has('is_online')?1:0;
         $country->save();
 
-        if(!$country->is_online){
-            $country->shippingCompanies()->update(['is_online' => 0]);
-        }
+       
+        $country->shippingCompanies()->update(['is_online' => $country->is_online]);
+       
 
         return redirect()->route('countries.index')->with('success','country has been updated successfully');
 

@@ -31,6 +31,7 @@ class User extends Authenticatable
         'twitter',
         'tiktok',
         'registered_business',
+        'following',
     ];
 
     /**
@@ -91,9 +92,16 @@ class User extends Authenticatable
         return $this->hasOne(Artist::class);
     }
 
+    // one to many relationship for admin
     public function auctions()
     {
         return $this->hasMany(Auction::class);
+    }
+
+    // many to many relationship
+    public function participatedAuctions()
+    {
+        return $this->belongsToMany(Auction::class)->withPivot('ending_price')->withTimestamps();
     }
 
     public function tickets()
@@ -124,4 +132,20 @@ class User extends Authenticatable
     public function countries(){
         return $this->hasMany(Country::class);
     } 
+
+    public function supports(){
+        return $this->hasMany(Support::class);
+    } 
+
+    public function events(){
+        return $this->hasMany(Event::class);
+    } 
+
+    public function followings(){
+        return $this->hasMany(Following::class);
+    }
+
+    public function notification(){
+        return $this->hasMany(Notification::class);
+    }
 }

@@ -1,83 +1,63 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/event.css')}}" />
-
+<style>
+  h3 {
+              position: absolute;
+              top: 10%; /* Center vertically */
+              left: 50%; /* Center horizontally */
+              transform: translate(-50%, -50%); /* Center the element */
+              color: white;
+              background: rgba(0, 0, 0, 0.4); /* Background color with transparency */
+              padding: 10px; /* Adjust as needed */
+              border-radius: 80px; /* Optional: for rounded corners */
+            
+              text-align: center; /* Center the text */
+          }
+    </style>
     <!-- Events -->
+    @if(count($events)>0)
     <section id="events" class="text-center">
       <div class="text-center">
         <div id="carouselExampleDark" class="carousel carousel-dark slide">
           <!-- The selector points -->
           <div class="carousel-indicators mb-4">
+            @for($i=0 ; $i<count($events) ; $i++)
             <button
               type="button"
               data-bs-target="#carouselExampleDark"
-              data-bs-slide-to="0"
-              class="active"
-              aria-current="true"
-              aria-label="Slide 1"
+              data-bs-slide-to="{{$i}}"
+              @if($i==0)class="active"@endif
+              @if($i==0) aria-current="true"@endif
+              aria-label="Slide".{{$i+1}}
             ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleDark"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleDark"
-              data-bs-slide-to="2"
-              aria-label="Slide 3"
-            ></button>
+            @endfor
+         
           </div>
           <!--  -->
           <div class="carousel-inner">
-            <div class="carousel-item active c-item" data-bs-interval="10000">
-              <a href="#first">
-                <img
-                  src="{{asset('assets/img/events/alina-grubnyak-IsxaFsXi2rs-unsplash.jpg')}}"
-                  class="d-block w-100 c-img"
-                  alt="go to event 1"
-                />
-              </a>
 
-              <div class="carousel-caption d-none d-md-block p-3">
-                <h3>Event 1</h3>
-                <p>
-                  Some representative placeholder content for the first slide.
-                </p>
-              </div>
-            </div>
-            <div class="carousel-item c-item" data-bs-interval="2000">
-              <a href="#second"
-                ><img
-                  src="{{asset('assets/img/events/anna-kolosyuk-D5nh6mCW52c-unsplash.jpg')}}"
-                  class="d-block w-100 c-img"
-                  alt="..."
-              /></a>
+            @for($i=0; $i<count($events); $i++)
+                <div class="carousel-item {{ $i==0? 'active':'' }} c-item" data-bs-interval="{{$i}}">
+                  <a href="#first-{{$i}}">
+                    <img
+                      src="{{asset('eventsImages/'.$events[$i]->img)}}"
+                      class="d-block w-100 c-img"
+                      alt="go to event 1"
+                    />
+                  </a>
 
-              <div class="carousel-caption d-none d-md-block">
-                <h3>Event 2</h3>
-                <p>
-                  Some representative placeholder content for the second slide.
-                </p>
-              </div>
-            </div>
-            <div class="carousel-item c-item">
-              <a href="#third">
-                <img
-                  src="{{asset('assets/img/events/portrait-woman-made-with-newspapers-paint-ai-generated.jpg')}}"
-                  class="d-block w-100 c-img"
-                  alt="..."
-                />
-              </a>
+                  <div class="carousel-caption d-none d-md-block p-3">
+                    <h3>{{$events[$i]->title}}</h3>
+                   
+                              
+                  </div>
+                </div>
+                @endfor
 
-              <div class="carousel-caption d-none d-md-block">
-                <h3>Event 3</h3>
-                <p>
-                  Some representative placeholder content for the third slide.
-                </p>
-              </div>
-            </div>
+
+        
+           
           </div>
           <!-- prev-next -btns -->
           <button
@@ -101,100 +81,86 @@
         </div>
       </div>
     </section>
+
+
     <!-- Event details -->
-    <section class="p-5 pb-4" id="first">
-      <div class="container">
-        <div class="row justify-content-between">
-          <div class="col-md p-5">
-            <h1>First <span class="text-warning">Event</span></h1>
-            <p class="lead">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
-              quaerat, fuga aut vero dolor quia?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-              debitis veniam in animi magnam quis quia neque hic quae numquam
-              dicta nobis alias, ea iure! Voluptatem in accusantium officia
-              vitae!
-            </p>
-          </div>
-          <div class="col-md pt-4 event-pic">
-            <img
-              src="{{asset('assets/img/events/alina-grubnyak-IsxaFsXi2rs-unsplash.jpg')}}"
-              alt=""
-              class="img-fluid event-pic"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Second event detail -->
-    <section class="p-5 second-event" id="second">
-      <div class="container row justify-content-between">
-        <div class="col-md">
-          <img
-            src="{{asset('assets/img/events/anna-kolosyuk-D5nh6mCW52c-unsplash.jpg')}}"
-            alt=""
-            class="img-fluid event-pic"
-          />
-        </div>
+     @for($i=0 ; $i<count($events) ; $i++)
+       @if($i%2==0)  
+              <section class="p-5 " id="{{$i}}">
+                <div class="container">
+                  <div class="row justify-content-between">
+                    <div class="col-md p-5">
+                      <h1>{{$events[$i]->title}}  <span class="text-warning">Event</span></h1>
+                    
+                      <p>
+                      {{$events[$i]->description}}
+                      </p>
 
-        <div class="col-md p-5">
-          <h1>second <span class="text-warning">Event</span></h1>
-          <p class="lead">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
-            quaerat, fuga aut vero dolor quia?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-            debitis veniam in animi magnam quis quia neque hic quae numquam
-            dicta nobis alias, ea iure! Voluptatem in accusantium officia vitae!
-          </p>
-        </div>
-      </div>
-    </section>
-    <!-- Third event -->
-    <!-- Third event detail -->
-    <section class="p-5 third-event" id="third">
-      <div class="container row justify-content-between">
-        <div class="col-md p-5">
-          <h1>Third <span class="text-warning">Event</span></h1>
-          <p class="lead">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
-            magnam.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa,
-            tenetur!
-          </p>
-          <!-- Creative Touch: Animated Illustration -->
-        </div>
+                      <p class="text-blue">
+                        <a style="text-decoration: none;" href="{{route('events.single',$events[$i]->id)}}">
+                        {{__('mycustom.showMore')}}</a>
 
-        <div class="col-md">
-          <img
-            src="{{asset('assets/img/events/portrait-woman-made-with-newspapers-paint-ai-generated.jpg')}}"
-            alt=""
-            class="img-fluid event-pic"
-          />
-        </div>
-      </div>
-    </section>
+                      </p>
+                      
+
+
+
+
+                    </div>
+                    <div class="col-md pt-4 event-pic">
+                      <img
+                        src="{{  isset($events[$i]->img)? asset('eventsImages/'.$events[$i]->img) : asset('assets/img/events/alina-grubnyak-IsxaFsXi2rs-unsplash.jpg')    }}"
+                        alt=""
+                        class="img-fluid event-pic"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+        @else
+
+        <section class="p-5 second-event " id="{{$i}}">
+                <div class="container">
+                  <div class="row justify-content-between">
+                    <div class="col-md p-5">
+                    <img
+                        src="{{  isset($events[$i]->img)? asset('eventsImages/'.$events[$i]->img) : asset('assets/img/events/alina-grubnyak-IsxaFsXi2rs-unsplash.jpg')    }}"
+                        alt=""
+                        class="img-fluid event-pic"
+                      />
+                    
+                    </div>
+                    <div class="col-md pt-4 event-pic">
+                      <h1>{{$events[$i]->title}}  <span class="text-warning">Event</span></h1>
+                      
+                      <p>
+                      {{$events[$i]->description}}
+                      </p>
+
+                      <p class="text-blue">
+                        <a style="text-decoration: none;" href="{{route('events.single',$events[$i]->id)}}">
+                        {{__('mycustom.showMore')}}</a>
+                      
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+            @endif
+
+
+
+
+    @endfor 
+   
+  @else
+  <h5 class="mt-4 mb-4 p-4" style="color: #35ace8;">No Support Articles Yet</h1>
+  @endif
 
   @section('footer')    
 
-    <script src="Events.js"></script>
-    <!-- JavaScript (bundle includes Popper.js) -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"
-    ></script>
+
 
 @endsection
 

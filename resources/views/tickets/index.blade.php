@@ -76,7 +76,14 @@
                                     <tr style="white-space: nowrap; font-size: 14px;">
 
                                     <td class=" text-black"><b>{{$ticket->title}}</b></td>
-                                    <td>{{$ticket->body}}</td>
+                                    <td>
+                                            @php
+                                                $words = explode(' ', $ticket->body);
+                                                $body = implode(' ', array_slice($words, 0, 9)).'...';
+                                            @endphp
+                                                    {{$body}}
+                            
+                            </td>
                                     <td>
                                     <a href="{{route('tickets.show',['ticket'=>$ticket['id']])}}"
                                     class="btn btn-primary btn-xs">

@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/WhoWeAre.css')}}">
@@ -7,6 +7,17 @@
       <div class="WhoFirstSection row">
         <div class="Right col-lg-5">
           <div class="header">
+          @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+
+
+    @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif
             <h1>{{__('mycustom.whoWeAreTitle')}}</h1>
             <h3>
             {{__('mycustom.expressYour')}}
@@ -15,6 +26,7 @@
           <div class="content">
             <p>
             {{__('mycustom.newlyEstablished')}}
+           
             </p>
           </div>
         </div>
@@ -77,7 +89,7 @@
         </div>
         <div class="Left col-lg-8">
           <div class="header">
-            <h3>{{__('mycustom.supporters')}}</h3>
+            <h3 style="margin-left: 20rem;">{{__('mycustom.supporters')}}</h3>
           </div>
         
         </div>
@@ -105,8 +117,8 @@
         <div class="LeftImages col-lg-6">
           <div>
 
-            <img class="mt-4" src="{{asset('assets/img/kareem.jpg')}}" width="320" height="320" alt="" />
-            <p dir="rtl">المهندس كريم جرادة</p>
+            <img class="mt-4 rounded-circle dirImg" src="{{asset('assets/img/kareem.jpg')}}" width="320" height="320" alt="" />
+          
           </div>
         </div>
       </div>

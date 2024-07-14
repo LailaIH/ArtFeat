@@ -21,8 +21,12 @@ class OrdersController extends Controller
 
    
     public function index(){
+        $statuses = ['completed', 'pending', 'canceled'];
 
-        return view('orders.index',['orders'=>Order::all()]);
+        // Get the orders with the specified statuses
+        $orders = Order::whereIn('status', $statuses)->get();
+
+        return view('orders.index',['orders'=>$orders]);
     }
 
   

@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/termsAndConditions.css')}}">
@@ -9,6 +9,17 @@
         <img src="/assets/img/shadowBlue.svg" />
       </div>
       <div class="header">
+      @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+
+
+    @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif
         <h1>{{__('mycustom.termsAndConditions')}}</h1>
       </div>
     </div>

@@ -1,7 +1,6 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/edit.css')}}">
 
 
 
@@ -21,8 +20,10 @@
            {{ $errors->first('fail') }}
       </div>
  @endif 
-      <a href="{{route('artists.profile',auth()->user()->id)}}">{{__('mycustom.backToProfile')}}</a>
-      <h3>{{__('mycustom.addNewArtwork')}}</h3>
+ <a style="text-decoration: none; color:black;" href="{{route('artists.profile',auth()->user()->id)}}">
+ {{__('mycustom.backToProfile')}}</a> 
+ 
+ <h3>{{__('mycustom.addNewArtwork')}}</h3>
       <div class="outerEditProfile addNewWork" >
         <div class="profile">
           <div class="content">
@@ -33,7 +34,7 @@
                   <label for="name">{{__('mycustom.imgTitle')}}</label>
                 </div>
                 <div class="grid-65">
-                  <input name="name" type="text" id="name" tabindex="1" value="{{old('name')}}" required />
+                  <input placeholder="{{__('mycustom.title')}}" name="name" type="text" id="name" tabindex="1" value="{{old('name')}}" required />
                 @error('name')
                 {{$message}}
                 @enderror
@@ -45,7 +46,7 @@
                   <label for="type">{{__('mycustom.artworkType')}}</label>
                 </div>
                 <div class="grid-65">
-                  <select name="type" id="type" tabindex="8" required class="form-select" aria-label="Default select example">
+                  <select name="type" id="type" tabindex="8" required class="form-select" aria-label="Default select example" dir="ltr">
                     <option selected="selected" value="" disabled>---</option>
                     <option value="digital" @if (old('type') === 'digital') selected @endif>Digital</option>
                     <option value="installation" @if (old('type') === 'installation') selected @endif>Installation</option>
@@ -69,9 +70,22 @@
                       type="file"
                       class="file-upload-field"
                       value=""
+                      
+                     
                     />
                   </div>
                 </div>
+                    <style>
+                         .file-upload-wrapper::before {
+                      content: attr(data-text);
+                      display: block;
+                      font-size: 1rem;
+                      color: #333;
+                  }
+
+                  
+                  </style>
+
               </fieldset>
               <!-- Artwork Category -->
               <fieldset>
@@ -79,10 +93,10 @@
                   <label for="section">{{__('mycustom.artworkCategory')}}</label>
                 </div>
                 <div class="grid-65">
-                  <select name="section_id" id="section_id" tabindex="8" class="form-select" aria-label="Default select example">
+                  <select name="section_id" id="section_id" tabindex="8" class="form-select" aria-label="Default select example" dir="ltr" >
                     
-                    <option selected="selected" value="" disabled {{ old('section_id') == '' ? 'selected' : '' }}>
-                    {{__('mycustom.chooseCategory')}}
+                    <option  selected="selected" value="" disabled {{ old('section_id') == '' ? 'selected' : '' }}>
+                   
                     </option>
                     @foreach($sections as $section)
                     <option value="{{$section->id}}" {{ old('section_id') == $section->id ? 'selected' : '' }}>{{$section->name}}</option>
@@ -105,11 +119,12 @@
                     cols="180"
                     rows="auto"
                     tabindex="8"
-                    placeholder="Description more than 20 characters"
+                    placeholder="{{__('mycustom.description')}}"
                     required
-                  >
-                  {{old('description')}}
-                </textarea>
+                  >{{old('description')}}</textarea>
+                  
+                  
+                
                   @error('description')
                 {{$message}}
                 @enderror
@@ -122,12 +137,13 @@
                 <div class="grid-65">
                   <div class="RadioButtons">
                     <div class="form">
-                      <label
-                        ><input type="radio" class="input-radio" name="created" value="yes" @if(old('geckoHatchling')==='yes') checked @endif  />
-                        {{__('mycustom.yes')}}</label
-                      >
-                      <label
-                        ><input
+                    
+                        <input type="radio" class="input-radio" name="created" value="yes" @if(old('geckoHatchling')==='yes') checked @endif  />
+                        <label 
+                        >{{__('mycustom.yes')}}
+                        </label>
+                      
+                        <input
                           type="radio"
                           class="input-radio"
                           checked
@@ -135,7 +151,7 @@
                           name="created"
                           @if(old('geckoHatchling')==='no') checked @endif
                          
-                        />
+                        /><label>
                         {{__('mycustom.no')}}</label
                       >
                     </div>
@@ -169,6 +185,7 @@
                     tabindex="11"
                     required
                     value="{{old('dimensions')}}"
+                    placeholder="{{__('mycustom.artworkDimensions')}}"
                   />
                   @error('dimensions')
                 {{$message}}
@@ -181,7 +198,7 @@
                   <label for="price">{{__('mycustom.price')}}</label>
                 </div>
                 <div class="grid-65">
-                  <input name="price" type="number" id="price" tabindex="12" required value="{{old('price')}}" />
+                  <input placeholder="{{__('mycustom.price')}} $" name="price" type="number" id="price" tabindex="12" required value="{{old('price')}}" />
                   @error('price')
                 {{$message}}
                 @enderror
@@ -193,7 +210,7 @@
                   <label for="discount_price">{{__('mycustom.priceAfterDiscount')}}</label>
                 </div>
                 <div class="grid-65">
-                  <input name="discount_price" type="number" id="discount_price" tabindex="13" value="{{old('discount_price')}}" />
+                  <input placeholder="{{__('mycustom.priceAfterDiscount')}}" name="discount_price" type="number" id="discount_price" tabindex="13" value="{{old('discount_price')}}" />
                   @error('discount_price')
                 {{$message}}
                 @enderror
@@ -205,7 +222,7 @@
                   <label for="quantity">{{__('mycustom.quantity')}}</label>
                 </div>
                 <div class="grid-65">
-                  <input name="quantity" type="number" id="quantity" tabindex="13" value="{{old('quantity')}}" required />
+                  <input placeholder="{{__('mycustom.quantity')}}" name="quantity" type="number" id="quantity" tabindex="13" value="{{old('quantity')}}" required />
                   @error('quantity')
                 {{$message}}
                 @enderror
@@ -222,7 +239,7 @@
         </div>
         <div class="content">
           
-            <div class="switcher">
+            <div class="switcher mb-4">
               <div>{{__('mycustom.productVisibility')}}</div>
               <div>
                 <input name="visibility" type="checkbox" id="switch" {{ old('visibility') ? 'checked' : '' }} /><label for="switch"
@@ -230,8 +247,43 @@
                 >
               </div>
             </div>
+
+            <div class="switcher mb-4">
+              <div>{{__('mycustom.addToAuctions')}}</div>
+              <div>
+                <input name="auction" type="checkbox" id="auction" {{ old('auction') ? 'checked' : '' }} /><label for="auction"
+                  >Toggle</label
+                >
+              </div>
+            </div>
+
+
+            <p style="color: red;">{{__('mycustom.ifYouWant')}}</p>
+
+           
+             
+             <fieldset>
+              <div class="grid-35">
+                <label class="mr-3">{{__('mycustom.startsAt')}}</label>
+              </div>
+              <div class="grid-65">
+                <input name="start_time" type="date" id="start_time" value="{{old('start_time')}}" />
+              </div>
+                </fieldset>
+             
+           
+
+
+                <fieldset>
+                <div class="grid-35">
+                <label class="mr-3">{{__('mycustom.endsAt')}}</label></div>
+                <div class="grid-65">
+                <input name="end_time" type="date" id="end_time" value="{{old('end_time')}}" />
+                </div>
+                </fieldset>
+
             <div class="imagesSection">
-              <div class="file-upload-wrapper file-upload-wrapper2 mt-4 " data-text="{{__('mycustom.addNewImage')}}">
+              <div class="file-upload-wrapper file-upload-wrapper2 " data-text="{{__('mycustom.addNewImage')}}">
                 <input
                   name="img"
                   id="img"
@@ -243,17 +295,29 @@
                 />
               
               </div>
-              <div class="wrapperImages">
-
-                @for($i=0;$i<3;$i++)
-                <div class="outerImg">
-                  @if(isset($products[$i]))
-                  <img  class="myImg" src="{{ asset('productImages/'.$products[$i]->img) }}" alt="product img" />
-                  @else
-                  <img class="myImg" src="/assets/img/a2.png" alt="" />
+              <div class="container">
+                 <div class="image-wrapper big">
+                    @if(isset($products[0]))
+                    <img src="{{asset('productImages/'.$products[0]->img)}}" alt="Big Image">
+                    </div>
+                    @else
+                    <img src="/assets/img/a1.png" alt="Big Image">
+                    
+                  </div>
                   @endif
+
+                @for($i=1;$i<=3;$i++)
+                <div class="image-wrapper">
+                  @if(isset($products[$i]))
+                  <img class="myImg"  src="{{ asset('productImages/'.$products[$i]->img) }}"  alt="product img" />
+                  </div>
+                  @else
+                  <img class="myImg"  src="/assets/img/a2.png" alt="" />
+                 
+                  
                  
                 </div>
+                @endif
                 @endfor
 
                 @error('img')
@@ -261,12 +325,47 @@
                 @enderror
 
                 <!-- new img -->
-                <div class="outerImg" id="uploadedImageContainer">
+                <div class="image-wrapper" id="uploadedImageContainer">
                
-                
-            </div>
+                  <img class="myImg" style="border: none;" id="new-img"/>
+                  <button class="delete-button" style="display: none;" onclick="deleteImage()">Delete</button>
+
+                </div>
 
               </div>
+              <style>
+                .container {
+                  padding-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+        }
+        .image-wrapper {
+            position: relative;
+        }
+        .image-wrapper img  {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .image-wrapper .delete-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 100px;
+            font-weight: lighter;
+        }
+        .big {
+            grid-column: span 2;
+        }
+               
+            </style>
+
             </div>
           </form>
         </div>
@@ -276,27 +375,31 @@
 
 
   <script>
-function previewImage(event) {
-    var reader = new FileReader();
-    reader.onload = function() {
-        var imgElement = document.createElement('img');
-        var buttonElement = document.createElement('button');
-        var deleteImg = document.createElement('img');
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('new-img');
+                var buttonElement = document.querySelector('#uploadedImageContainer .delete-button');
 
-       
-        
-        imgElement.setAttribute('class', 'myImg');
-        imgElement.setAttribute('src', reader.result);
-        imgElement.setAttribute('alt', 'uploaded image');
-        document.getElementById('uploadedImageContainer').appendChild(imgElement);
-        document.getElementById('uploadedImageContainer').appendChild(buttonElement);
+                output.src = reader.result;
+                output.classList.add('myImg'); // Add the class here
+                buttonElement.style.display = 'inline-block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
 
-    }
-    reader.readAsDataURL(event.target.files[0]);
-}
+        function deleteImage() {
+            var output = document.getElementById('new-img');
+            var buttonElement = document.querySelector('#uploadedImageContainer .delete-button');
 
+            output.src = '';
+            output.classList.remove('myImg'); // Remove the class if needed
+            buttonElement.style.display = 'none';
 
-</script> 
+            // Clear the file input field
+            document.getElementById('img').value = '';
+        }
+    </script>
 
 <script>
   // JavaScript to update file name in file upload wrapper
@@ -306,10 +409,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fileUploadField.addEventListener("change", function () {
         var fileName = this.files[0].name;
-        fileUploadWrapper.setAttribute("data-text", fileName);
+        var newName = fileName.split(' ').slice(0,4).join(' ');
+        fileUploadWrapper.setAttribute("data-text", newName);
     });
 });
 
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var fileUploadField = document.getElementById("fileUploadField");
+    var fileUploadWrapper = document.getElementById("fileUploadWrapper");
+
+    fileUploadField.addEventListener("change", function () {
+        var fileName = this.files[0] ? this.files[0].name : '';
+        fileUploadWrapper.setAttribute("data-text", fileName);
+    });
+});
+</script>
+
 
 @endsection

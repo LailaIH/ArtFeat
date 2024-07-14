@@ -113,6 +113,17 @@
                                  
                                            </div> </div>
 
+                                           <div class="row gx-3 mb-3">
+             
+                                           <div class="col-md-12">
+                                           <label class="small mb-1" for="description">Description</label>
+                                            <textarea class="form-control" id="description" type="text" name="description" >
+                                                {{$artist->artist->description}}
+                                            </textarea>
+
+                                           </div>
+                                        </div>
+
                                             <!-- Submit button-->
                                             
                                             <button class="btn btn-primary" type="submit">Save changes</button>

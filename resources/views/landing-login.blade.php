@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="icon" type="image/x-icon" href="{{asset('assets/img/fave.svg')}}">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/index2.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.min.css">
+<meta charset="UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      name="viewport"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/assets/img/fave.svg" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/assets/css/index.css" />
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/login.css')}}">
 
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
     <title>ArtFeat</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
 </head> 
   <body>
     <div class="outerLogin">
@@ -50,10 +63,10 @@
                     <strong>{{ $message }}</strong>
                      </span>
                 @enderror
-                <div class="eye-btn"><i class="uil uil-eye-slash"></i></div>
+                <div class="eye-btn"><i class="fas fa-eye" id="togglePassword"></i></div>
               </div>
               <div class="field button-field">
-                <a>{{__('mycustom.forgotPassword')}}</a>
+                <a href="{{ route('password.request') }}">{{__('mycustom.forgotPassword')}}</a>
                 <button>{{__('mycustom.signIn')}}</button>
               </div>
             </form>
@@ -76,6 +89,7 @@
               >{{__('mycustom.newToArtfeat')}} 
               <a href="/landing/signup" class="link login-link">{{__('mycustom.joinNow')}}</a></span
             >
+            
           </div>
           @if(App::getLocale()==='ar')
           <div class="artist" dir="rtl">
@@ -94,6 +108,21 @@
         <img src="{{asset('assets/img/signupArtdeat.svg')}}" />
       </div>
     </div>
+<style>
+    .eye-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    padding-top: 25px;
+}
+
+.eye-btn i {
+    font-size: 18px;
+}
+    </style>
   </body>
   <script
   src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -101,5 +130,22 @@
   crossorigin="anonymous"
 ></script>
 <script src="{{asset('js/script.js')}}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+
+  togglePassword.addEventListener('click', function () {
+    // Toggle the type attribute
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+
+    // Toggle the eye icon
+   
+    this.classList.toggle('fa-eye-slash');
+  });
+});
+</script>
+
 </html>
 

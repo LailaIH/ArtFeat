@@ -74,7 +74,22 @@
                                         <tr style="white-space: nowrap; font-size: 14px;">
 
                                             <td class=" text-black"><b>{{ $section->name }}</b></td>
-                                            <td>{{ $section->description }}</td>
+                                          
+                                          
+                                            <td>   
+                                                @php
+                                                                $words = explode(' ', $section->description);
+                                                                echo implode(' ', array_slice($words, 0, 5));
+                                                                if (count($words) > 5) {
+                                                                    echo ' ...';
+                                                                }
+                                                            @endphp
+                                                        
+                                            </td>
+                                          
+                                          
+                                          
+                                          
                                             <td>
                                             <span class="badge {{ $section->is_online ? 'badge-green' : 'badge-red' }}">
                               {{ $section->is_online ? 'Online' : 'Offline' }}

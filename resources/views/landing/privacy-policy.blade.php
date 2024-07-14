@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
     <div class="pageHeader">
       <img src="/assets/img/termsconditions.svg" />

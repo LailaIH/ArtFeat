@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/cartDetail.css')}}">
@@ -129,12 +129,16 @@
                 <p>$<span>{{$total}}</span></p>
               </div>
             </div>
-            <button>Continue to payment</button>
+            <form method="get" action="/landing/login">
+              @csrf 
+              <input name="hiddenCart" type="hidden" value="logToCart"/>
+            <button type="submit">Continue to payment</button>
+            </form>
           </div>
         </div>
       </div>
       @else
-      <h3 style="color: #35ace8;">No Items</h3>
+      <h5 class="mt-4 mb-4" style="color: #35ace8;">{{__('mycustom.noItemsInYourCart')}}</h5>
       @endif
     </div>
   </div>

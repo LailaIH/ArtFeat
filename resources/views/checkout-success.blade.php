@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/cartDetail.css')}}">
@@ -20,8 +20,16 @@
     <div class="pageContent">
 
     @if (session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
+                            <div class="alert alert-success mb-2">{{ session('success') }}</div>
                         @endif
+
+
+
+    @if ($errors->has('fail'))
+                                <div class="alert alert-danger mb-2">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif
     
     <table class="table table-hover">
       <thead>

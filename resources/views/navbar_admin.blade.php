@@ -251,6 +251,15 @@
 
 
 
+                  
+
+                    <a class="nav-link" href="{{route('notifications.index')}}">
+                        <div class="nav-link-icon"><i class="fas fa-exclamation text-gray-200"></i></div>
+                       Notifications
+                    </a>
+
+
+
 
 
 
@@ -337,7 +346,7 @@
                     </div>-->
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards7" aria-expanded="false" aria-controls="collapseDashboards7">
-                        <div class="nav-link-icon"><i class="fa-solid fa-circle-user text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fas fa-user-tag text-gray-200"></i></div>
                         Job Titles
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -358,7 +367,7 @@
 
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards77" aria-expanded="false" aria-controls="collapseDashboards77">
-                        <div class="nav-link-icon"><i class="fa-solid fa-circle-user text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fas fa-globe-americas text-gray-200"></i></div>
                         Countries
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -380,7 +389,7 @@
 
 
                     <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards777" aria-expanded="false" aria-controls="collapseDashboards777">
-                        <div class="nav-link-icon"><i class="fa-solid fa-circle-user text-gray-200"></i></div>
+                        <div class="nav-link-icon"><i class="fas fa-building text-gray-200"></i></div>
                         Shipping Companies
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -392,6 +401,76 @@
                             </a>
                             <a class="nav-link" href="{{route('shipping-companies.create')}}">
                                 New Shipping Company
+
+                            </a>
+
+                        </nav>
+                    </div>
+
+
+
+
+
+
+
+
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards778" aria-expanded="false" aria-controls="collapseDashboards778">
+                        <div class="nav-link-icon"><i class="fas fa-info-circle text-gray-200"></i></div>
+                        Supports 
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseDashboards778" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="{{route('supports.index')}}">
+                                All Support Articles 
+
+                            </a>
+                            <a class="nav-link" href="{{route('supports.create')}}">
+                                New Support Article
+
+                            </a>
+
+                        </nav>
+                    </div>
+
+
+
+
+
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards779" aria-expanded="false" aria-controls="collapseDashboards779">
+                        <div class="nav-link-icon"><i class="fas fa-calendar-check text-gray-200"></i></div>
+                        Events 
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseDashboards779" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="{{route('events.index')}}">
+                                All Events 
+
+                            </a>
+                            <a class="nav-link" href="{{route('events.create')}}">
+                                New Event
+
+                            </a>
+
+                        </nav>
+                    </div>
+
+
+
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards780" aria-expanded="false" aria-controls="collapseDashboards780">
+                        <div class="nav-link-icon"><i class="fa-solid fa-circle-user text-gray-200"></i></div>
+                        Creators 
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseDashboards780" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="{{route('creators.index')}}">
+                                All Creators 
+
+                            </a>
+                            <a class="nav-link" href="{{route('creators.create')}}">
+                                New Creator
 
                             </a>
 

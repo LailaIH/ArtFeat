@@ -43,6 +43,7 @@ nav {
   z-index: 99;
   position: sticky;
   top: 0;
+  z-index: 1000;
 }
 nav .logo img {
   width: 185px;
@@ -54,16 +55,18 @@ nav ul {
   flex-wrap: wrap;
   list-style: none;
   justify-content: space-between;
-  width: 80%;
+  width: 78%;
   margin: 0 !important;
 }
 nav ul .links {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  
 }
 nav ul li {
   transition: 500ms;
-  margin: 0px 55px;
+  margin: 0px 35px;
 }
 nav ul li a {
   color: var(--secondary-color);
@@ -80,24 +83,29 @@ nav ul li a:hover {
 .headerButtons {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 270px;
 }
 .headerButtons .innerContent {
   display: flex;
-  gap: 34px;
+  gap:30px;
 }
-.headerButtons .innerContent .signUp {
-  position: relative;
+.headerButtons .signUp {
+   display:flex;
+  justify-content: space-between;
+  margin: 10px;
+  gap: 10px;
 }
-.headerButtons .innerContent .signUp button {
-  position: absolute;
-  right: 0px;
-  top: 0px;
+
+.headerButtons .signUp button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   color: #fff;
   font-size: 16px;
   font-weight: 700;
   background: var(--primary-color);
-  margin: 0;
   z-index: 2;
   transition: all 0.3s;
   overflow: hidden;
@@ -107,37 +115,48 @@ nav ul li a:hover {
   cursor: pointer;
   text-align: center;
   border-radius: 8px;
+  margin: 2px;
 }
-.headerButtons .innerContent .signUp .botton:hover {
+.headerButtons .signUp .botton:hover {
   background: var(--secondary-color);
   cursor: pointer;
 }
-.headerButtons .innerContent .signUp .botton::before {
-  content: "";
-  position: absolute;
-  top: 11px;
-  left: 0;
-  width: 100%;
-  height: 30px;
-  transform: translateX(-100%) rotate(80deg);
-  background: #fff;
-  transition: all 0.2s;
-  cursor: pointer;
+@media (max-width: 1250px) {
+  .headerButtons {
+    flex-direction: column; /* Stack the buttons vertically on smaller screens */
+    align-items: center;
+    justify-content: center;
+    margin-left: auto; /* Add auto margin to the left */
+    margin-right: auto; /* Add auto margin to the right */
+  }
 }
-.headerButtons .innerContent .signUp .botton:hover::before {
-  transform: translateX(100%) rotate(80deg);
-  cursor: pointer;
-}
+
 .headerButtons .innerContent .line {
   width: 1px;
   height: 37px;
-  background: var(--secondary-color);
+  background-color: var(--secondary-color);
 }
 .headerButtons .innerContent button {
   background: transparent;
   border: none;
   border-radius: 8px;
 }
+.innerContent #language{
+  border: none;
+  padding: 8px;
+  border-radius:20px;
+  border: none;
+  width: 100px;
+}
+.innerContent #language:hover{
+  color: var(--primary-color);
+  border: none;
+  padding: 8px;
+  border-radius:20px;
+  border: none;
+  width: 100px;
+}
+
 nav .menu-btn i {
   background-color: #fafafa;
   border: 1px solid #eef1f5;
@@ -149,6 +168,7 @@ nav .menu-btn i {
   display: none;
   padding: 12px 16px 12px 15px;
 }
+
 nav input[type="checkbox"] {
   display: none;
 }
@@ -232,9 +252,11 @@ nav input[type="checkbox"] {
   }
 }
 
+
 .searchBar {
   background: #f6f6f6;
 }
+
 .searchBar .inner {
   width: 90%;
   height: 64px;
@@ -279,14 +301,14 @@ nav input[type="checkbox"] {
   font-weight: 500;
 }
 /* ==================== Header Ends ====================*/
-.profileSection {
-}
+
 .outerProfile {
   border-radius: 25px;
   border: 0.7px solid #e7e7e7;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   width: 90%;
   margin: 55px auto !important;
+  height: min-content;
 }
 .outerProfile .innerProfile {
   margin-bottom: 80px;
@@ -520,7 +542,7 @@ nav input[type="checkbox"] {
 }
 .collections .addnew {
   position: absolute;
-  top: -80px;
+  top: -60px;
   right: 50px;
 }
 /* my adding */
@@ -529,9 +551,15 @@ nav input[type="checkbox"] {
   left: 50px;  /* Apply left position */
 }
 
+/* my adding */
+:dir(rtl) .artwork .addnew {
+  right: auto; /* Reset right position */
+  left: 50px;  /* Apply left position */
+}
+
 .artwork .addnew {
   position: absolute;
-  top: -90px;
+  top: -60px;
   right: 50px;
 }
 .collections .addnew button {
@@ -620,6 +648,54 @@ width: 100%;
   text-align: center;
   justify-content: center;
   z-index: 2;
+}
+/* Adjust for RTL */
+[dir="rtl"] .collections .outerCard .delete {
+  right: auto;
+  left: 0px; /* Move to left */
+  border-radius: 0px 100px 100px 0px; /* Flip border-radius */
+}
+
+.collections .outerCard .addwork {
+  position: absolute;
+  top: 5px;
+  right: 0px;
+  border-radius: 100px 0px 0px 100px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.6);
+  width: 50px;
+  height: 32px;
+  text-align: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Adjust for RTL */
+[dir="rtl"] .collections .outerCard .addwork {
+  right: auto;
+  left: 0px; /* Move to left */
+  border-radius: 0px 100px 100px 0px; /* Flip border-radius */
+}
+
+ .outerImage .addToCollection {
+  position: absolute;
+  top: 5px;
+  right: 0px;
+  border-radius: 100px 0px 0px 100px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.6);
+  width: 83px;
+  height: 32px;
+  text-align: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Adjust for RTL */
+[dir="rtl"] .outerImage .addToCollection {
+  right: auto;
+  left: 0px; /* Move to left */
+  border-radius: 0px 100px 100px 0px; /* Flip border-radius */
 }
 .collections .outerCard .delete img {
   margin-top: -4px;
@@ -762,6 +838,15 @@ width: 100%;
   .flexbin.flexbin-margin {
     margin: 2.5px;
   }
+}
+
+/* Adjust for RTL */
+[dir="rtl"] .editIcon,
+[dir="rtl"] .fav-btn,
+
+[dir="rtl"] .addToCollection {
+    right: auto;
+    left: 0;
 }
 
 /* ================================Footer start================================ */

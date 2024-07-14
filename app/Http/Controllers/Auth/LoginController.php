@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -35,5 +35,20 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $result = session('url.intended');
+        // Check if there's a previous URL in the session indicating payment attempt
+        if ($result && $result==1) {
+            // $urlIntended = $request->session()->pull('url.intended');
+
+            // Redirect to specific route for cart details with user ID
+            return redirect()->route('logged_user_cart',$user->id);
+        }
+
+        // Otherwise, redirect to default location
+        return redirect()->intended($this->redirectPath());
     }
 }

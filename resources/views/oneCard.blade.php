@@ -1,5 +1,12 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
+<style>
+html[dir="rtl"] .custom-search-botton {
+  right: auto;
+  
+  left: 3px;
+}
+</style>
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/discover.css')}}">
 
@@ -10,6 +17,17 @@
             <img src="{{asset('assets/img/shadowBlue.svg')}}" />
         </div>
         <div class="header">
+        @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+
+
+    @if ($errors->has('fail'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('fail') }}
+                                </div>
+                            @endif
             <h1>{{__('mycustom.discoverOurArtists')}}</h1>
             <p>
                {{__('mycustom.discoverOurArtistsDes')}}
@@ -17,7 +35,7 @@
 
 
             <div class="custom-search">
-                <form method="post" action="{{route('artists.search')}}">
+                <form method="get" action="{{route('artists.search')}}">
                     @csrf
                 <input name="name" type="text" class="custom-search-input" placeholder="{{__('mycustom.descoverSaerch')}}">
                 <button class="custom-search-botton" type="submit">{{__('mycustom.descoverSaerchButton')}}</button>  
@@ -33,9 +51,13 @@
        
         
         <div class="divider"></div>    
-       
-    <div class="wrapperDiscoverCards" >
+        @if(!$artist)
+        <h5 class="mt-3">{{__('mycustom.noArtist')}}</h5>
+        @else
+           <div class="wrapperDiscoverCards" >
         
+        
+
         
            
             @php   
@@ -43,7 +65,8 @@
                 $products = DB::table('products')->where('artist_id', $artist->id)->where('is_online', 1)->get();
             @endphp
             
-           
+            <a style="text-decoration: none;" href="{{ route('artists.showArtist', ['id' => $artist->id]) }}">
+
             <div class="DiscoverCard" >
                 <div class="infoCard">
                     <div class="Avatar">
@@ -82,13 +105,14 @@
                     
                     </div>
                     @endfor
-                </div>
+                </div></a>
 
             </div>
-        
+        @endif
             
         </div>
         </div>
+        
     </div>
 
 

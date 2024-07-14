@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/profile.css')}}">
@@ -9,10 +9,10 @@
        <div class="alert alert-success text-center m-3">{{ session('success') }}</div>
 @endif
 
-@if ($errors->has('fail'))
+@if (session('fail'))
       <div class="alert alert-danger text-center m-3">
 
-                {{ $errors->first('fail') }}
+                {{session('fail') }}
       </div>
 @endif
 
@@ -57,25 +57,25 @@
 
               </div>
             </div>
-            <div class="info container">
+            <div class="info">
               
               <div><h3 class="name">{{$user->name}}</h3></div><br>
-              @if($artist && $artist->store_name)
+              <!-- @if($artist && $artist->store_name)
                 @if($artist->website)
                   <a class="name" style="margin-top:90px; color: #35ace8;" href='{{$artist->website}}' target="_blank" rel="noopener noreferrer">Store:{{$artist->store_name}}</a>
                 @else
                   <a class="name" style="margin-top:90px; color: #35ace8;">Store:{{$artist->store_name}}</a>
                 @endif
-              @endif
+              @endif -->
 
-              <div class="actions mt-4">
+              <div class="actions">
               
-                @if($products->isEmpty())
-                <div><span>0</span>Artworks</div>
+                <!-- @if($products->isEmpty())
+                <div><span>0</span>{{__('mycustom.artworks')}}</div>
                 @else
-                <div><span>{{count($products)}}</span>{{__('mycustom.artworks')}}</div>@endif
-                <div><span>4</span>{{__('mycustom.followers')}}</div>
-                <div><span>55</span>{{__('mycustom.following')}}</div>
+                <div><span>{{count($products)}}</span>{{__('mycustom.artworks')}}</div>@endif -->
+                <div><span>{{$artist->followers}}</span>{{__('mycustom.followers')}}</div>
+                <div>{{__('mycustom.following')}}<span>{{$user->following}}</span></div>
                 <a href="{{route('artists.edit_profile',['id'=>$user['id']] )}}">
                 <button>{{__('mycustom.editAccount')}}</button></a>
               </div>
@@ -86,26 +86,26 @@
               <nav>
                 <div class="nav nav-tabs " id="nav-tab" role="tablist">
                   <button
-                    class="nav-link active "
+                    class="nav-link  {{$tab==='artwork'?  'active' : '' }} "
                     id="nav-Work-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#nav-Work"
                     type="button"
                     role="tab"
                     aria-controls="nav-Work"
-                    aria-selected="true"
+                    aria-selected=" {{$tab==='artwork'? 'true' : 'false' }}"
                   >
                   {{__('mycustom.artwork')}}
                   </button>
                   <button
-                    class="nav-link "
+                    class="nav-link {{$tab==='collections'?  'active' : '' }} "
                     id="nav-Collections-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#nav-Collections"
                     type="button"
                     role="tab"
                     aria-controls="nav-Collections"
-                    aria-selected="false"
+                    aria-selected="{{$tab==='collections'? 'true' : 'false' }}"
                   >
                   {{__('mycustom.collections')}}
                   </button>
@@ -122,34 +122,151 @@
                   {{__('mycustom.favorite')}}
                   </button>
                   <button
-                    class="nav-link"
+                    class="nav-link {{$tab==='about'?  'active' : '' }}"
                     id="nav-About-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#nav-About"
                     type="button"
                     role="tab"
                     aria-controls="nav-About"
-                    aria-selected="false"
+                    aria-selected="{{$tab==='about'?  'true' : 'false' }}"
                   >
                   {{__('mycustom.about')}}
                   </button>
                 </div>
               </nav>
-              <div class="tab-content mt-4" id="nav-tabContent">
+              <div class="tab-content" id="nav-tabContent">
                 
                 <div
-                  class="tab-pane fade show active artwork"
+                  class="tab-pane fade {{$tab==='artwork'? 'show active' : '' }} artwork"
                   id="nav-Work"
                   role="tabpanel"
                   aria-labelledby="nav-Work-tab"
                 >
+                <!-- <div class="addnew">
+                    <a href="#">
+                    <button >{{__('mycustom.addArtwork')}}</button></a>
+                  </div> -->
                 
                   <div class="flexbin flexbin-margin">
+                      <!-- edit -->
+                      <style>
+                        .editIcon{
+                           width: 30px;
+                           height: 25px;
+                            border-radius: 100px;
+                            position: absolute;
+                            z-index: 1;
+                            top: 5px;
+                            right: 11px;
+                            border: 1px solid rgba(255, 255, 255, 0.4);
+                            background: rgba(0, 0, 0, 0.6);
+                            
+                            justify-content: center;
+                            align-items: center;
+                            color: #ccc; 
+                                  }
 
+                                  .fav-btn{
+                                    width: 30px;
+                                    height: 25px;
+                            border-radius: 100px;
+                            position: absolute;
+                            z-index: 1;
+                            top: 40px;
+                            right: 11px;
+                            /* border: 1px solid rgba(255, 255, 255, 0.4); */
+                            border: none;
+                            background: rgba(249, 249, 249, 0.6);
+                            
+                            justify-content: center;
+                            align-items: center;
+                            color: red; 
+                                  }
+
+                        .fav-btn:hover{
+                          width: 30px;
+                           height: 25px;
+                        border-radius: 100px;
+                         position: absolute;
+                           z-index: 1;
+                         top: 40px;
+                         right: 11px;
+                         /* border: 1px solid rgba(255, 255, 255, 0.4); */
+                        border: none;
+                        background: red;
+                  
+                        justify-content: center;
+                         align-items: center;
+                         color: rgb(0, 0, 0); 
+                        }
+                      </style>
                   @if(!$products->isEmpty())
                   @foreach($products as $product)
-                    <div class="outerImage m-2">
-                      <img src="{{ asset('productImages/'.$product->img) }}" height="80%;" />
+                    <div class="outerImage">
+                    <button class="editIcon">
+                        <a style="text-decoration: none; color: inherit;" href="{{route('artists.showEditArtwork',$product->id)}}">
+                        <i class="fa fa-pencil" aria-hidden="true"></i></a>
+                      </button>
+                      <button class="fav-btn">
+                        <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                      </button>
+
+                      <!-- add product to a collection if it doesn't belong to one -->
+                     @if(!$product->collection)
+                      <button class="editIcon addToCollection" style="margin-top: 68px;" data-bs-toggle="modal" data-bs-target="#addToCollection-{{$product->id}}">
+                        {{__('mycustom.collectionn')}}
+                      </button>@endif
+                      <!-- Modal -->
+                      <div class="modal fade" id="addToCollection-{{$product->id}}" tabindex="-1" aria-labelledby="proLabel-{{$product->id}}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="proLabel-{{$product->id}}">Add To Collection</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                  <form method="post" action="{{route('addExistedArtworkToCollection',$product->id)}}">
+                                @csrf 
+                                @method('PUT')
+                                    
+                                    
+                                @foreach($collections as $collection)
+                                
+                                <div class="row mb-3" style="align-items: center;">
+                                    <div class="col" style="display: flex; align-items: center; margin-right: 50px;">
+                                        <input style="margin-right: 10px;" value="{{$collection->id}}" name="collection" type="radio" id="collection-{{$collection->id}}">
+                                        <label for="collection-{{$collection->id}}" class="col-form-label"><b>{{$collection->name}}</b></label>
+                                    </div>
+                                    <div class="col">
+                                        <img style="border-radius: 10px;" src="{{ isset($collection->products[0]) ? asset('productImages/'.$collection->products[0]->img) : asset('assets/img/a1.png')}}" height="100rem" width="100rem"/>
+                                    </div>
+                                </div>
+                                <hr>
+                              
+                              @endforeach
+                                     
+
+                               </div>
+                                    
+                                  
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                  </div>
+                                  
+                                  </form>
+                                 
+                                  
+                                </div>
+                              </div>
+                            </div>
+                 
+                            <!-- Modal end -->
+
+
+
+                    <img src="{{ asset('productImages/'.$product->img) }}" height="100%;" />
                       <div class="select">
                         <select name="cars" id="cars">
                           <option value="A">A</option>
@@ -172,30 +289,253 @@
 
 
                 <div
-                  class="tab-pane fade collections"
+                  class="tab-pane fade {{$tab==='collections'? 'show active' : '' }} collections"
                   id="nav-Collections"
                   role="tabpanel"
                   aria-labelledby="nav-Collections-tab"
                   
                 >
                   <div class="addnew">
-                    <a href="{{route('artists.showAddCollection')}}">
-                    <button >{{__('mycustom.addCollection')}}</button></a>
+                    
+                    <button id="openModalButton" >{{__('mycustom.addCollection')}}</button>
                   </div>
+
+                  <!-- start modal for new collection -->
+                  <div class="collectionNameModal" id="collectionNameModal">
+                  <span class="close" id="closeModalButton">&times;</span>
+
+                                            <style>
+                          
+
+                                  .collectionNameModal .close {
+                                      position: absolute;
+                                      right: 10px; /* Default for LTR */
+                                  }
+
+                                  /* Adjust for RTL */
+                                  [dir="rtl"] .collectionNameModal .close {
+                                      right: auto;
+                                      left: 10px; /* Move to left */
+                                  }
+                              </style>
+
+
+
+
+                  <h2>{{__('mycustom.newCollection')}}</h2>
+                  <form  action="{{route('artists.add_collection',['id'=>auth()->user()->id] )}}" method="POST">
+                  @csrf
+                  <label for="collection-name">{{__('mycustom.collectionName')}}</label>
+                  <input type="text" id="collection-name" name="name">
+                  <div class="buttons">
+                  <button type="submit" class="save mb-2">{{__('mycustom.save')}}</button></div>
+
+
+
+
+
+                  
+                  </form>
+                  
+                 
+                 
+                 
+                 <style>
+                  .flexImg{
+                    display: flex;
+                    flex-direction: column;
+                    border-radius: 10px;
+                    border: solid 1px;
+                    padding: 5px;
+                    padding-bottom: 5px;
+                  }
+                  .innerFlex{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    border-bottom: solid 1px;
+                  }
+                   .x{
+                    border: none;
+                  }
+                   .innerFlex p{
+                    position: relative;
+                    top: 10px;
+                    padding: 5px;
+                    
+                   }
+                   .innerFlex img{
+                    border-right: solid 1px;
+                    padding: 10px;
+                    width: 150px;
+                    
+                   }
+
+                  
+                 </style>
+                  
+              </div>
+              <!-- end modal -->
+              <script>
+              const openModalButton = document.getElementById('openModalButton');
+              const closeModalButton = document.getElementById('closeModalButton');
+              const cancelButton = document.getElementById('cancelButton');
+              const modal = document.getElementById('collectionNameModal');
+          
+              openModalButton.addEventListener('click', () => {
+                  modal.classList.add('show-modal');
+              });
+          
+              closeModalButton.addEventListener('click', () => {
+                  modal.classList.remove('show-modal');
+              });
+          
+              cancelButton.addEventListener('click', () => {
+                  modal.classList.remove('show-modal');
+              });
+          
+              window.addEventListener('click', (event) => {
+                  if (event.target === modal) {
+                      modal.classList.remove('show-modal');
+                  }
+              });
+          </script>
+   <style>
+    
+    .collectionNameModal {
+      display: none; /* Initially hidden */
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px;
+            position: fixed;
+            top: 20px; /* Adjust top value as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            height: min-content;
+    }
+    .collectionNameModal h2 {
+        margin: 0;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    .collectionNameModal .close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+        font-size: 1.2em;
+    }
+    .collectionNameModal label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .collectionNameModal input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .collectionNameModal .buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+    .collectionNameModal .buttons button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+    .collectionNameModal .buttons .cancel {
+        background: white;
+        border: 1px solid #0b0;
+        color: #0b0;
+    }
+    .collectionNameModal .buttons .save {
+        background: #0af;
+        color: white;
+    }
+    .show-modal {
+        display: block;
+    }
+</style>
+
+
+
+
                   @if(!$collections->isEmpty())
                 <div class="outerCollections">
                     
                  
                   @foreach($collections as $collection)
                  
-                  <div style="display:block;">
+                
+                
                   <div class="outerCard ">
                     <form method="POST" action="{{route('artists.collectionsDisable',['collection'=>$collection])}}" onsubmit="return confirmDisable()">
-                      @csrf
-                      <button type="submit" class="delete">
+                    @csrf
+                      <button type="submit" class="delete" style="margin-top: 34px;">
                         <img src="/assets/img/Delete.svg" alt="" />
                       </button>
+                     
                     </form>
+                    <button class="editIcon delete ">
+                        
+                        <i class="fa fa-pencil" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#collectionNameModal-{{$collection->id}}"></i>
+                      </button>
+
+                      <form method="get" action="{{route('artists.showAddToCollection',['id'=>$collection['id']] )}}">
+                       @csrf 
+                      <button type="submit" class="editIcon addwork " style="margin-top: 68px;">
+                      {{__('mycustom.addArtworkk')}}
+                      </button></form>
+
+                        <!-- Modal For editing collection name -->
+                        <div class="modal fade" id="collectionNameModal-{{$collection->id}}" tabindex="-1" aria-labelledby="collectionNameLabel-{{$collection->id}}" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="collectionNameLabel-{{$collection->id}}">{{__('mycustom.editCollection')}}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form method="POST" action="{{route('artists.collectionUpdate',['id'=>$collection->id])}}">
+                                    @csrf 
+                                    @method('PUT')
+                                    
+
+                                      <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">{{__('mycustom.name')}}</label>
+                                        <input value="{{$collection->name}}" name="name" type="text" class="form-control" id="recipient-name" required>
+                                      </div>
+                                      </div>
+                                    
+                                  
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('mycustom.close')}}</button>
+                                    <button type="submit" class="btn btn-primary">{{__('mycustom.update')}}</button>
+                                  </div>
+                                  
+                                  </form>
+                                 
+                                  
+                                </div>
+                              </div>
+                            </div>
+                 
+                            <!-- Modal end -->
+
+
+
+    
+
+
+
                     <div class="grid-container">
                         
                     @if(count($collection->products) >= 1)
@@ -228,11 +568,9 @@
                     
                       <div class="overLay"></div>
                      
-                      </div>
+                      </div> 
                     
-                    <a href="{{route('artists.showAddToCollection',['id'=>$collection['id']] )}}" class="btn btn-success btn-xs mt-1 ">
-                    {{__('mycustom.addArtwork')}}
-                    </a></div>
+                    
 
                     
                   
@@ -252,10 +590,11 @@
                   role="tabpanel"
                   aria-labelledby="nav-Favorites-tab"
                 >
-                  <div class="outerFav">
-                    <div class="innerFav">
+                  
 
-                    @if(isset($carts))
+                  @if(count($carts)>0)
+                    <div class="outerFav">
+                    <div class="innerFav">
                       @foreach($carts as $cart)
                       <div class="FavCard">
                         <img class="bg" src="{{ asset('productImages/'.$cart->product->img) }}" />
@@ -273,18 +612,15 @@
                         </div>
                       </div>
                       @endforeach
-                    @else
-                      <h5>{{__('mycustom.noFavorite')}}</h5>
-                    @endif
-                     
-                    
-
-                     
+                   
                     </div>
                   </div>
+                  @else
+                      <h5 class="p-4">{{__('mycustom.noFavorite')}}</h5>
+                  @endif
                 </div>
                 <div
-                  class="tab-pane fade AboutProfile"
+                  class="tab-pane fade {{$tab==='about'?  'show active' : '' }} AboutProfile"
                   id="nav-About"
                   role="tabpanel"
                   aria-labelledby="nav-About-tab"
@@ -305,14 +641,18 @@
                     </form>
 
                       @else
+                      <button class="btn btn-primary" id="show">{{__('mycustom.addDesc')}}</button>
+
                       <form method="post" action="{{route('artists.addDescription',['id'=>$artist->id])}}">
                       @csrf
                       <textarea style="width: 70%;" name="description" class="form-control desc"  cols="2" rows="4"></textarea>
                         <br><button type="submit" class="btn btn-primary desc">{{__('mycustom.save')}}</button>
                     </form>
-                      <button class="btn btn-primary" id="show">{{__('mycustom.addDesc')}}</button>
-                      @endif
-                    
+
+
+
+                    @endif
+                   
                   </div>
                   <div>
                     <h3>{{__('mycustom.country')}}</h3>
@@ -355,7 +695,7 @@
                                     @csrf
                                     <div class="mb-3">
                                       <label for="recipient-name" class="col-form-label">{{__('mycustom.expert')}}:</label>
-                                      <input name="expertise[]" type="text" class="form-control" id="recipient-name">
+                                      <input name="expertise[]" type="text" class="form-control" id="recipient-name" required>
                                     </div>
                                     
                                   
@@ -370,7 +710,22 @@
                           </div>
 
 
+                          <style>
+        .modal-header {
+            position: relative;
+        }
 
+        .modal-header .btn-close {
+            position: absolute;
+            right: 10px; /* Default for LTR */
+        }
+
+        /* Adjust for RTL */
+        [dir="rtl"] .modal-header .btn-close {
+            right: auto;
+            left: 10px; /* Move to left */
+        }
+    </style>
 
                     
                   </div>
@@ -390,12 +745,13 @@
                     </form>
 
                       @else
+                      <button class="btn btn-primary" id="show_years">{{__('mycustom.addExperienceYears')}}</button>
+
                       <form method="post" action="{{route('artists.addYears',['id'=>$artist->id])}}">
                       @csrf
                       <input style="width: 30%;" type="number" name="years" class="form-control years "/>
                         <br><button type="submit" class="btn btn-primary years ">{{__('mycustom.save')}}</button>
                     </form>
-                      <button class="btn btn-primary" id="show_years">{{__('mycustom.addExperienceYears')}}</button>
                       @endif
                   </div>
 
@@ -484,7 +840,7 @@ exampleModal.addEventListener('show.bs.modal', event => {
   const modalTitle = exampleModal.querySelector('.modal-title')
   const modalBodyInput = exampleModal.querySelector('.modal-body input')
 
-  modalTitle.textContent = `New Expert`
+  
 })
 </script>
 
@@ -531,5 +887,23 @@ exampleModal.addEventListener('show.bs.modal', event => {
         return confirm('Are you sure you want to remove this collection?');
     }
 </script>
+
+<!-- <script>
+document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+  button.addEventListener('click', event => {
+    const collectionId = button.getAttribute('data-bs-target').split('-')[1];
+    const modal = document.getElementById(`exampleModal2-${collectionId}`);
+    const modalTitle = modal.querySelector('.modal-title');
+    const modalBodyInput = modal.querySelector('.modal-body input');
+    
+    modalTitle.textContent = `Edit Collection`;
+    modalBodyInput.value = button.closest('.outerCard').querySelector('.text').textContent.trim();
+  });
+});
+
+</script> -->
+
+
+
 
 @endsection

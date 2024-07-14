@@ -70,6 +70,9 @@ class Kernel extends HttpKernel
 
         'checkUserCart' => \App\Http\Middleware\CheckUserCart::class,
         'check.admin' => \App\Http\Middleware\CheckAdmin::class,
+        'capture.intended.url' => \App\Http\Middleware\CaptureIntendedUrl::class,
+        'userOnly' => \App\Http\Middleware\ProfileUserOnly::class,
+        'artistProfile' => \App\Http\Middleware\ArtistProfile::class,
 
     ];
 }

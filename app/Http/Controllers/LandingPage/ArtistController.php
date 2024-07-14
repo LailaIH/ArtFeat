@@ -11,22 +11,25 @@ use App\Models\Cart;
 use App\Models\User;
 use App\Models\Artist;
 use App\Models\ArtworkProvided;
-
+use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
-
-
-
+use App\Http\Controllers\LandingPage\Countries;
+use App\Models\Auction;
+use App\Models\Notification;
 
 class ArtistController extends Controller
 {
 
+    
+
     public function signup(){
 
-        $countries = ['Palestine','Egypt','America'];
-        $cities = ['Gaza','Cairo','New York'];
+        $countriesInstance = new Countries();
+
+        $countries = $countriesInstance->countries();
+        $cities = $countriesInstance->cities();
         return view('artists.artist-signup' , ['countries'=>$countries , 'cities'=>$cities]);
     }
 
@@ -64,8 +67,17 @@ class ArtistController extends Controller
         $artist->save();
         Auth::login($user);
 
+
+        $result = session('url.intended');
+        // Check if there's a previous URL in the session indicating payment attempt
+        if ($result && $result==1) {
+            // $urlIntended = $request->session()->pull('url.intended');
+
+            // Redirect to specific route for cart details with user ID
+            return redirect()->route('logged_user_cart',$user->id);
+        }
+
         return redirect()->route('welcome');
-        
 
     }
 
@@ -86,10 +98,14 @@ class ArtistController extends Controller
 
         $products = Product::where('artist_id', $user->id)
         ->where('is_online',1)->get();
+
+        $tab = session('tab', 'artwork');
+
         return view('artists.profile',['artist'=>$artist , 'user'=>$user ,
          'collections'=>$collections,
         'carts'=>$carts,
-         'products'=>$products]);
+         'products'=>$products,
+        'tab'=>$tab]);
     }
 
     public function updateProfilePicture(Request $request ,$id){
@@ -205,7 +221,7 @@ class ArtistController extends Controller
         $collection->name= strip_tags($request->input('name'));
         $collection->artist_id = $artist->id;
         $collection->save();
-        return redirect()->route('artists.profile',$id)->with('success','collection created successufully');
+        return redirect()->route('artists.profile',$id)->with(['success','collection created successufully','tab'=>'collections']);
 
 
     }
@@ -216,7 +232,7 @@ class ArtistController extends Controller
         $products = $collection->products;
         return view('artists.add-to-collection',['collection'=>$collection,
         'products'=>$products
-         , 'sections'=>Section::all()]);
+         , 'sections'=>Section::where('is_online',1)->get()]);
 
     }
 
@@ -270,27 +286,48 @@ class ArtistController extends Controller
         }
 
 
-        if ($request->hasFile('file-upload-field')) {
-            $file = $request->file('file-upload-field');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('digital_works', $fileName, 'public');
-    
-            // Update the product's digital_work_file column with the file path
-            $product->digital_work_file = $filePath;
+       
+
+        if ($request->hasFile('digital_works')) {
+            $documents = $request->file('documents');
+            $documentsName =   $documents->getClientOriginalName();
+            $documents->move(public_path('digital_works'), $documentsName);
+            $product->digital_work_file = $documentsName;
         }
+
+        
 
         
         $product->user_id = auth()->user()->id;
         $product->section_id = $request->input('section_id');
         
         $product->save();
-        return redirect()->route('artists.profile',auth()->user()->id)->with('success','artwork added successfully');
+        $message ='artwork added successfully';
+
+        if($request->has('auction')){
+            
+            $auction = new Auction();
+            $auction->product_id = $product->id;
+            $auction->user_id = auth()->user()->id;
+            $auction->title = $product->name;
+            $auction->starting_price = $product->price;
+            $auction->start_time = $request->filled('start_time') ? $request->input('start_time') : Carbon::now()->toDateTimeString();
+            $auction->end_time = $request->filled('end_time') ? $request->input('end_time') : Carbon::now()->addMonth()->toDateTimeString();
+            $auction->save();
+           
+            $extraText = ' it now belongs to auctions ' ;
+            $message .= $extraText;
+
+        }
+        return redirect()->route('artists.profile',auth()->user()->id)->with(['success'=>$message ,'tab'=>'collections']);
       
 
         
 
 
     }
+
+   
 
     public function disableCollection(Collection $collection){
 
@@ -303,9 +340,17 @@ class ArtistController extends Controller
             $product->save();
         }
 
-        return redirect()->back()->withErrors(['fail' => 'Collection was removed']);
+        return redirect()->back()->with(['fail' => 'Collection was removed','tab'=>'collections']);
         
 
+    }
+
+    // edit collection name
+    public function updateCollection(Request $request , $id){
+        $collection = Collection::findOrFail($id);
+        $collection->name = $request->input('name');
+        $collection->save();
+        return redirect()->back()->with(['success'=>'collection name has been updated successfully','tab'=>'collections']);
     }
 
     // About Artist Section
@@ -322,7 +367,7 @@ class ArtistController extends Controller
         }
         $artist->save();
     
-        return redirect()->back()->with('success', 'Expertise added successfully');
+        return redirect()->back()->with(['success'=> 'Expertise added successfully','tab'=>'about']);
     }
 
     public function addDescription(Request $request , $id){
@@ -335,7 +380,7 @@ class ArtistController extends Controller
         }
         $artist->description = $request->input('description');
         $artist->save();
-        return redirect()->back()->with('success', $message.' successfully');
+        return redirect()->back()->with(['success'=> $message.' successfully','tab'=>'about']);
 
     }
 
@@ -349,7 +394,114 @@ class ArtistController extends Controller
         }
         $artist->years_of_experience = $request->input('years');
         $artist->save();
-        return redirect()->back()->with('success', $message.' successfully');
+        return redirect()->back()->with(['success'=> $message.' successfully','tab'=>'about']);
+
+    }
+
+    // show become an artist form
+    // public function showBecomArtist(){
+    //     $countriesInstance = new Countries();
+
+    //     $countries = $countriesInstance->countries();
+    //     $cities = $countriesInstance->cities();
+    //     return view('artists.become-artist' , ['countries'=>$countries , 'cities'=>$cities]);
+    // }
+
+    // convert logged in user to an artist
+    public function becomeArtist(Request $request){
+
+        $notification = new Notification();
+        $notification->user_id = auth()->user()->id;
+        $notification->type = 'become artist';
+        $notification->save();
+
+        return redirect()->back()->with('success','a request was sent to admin , waiting for admin\'s approval');
+    
+    }
+
+    // show a profile of another artist
+    public function showArtist($id){
+        $user = User::findOrFail($id);
+        $artist = Artist::where('user_id',$user->id)->first();
+        $products = Product::where('artist_id', $user->id)
+        ->where('is_online',1)->get();
+        $collections = Collection::where('artist_id',$artist->id)->where('is_online',1)->get();
+        return view('artists.artist',compact('products','artist','user','collections'));
+
+
+    }
+
+    public function editArtWork($id){
+        $product = Product::findOrFail($id);
+        $sections = Section::where('is_online',1)->get();
+        return view('artists.ediArtWork',compact('product','sections'));
+
+    }
+
+    public function updateArtWork(Request $request ,$id){
+        $product = Product::findOrFail($id);
+        $product->creation_date= $request->input('creation_date');
+        $product->artwork_type = $request->input('artwork_type');
+        $product->price_after_discount = $request->input('price_after_discount');
+        $product->stock_quantity = $request->input('stock_quantity');
+        $product->price_after_discount = $request->input('price_after_discount');
+        $product->artwork_dimensions = $request->input('artwork_dimensions');
+        $product->section_id = $request->input('section_id');
+
+
+        $product->save();
+
+        $data= $request->validate([
+            'name'=>'required',
+            'price' => 'required|numeric|min:1',
+        ]);
+        $additional = [
+            
+            'description'=>$request->input('description'),
+
+
+
+        ];
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = $image->getClientOriginalName();
+            $destinationPath = public_path('productImages');
+            if (!file_exists($destinationPath . '/' . $imageName)) {
+            $image->move(public_path('productImages'), $imageName);
+            }
+            $additional['img'] = $imageName;
+
+            
+           
+            
+        }
+
+        if ($request->hasFile('digital_works')) {
+            $documents = $request->file('documents');
+            $documentsName =   $documents->getClientOriginalName();
+            if(!file_exists(public_path('digital_works/'.$documentsName))){
+            $documents->move(public_path('digital_works'), $documentsName);
+            }
+            $additional['digital_work_file'] = $documentsName;
+        }
+
+        $final = array_merge($data,$additional);
+
+        $product->update($final);
+        return redirect()->route('artists.profile',auth()->user()->id)->with('success','art work was updated successfully');
+
+
+    }
+
+    // if an artwork doesn't belong to some collection , it adds it to one
+    public function addExistedArtworkToCollection(Request $request,$productId){
+        $product = Product::findOrFail($productId);
+        $product->collection_id = $request->input('collection');
+        $product->save();
+        return redirect()->back()->with(['success'=> 'artwork was added to the collection successfully','tab'=>'collections']);
+
+
 
     }
 

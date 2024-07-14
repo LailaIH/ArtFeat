@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class ProductsController extends Controller
 {
@@ -72,8 +74,11 @@ class ProductsController extends Controller
 
         if ($request->hasFile('img')) {
             $image = $request->file('img');
-            $imageName = time().'.'.$image->extension();
+            $imageName = time().'.'.$image->getClientOriginalName();
+            $destinationPath = public_path('productImages'); 
+            if (!file_exists($destinationPath . '/' . $imageName)) {
             $image->move(public_path('productImages'), $imageName);
+            }
             $product->img = $imageName;
         }
         $product->name = strip_tags($request->input('name'));
@@ -123,8 +128,11 @@ class ProductsController extends Controller
         $product->section_id = $request->input('section_id');
         if ($request->hasFile('img')) {
             $image = $request->file('img');
-            $imageName = time().'.'.$image->extension();
+            $imageName = time().'.'.$image->getClientOriginalName();
+            $destinationPath = public_path('productImages'); 
+            if (!file_exists($destinationPath . '/' . $imageName)) {
             $image->move(public_path('productImages'), $imageName);
+            }
             $product->img = $imageName;
         }
         $product->name = strip_tags($request->input('name'));

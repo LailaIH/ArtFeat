@@ -1,7 +1,6 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/edit.css')}}">
 <div class="pageHeader">
       <img src="/assets/img/editprofile.png" />
       <div class="overLay">
@@ -15,8 +14,9 @@
 
     <div class="pageContent">
       <div>
-      <a href="{{route('artists.profile',['id'=>auth()->user()->id])}}"> {{__('mycustom.backToProfile')}}</a>
-      </div> <br>
+      <a style="text-decoration: none; color:black;" href="{{route('artists.profile',auth()->user()->id)}}">
+      Back to Profile</a>
+          </div> 
       <h3>{{__('mycustom.yourCollectionDetails')}}</h3>
       <div class="outerEditProfile" style="justify-content: center;
         align-items: center;">

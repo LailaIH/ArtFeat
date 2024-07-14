@@ -200,7 +200,7 @@ class UserCartsController extends Controller
 
 
     public function paidInvoices(){
-       $invoices = Invoice::where('user_id',auth()->user()->id)->where('is_online',0)->get();
+       $invoices = Invoice::where('user_id',auth()->user()->id)->where('is_online',0)->whereNotNull('order_id')->get();
        $total = $invoices->sum('total_price');
 
        return view('user-paid-invoices',['invoices'=>$invoices,'total'=>$total]) ;

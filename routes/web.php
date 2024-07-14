@@ -12,6 +12,9 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionsController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CreatorsController;
+use App\Http\Controllers\EventsController;
+use App\Http\Controllers\FollowingsController;
 use App\Http\Controllers\ShippingCompanyController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\LandingPage\LandingController;
@@ -19,10 +22,13 @@ use App\Http\Controllers\LandingPage\DiscoverController;
 use App\Http\Controllers\LandingPage\ArtistController;
 use App\Http\Controllers\LandingPage\UserCartsController;
 use App\Http\Controllers\LandingPage\StripeController;
-
-
-
-
+use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\SupportsController;
+use App\Models\Auction;
+use App\Models\Invoice;
+use App\Models\User;
+use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -45,30 +51,44 @@ Auth::routes();
 
 
 
+
 Route::get('/languageConverter/{locale}', [LandingController::class, 'switch'])->name('languageConverter');
 
+// Route::get('/test', [LandingController::class, 'test']);
+Route::post('/filter', [LandingController::class, 'productsFilter'])->name('products.filter');
 //public routes for landing pages
 Route::get('/', [LandingController::class, 'welcome'])->name('welcome');
-Route::get('/events', [LandingController::class, 'events'])->name('events');
+Route::get('/landing/events', [LandingController::class, 'events'])->name('events');
+Route::get('/landing/single/event/{id}', [LandingController::class, 'singleEvent'])->name('events.single');
+
 Route::get('/landing/auctions', [LandingController::class, 'auctions'])->name('auctions');
+Route::post('/landing/auctions/price/{id}', [LandingController::class, 'addPriceLanding'])->name('addPrice');
+
 Route::get('/privacy/policy', [LandingController::class, 'privacyPolicy'])->name('privacyPolicy');
+Route::get('/support', [LandingController::class, 'support'])->name('support');
 
 
 Route::get('/all/sections', [LandingController::class, 'allSections'])->name('allSections');
+Route::get('/single/section/{id}', [LandingController::class, 'singleSection'])->name('singleSection');
 
 Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover');
 Route::get('/one/card/{artist}', [DiscoverController::class, 'oneCard'])->name('one_card');
 
-Route::post('/artists/search', [DiscoverController::class, 'search'])->name('artists.search');
+Route::get('/artists/search', [DiscoverController::class, 'search'])->name('artists.search');
 
 
 Route::get('/live/join', function () {
     return view('livejoin');
 });
 
+Route::get('/dis', function () {
+    return view('landing.editprofile');
+});
 
 
-
+// Route::get('/test', function () {
+//     return view('landing.supportTickets');
+// });
 
 
 
@@ -76,9 +96,6 @@ Route::get('/who/we/are', function () {
     return view('who-we-are');
 });
 
-Route::get('/proooo', function () {
-    return view('landing.profile');
-});
 
 
 
@@ -120,13 +137,24 @@ Route::post('/artists/add/collection/{id}', [ArtistController::class, 'addCollec
 Route::get('/artists/show/add/to/collection/{id}', [ArtistController::class, 'showAddToCollection'])
 ->name('artists.showAddToCollection')->middleware('auth', 'checkArtistCollection');
 
+Route::get('/artists/show/edit/artwork/{id}', [ArtistController::class, 'editArtWork'])
+->name('artists.showEditArtwork')->middleware('auth');
+
 Route::post('/artists/add/to/collection/{id}', [ArtistController::class, 'addArtToCollection'])->name('artists.add_to_collection');
+Route::put('/artists/update-art-work/{id}', [ArtistController::class, 'updateArtWork'])->name('artists.updateArtWork');
+Route::put('/artists/addArtToCollection/{id}', [ArtistController::class, 'addExistedArtworkToCollection'])->name('addExistedArtworkToCollection');
+
 Route::post('/artists/add/expertise/{id}', [ArtistController::class, 'addExpert'])->name('artists.addExpert');
 Route::post('/artists/add/desc/{id}', [ArtistController::class, 'addDescription'])->name('artists.addDescription');
 Route::post('/artists/add/years/{id}', [ArtistController::class, 'addYears'])->name('artists.addYears');
 
+Route::get('/artists/show/become/artist', [ArtistController::class, 'showBecomArtist'])
+->name('artists.showBecomeArtist');
+Route::get('/artists/become/artist', [ArtistController::class, 'becomeArtist'])
+->name('artists.becomeArtist');
 
-
+Route::get('/artists/artist/{id}', [ArtistController::class, 'showArtist'])
+->name('artists.showArtist')->middleware('artistProfile');;
 
 Route::get('/artists/profile/{id}', [ArtistController::class, 'profile'])
 ->name('artists.profile')
@@ -151,22 +179,47 @@ Route::post('/artists/edit/background/picture/{id}', [ArtistController::class, '
 Route::post('/collections/disable/{collection}', [ArtistController::class, 'disableCollection'])
 ->name('artists.collectionsDisable');
 
+Route::put('/artists/collections/edit/{id}', [ArtistController::class, 'updateCollection'])->name('artists.collectionUpdate');
+
+
+Route::get('/follow/{id}', [FollowingsController::class, 'follow'])->name('follow')->middleware(['auth']);
+Route::delete('/unfollow/{id}', [FollowingsController::class, 'unfollow'])->name('unfollow')->middleware(['auth']);
 
 
 
-Route::get('/landing/login', function () {
-    return view('landing-login');
-});
+Route::get('/landing/login', [LandingController::class, 'landingLogin'])->name('landingLogin')->middleware('capture.intended.url');
+Route::get('/landing/signup', [LandingController::class, 'landingSignup'])->name('landingSignup')->middleware('capture.intended.url');
+Route::get('/landing/user/profile', [LandingController::class, 'userProfile'])->name('userProfile')->middleware(['auth','userOnly']);
+Route::put('/landing/user/update/profile/{id}', [LandingController::class, 'updateUser'])->name('userUpdateProfile')->middleware(['auth','userOnly']);
 
-Route::get('/landing/signup', function () {
-    return view('landing-signup');
-});
+// landing tickets
+Route::get('/landing/user/tickets', [LandingController::class, 'showTickets'])->name('showTickets')->middleware(['auth']);
+Route::post('/landing/user/add/ticket', [LandingController::class, 'addTicket'])->name('addTicket')->middleware(['auth']);
+Route::get('/landing/user/ticket/{id}/replies', [LandingController::class, 'showReplies'])->name('showRepliesOfTicket')->middleware(['auth']);
+Route::post('/landing/user/reply/to/ticket', [LandingController::class, 'replyToTicket'])->name('replyToTicket')->middleware(['auth']);
+Route::put('/landing/close/ticket/{id}', [LandingController::class, 'closeTicket'])->name('closeTicket')->middleware(['auth']);
+
+
 
 // stripe
 Route::post('/checkout', [StripeController::class, 'checkout'])->name('checkout');
 Route::get('/success', [StripeController::class, 'success'])->name('success');
 Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
 Route::post('/webhook', [StripeController::class, 'webhook'])->name('webhook');
+
+// funds stripe
+
+Route::post('/funds/checkout', [StripeController::class, 'fundsCheckout'])->name('fundsCheckout');
+Route::get('/funds/success', [StripeController::class, 'fundSuccess'])->name('fundsSuccess');
+Route::get('/funds/cancel', [StripeController::class, 'fundsCancel'])->name('fundsCancel');
+
+// wallet payment
+
+Route::get('/wallet/confirm/payment', [StripeController::class, 'showConfirmPayment'])->name('showConfirmPayment');
+// success:
+Route::get('/wallet/pay', [StripeController::class, 'payWithWallet'])->name('payWithWallet');
+//cancel
+Route::get('/wallet/cancel', [StripeController::class, 'cancelWallet'])->name('cancelWallet');
 
 
 
@@ -279,11 +332,14 @@ Route::delete('/sections/destroy/{id}', [SectionsController::class, 'destroy'])-
 // Define routes for Auctions
 Route::get('/auctions', [AuctionsController::class, 'index'])->name('auctions.index');
 Route::get('/auctions/create', [AuctionsController::class, 'create'])->name('auctions.create');
-Route::get('/auctions/{id}', [AuctionsController::class, 'show'])->name('auctions.show');
 Route::post('/auctions/store', [AuctionsController::class, 'store'])->name('auctions.store');
 Route::get('/auctions/edit/{id}', [AuctionsController::class, 'edit'])->name('auctions.edit');
 Route::put('/auctions/update/{id}', [AuctionsController::class, 'update'])->name('auctions.update');
 Route::delete('/auctions/delete/{id}', [AuctionsController::class, 'destroy'])->name('auctions.delete');
+Route::get('/auctions/show/prices/{id}', [AuctionsController::class, 'showPrices'])->name('auctions.showPrices');
+Route::get('/auctions/show/add/price/{id}', [AuctionsController::class, 'showAddPrice'])->name('auctions.showAddePrice');
+
+Route::post('/auctions/add/price/{id}', [AuctionsController::class, 'addPrice'])->name('auctions.addPrice');
 
 
 
@@ -342,6 +398,33 @@ Route::post('/shipping/companies/store', [ShippingCompanyController::class, 'sto
 Route::put('/shipping/companies/update/{uuid}', [ShippingCompanyController::class, 'update'])->name('shipping-companies.update');
 Route::get('/shipping/companies/show/offline/{uuid}', [ShippingCompanyController::class, 'showOffline'])->name('shipping-companies.show_offline');
 
+// support routes
+Route::get('/supports', [SupportsController::class, 'index'])->name('supports.index');
+Route::get('/supports/create', [SupportsController::class, 'create'])->name('supports.create');
+Route::get('/supports/edit/{id}', [SupportsController::class, 'edit'])->name('supports.edit');
+Route::post('/supports/store', [SupportsController::class, 'store'])->name('supports.store');
+Route::put('/supports/update/{id}', [SupportsController::class, 'update'])->name('supports.update');
+
+
+// events routes
+Route::get('/events', [EventsController::class, 'index'])->name('events.index');
+Route::get('/events/create', [EventsController::class, 'create'])->name('events.create');
+Route::get('/events/edit/{id}', [EventsController::class, 'edit'])->name('events.edit');
+Route::post('/events/store', [EventsController::class, 'store'])->name('events.store');
+Route::put('/events/update/{id}', [EventsController::class, 'update'])->name('events.update');
+
+
+// creators routes
+Route::get('/creators', [CreatorsController::class, 'index'])->name('creators.index');
+Route::get('/creators/create', [CreatorsController::class, 'create'])->name('creators.create');
+Route::get('/creators/edit/{id}', [CreatorsController::class, 'edit'])->name('creators.edit');
+Route::post('/creators/store', [CreatorsController::class, 'store'])->name('creators.store');
+Route::put('/creators/update/{id}', [CreatorsController::class, 'update'])->name('creators.update');
+
+// notifications routes
+Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
+Route::put('/notifications/approve/{id}', [NotificationsController::class, 'approve'])->name('notifications.approve');
+Route::put('/notifications/reject/{id}', [NotificationsController::class, 'reject'])->name('notifications.reject');
 
 
 });

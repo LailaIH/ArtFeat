@@ -54,6 +54,11 @@ class Product extends Model
         return $this->hasMany(Cart::class);
     }
 
+    public function auction()
+    {
+        return $this->hasOne(Auction::class);
+    }
+
     
 
 }

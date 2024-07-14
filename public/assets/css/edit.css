@@ -63,7 +63,7 @@ nav ul .links {
 }
 nav ul li {
   transition: 500ms;
-  margin: 0px 55px;
+  margin: 0px 35px;
 }
 nav ul li a {
   color: var(--secondary-color);
@@ -357,8 +357,6 @@ span.photo {
   border: 2px solid #ddd;
 }
 
-
-
 input[type="file"] {
   color: #555;
   font-size: 15px;
@@ -383,12 +381,6 @@ label[for="avatar"] {
 fieldset {
   display: flex;
   align-items: center;
-  
-  
-}
-fieldset input{
-  margin-left: 15px;
-  
 }
 fieldset textarea,
 input {
@@ -396,7 +388,7 @@ input {
   background: var(--Gray, #f8f8f8);
   box-shadow: none;
   padding: 5px;
-  width: 100%;
+  width: 75%;
   border: 0;
   outline: 0;
   transition: 0.3s ease;
@@ -426,11 +418,10 @@ input:focus {
   font-weight: 500;
   color: #333;
   text-align: start;
-  margin-right: 200px;
 }
 .grid-65 {
   position: relative;
-  width: 100%;
+  width: 65%;
   float: right;
   display: flex;
   justify-content: flex-start;
@@ -449,42 +440,34 @@ input:focus {
   margin: 5px auto 15px auto;
 }
 select {
-  width: 10%;
+  width: 80%;
   padding: 7px 10px;
   background-color: #f5f5f5;
   border: none;
   border-radius: 2.5px;
   outline: 0;
 }
-.ddd{
-display: flex;
-}
 select option {
   padding: 5px;
 }
 fieldset {
   text-align: center;
+  /* background-color: rgba(0,0,0,0.01); */
   margin-bottom: 5px;
   padding: 5px;
   box-sizing: border-box;
-  gap: 50px;
-  
-  
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
-
 fieldset:last-child {
   border-bottom: none;
 }
 fieldset .justifyButtons {
   display: flex;
-  gap: 30px;
-  margin-left: 10px;
-  
+  gap: 8px;
 }
-
 fieldset .justifyButtons button {
   display: flex;
-  padding: 10px 25px;
+  padding: 15px 30px;
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
@@ -494,8 +477,7 @@ fieldset .justifyButtons button {
 input.Btn {
   width: 170px;
   margin: auto;
-  /* padding: 15px 0; */
-  padding: 10px 25px;
+  padding: 15px 0;
   font-size: 16px;
   color: #fff;
   cursor: pointer;
@@ -558,11 +540,10 @@ input.cancel {
 
 .file-upload-wrapper::after {
   content: attr(data-text);
-  font-size: 15px;
+  font-size: 18px;
   position: absolute;
-  /* top: 0;
-  left: 0; */
-  
+  top: 0;
+  left: 0;
   background: #f8f8f8;
   padding: 10px 15px;
   display: block;
@@ -610,12 +591,6 @@ input.cancel {
   pointer-events: none;
   border-radius: 0 5px 5px 0;
 }
-.file-upload-wrapper::after {
-  color: #000;
-  font-size: 16px;
-  font-weight: 400;
-}
-
 .file-upload-wrapper input {
   opacity: 0;
   position: absolute;
@@ -631,6 +606,26 @@ input.cancel {
   cursor: pointer;
   width: 100%;
 }
+
+
+/* RTL styling */
+.file-upload-wrapper:dir(rtl) {
+  direction: rtl;
+}
+
+.file-upload-wrapper:dir(rtl)::after {
+  left: auto;
+  right: 0;
+  text-align: right;
+}
+
+.file-upload-wrapper:dir(rtl)::before {
+  right: auto;
+  left: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+
 .switcher {
   display: flex;
   justify-content: space-between;
@@ -686,43 +681,16 @@ input.cancel {
 .imagesSection .wrapperImages {
   margin-top: 24px;
   display: flex;
-  
   flex-wrap: wrap;
-  
   gap: 16px;
 }
 .imagesSection .outerImg {
   position: relative;
-  flex: 0 0 calc(50% - 8px); /* Each image container takes up 50% of the container width minus gap */
-  max-width: calc(50% - 8px); /* Set maximum width for each image container */
   height: 158px;
-  margin-bottom: 16px; /* Adjust margin to create gap between rows */
+  width: 158px;
 }
 
-.imagesSection .outerImg .myImg {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  padding: 6px;
-  border-radius: 2px;
-  border: 1px solid #adadad;
-}
-.imagesSection .outerImg .delete {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(0, 0, 0, 0.6);
-  width: 32px;
-  height: 32px;
-  text-align: center;
-  justify-content: center;
-  z-index: 2;
-}
-.imagesSection .outerImg .delete img {
-  margin-top: -4px;
-}
+
 /*Media Queries
 =========================*/
 @media only screen and (max-width: 1200px) {
@@ -915,9 +883,5 @@ input.cancel {
     width: 90%;
   }
 }
-.avatar-image {
-  width: 100%;
-  height: 100%;
-  display: block;
-  margin: auto;
-}
+
+

@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html lang="" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="icon" type="image/x-icon" href="{{asset('assets/img/fave.svg')}}">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/index2.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/signup.css')}}">
+<meta charset="UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+      name="viewport"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="Images/fave.svg" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/assets/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/login.css')}}">
 
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
     <title>ArtFeat</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
 </head> 
   <body>
     <div class="outerLogin">
@@ -25,8 +38,8 @@
           <div class="form-content mt-3">
             <form method="POST" action="{{ route('artists.create') }}">
             @csrf
-          <div class="row gx-3 mb-3">
-            <div class="col-md-6" >
+          <div class="row ">
+            <div class="col" >
                 <input class= "form-control" id="name" type="text" placeholder="{{__('mycustom.name')}}" class="input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus />
                 @error('name')
                            <span class="invalid-feedback" role="alert">
@@ -35,7 +48,7 @@
                 @enderror
             </div>
 
-            <div class="col-md-6" >
+            <div class="col" >
                 <input class="form-control" id="store" type="text" placeholder="{{__('mycustom.storeName')}}"  name="store" value="{{ old('store') }}" required autocomplete="store" autofocus />
                 @error('store')
                                     <span class="invalid-feedback" role="alert">
@@ -109,7 +122,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                <div class="eye-btn"><i class="uil uil-eye-slash"></i></div>
+                <div class="eye-btn"><i class="fas fa-eye" id="togglePassword"></i></div>
               </div>
               <div class="field input-field">
                 <input
@@ -119,7 +132,7 @@
                   class="password-input2"
                   name="password_confirmation" required autocomplete="new-password"
                 />
-                <div class="eye-btn"><i class="uil uil-eye-slash"></i></div>
+                <div class="eye-btn"><i class="fas fa-eye" id="togglePasswordConfirm"></i></div>
                 <i class="bx bx-hide eye-icon"></i>
               </div>
               <div class="field button-field">
@@ -150,3 +163,35 @@
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
   crossorigin="anonymous"
 ></script>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+
+  const togglePasswordConfirm = document.getElementById('togglePasswordConfirm');
+  const passwordConfirmInput = document.getElementById('password-confirm');
+
+  function toggleVisibility(inputField, icon) {
+    // Toggle the type attribute
+    const type = inputField.getAttribute('type') === 'password' ? 'text' : 'password';
+    inputField.setAttribute('type', type);
+
+    // Toggle the eye icon
+   
+    icon.classList.toggle('fa-eye-slash');
+  }
+
+  togglePassword.addEventListener('click', function () {
+    toggleVisibility(passwordInput, this);
+  });
+
+  togglePasswordConfirm.addEventListener('click', function () {
+    toggleVisibility(passwordConfirmInput, this);
+  });
+});
+
+
+
+</script>

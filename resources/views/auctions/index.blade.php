@@ -69,6 +69,7 @@
                                         <th>Start Time</th>
                                         <th>End Time</th>
                                         <th>Starting Price</th>
+                                        <th>Ending Price </th>
                                         <th>Actions</th>
                                         
 
@@ -82,10 +83,18 @@
                                             <td>{{ $auction->description }}</td>
                                             <td>{{ $auction->start_time }}</td>
                                             <td>{{ $auction->end_time }}</td> 
-                                            <td class="text-primary">{{ $auction->starting_price }}</td>                                           
+                                            <td class="text-primary">{{ $auction->starting_price }}</td>
+                                            <td class="text-primary">{{ $auction->ending_price }}</td>                                           
                                             <td>
                                             <a class="btn btn-primary btn-xs" href="{{route('auctions.edit' , ['id'=>$auction['id'] ])}}" >   
                                             Edit
+                                              </a>
+                                              <a class="btn btn-success btn-xs" href="{{route('auctions.showPrices' , ['id'=>$auction['id'] ])}}" >   
+                                            show prices
+                                              </a>
+
+                                              <a class="btn btn-success btn-xs" href="{{route('auctions.showAddePrice' , ['id'=>$auction['id'] ])}}" >   
+                                            add price
                                               </a>
                                         
 
@@ -93,8 +102,10 @@
                                         <form class="d-inline"  action="{{ route('auctions.delete', ['id'=>$auction['id']]) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this section?')">Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this auction?')">Delete</button>
                                                 </form>
+
+
                                         </td>
 
                                         </tr>

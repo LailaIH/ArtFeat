@@ -1,4 +1,4 @@
-@extends('commonlanding')
+@extends('commonlanding2')
 @section('content')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/error.css')}}">
@@ -13,6 +13,12 @@
       </div>
     </div>
     <div class="pageContent">
+    @if (session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+
+
+
       <div aria-label="Breadcrumb" class="breadcrumb">
         <ul>
           <li><a href="#">ArtFeat</a></li>
