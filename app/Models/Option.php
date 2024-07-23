@@ -15,7 +15,7 @@ class Option extends Model
     protected $fillable = [
             'user_id' ,
             'key',
-            'value',
+            'value','created_at',
     ];
 
     public function user(){

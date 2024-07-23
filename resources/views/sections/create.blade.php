@@ -44,7 +44,7 @@
                                         <label for="img" class="custom-file-upload">
                                             Upload New Image
                                         </label>
-                                        <input style="display: none;" type="file" name="img" id="img" class="form-control-file" multiple onchange="updateProfileImage(event);">
+                                        <input style="display: none;" type="file" name="img" id="img" class="form-control-file" multiple onchange="updateProfileImage(event);" required>
                                     </div>
                                 </div>
                             </div>

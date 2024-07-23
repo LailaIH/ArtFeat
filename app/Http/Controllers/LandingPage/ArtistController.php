@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LandingPage\Countries;
 use App\Models\Auction;
+use App\Models\Favorite;
 use App\Models\Notification;
+use App\Models\Picture;
+use Illuminate\Support\Str;
 
 class ArtistController extends Controller
 {
@@ -99,13 +102,21 @@ class ArtistController extends Controller
         $products = Product::where('artist_id', $user->id)
         ->where('is_online',1)->get();
 
+        $favorites = Favorite::where('user_id',$user->id)->get();
+        $Favproducts = [];
+        foreach($favorites as $favorite){
+            $Favproducts[] = $favorite->product;
+
+        }
+
         $tab = session('tab', 'artwork');
 
         return view('artists.profile',['artist'=>$artist , 'user'=>$user ,
          'collections'=>$collections,
         'carts'=>$carts,
          'products'=>$products,
-        'tab'=>$tab]);
+        'tab'=>$tab ,
+         'Favproducts'=>$Favproducts]);
     }
 
     public function updateProfilePicture(Request $request ,$id){
@@ -278,12 +289,15 @@ class ArtistController extends Controller
         $product->stock_quantity = strip_tags($request->input('quantity'));
         $product->product_visibility = $request->has('visibility')?1:0;
 
+        // main image
         if ($request->hasFile('img')) {
             $image = $request->file('img');
             $imageName = time().'.'.$image->extension();
             $image->move(public_path('productImages'), $imageName);
             $product->img = $imageName;
         }
+
+
 
 
        
@@ -302,23 +316,34 @@ class ArtistController extends Controller
         $product->section_id = $request->input('section_id');
         
         $product->save();
+
+
+                // extra product images
+
+                $images = [];
+                
+                if($request->hasFile('images')) {
+                    foreach($request->file('images') as $file) {
+                        $filename = time() . '_' . $file->getClientOriginalName();
+                        $file->move(public_path('productImages'), $filename);
+                        $images[] = $filename;
+                    }
+                }
+            
+               $jsonImages = json_encode($images);
+               
+            
+                // Save to the database
+                $picture = new Picture();
+                $picture->product_id = $product->id;
+                $picture->images = $jsonImages;
+                $picture->save();  
+
+
+
         $message ='artwork added successfully';
 
-        if($request->has('auction')){
-            
-            $auction = new Auction();
-            $auction->product_id = $product->id;
-            $auction->user_id = auth()->user()->id;
-            $auction->title = $product->name;
-            $auction->starting_price = $product->price;
-            $auction->start_time = $request->filled('start_time') ? $request->input('start_time') : Carbon::now()->toDateTimeString();
-            $auction->end_time = $request->filled('end_time') ? $request->input('end_time') : Carbon::now()->addMonth()->toDateTimeString();
-            $auction->save();
-           
-            $extraText = ' it now belongs to auctions ' ;
-            $message .= $extraText;
 
-        }
         return redirect()->route('artists.profile',auth()->user()->id)->with(['success'=>$message ,'tab'=>'collections']);
       
 
@@ -326,6 +351,21 @@ class ArtistController extends Controller
 
 
     }
+
+    // when artist want to add artwork to auctions , it sends a request to admin
+    public function askToAddToAuctions($id){
+        $product = Product::findOrFail($id);
+        $notification = Notification::create([
+            'user_id'=>auth()->user()->id,
+            'type'=>'add artwork to auctions',
+            'product_id'=>$id,
+
+        ]);
+        return redirect()->back();
+
+    }
+
+ 
 
    
 
@@ -411,6 +451,7 @@ class ArtistController extends Controller
     public function becomeArtist(Request $request){
 
         $notification = new Notification();
+       
         $notification->user_id = auth()->user()->id;
         $notification->type = 'become artist';
         $notification->save();
@@ -434,11 +475,19 @@ class ArtistController extends Controller
     public function editArtWork($id){
         $product = Product::findOrFail($id);
         $sections = Section::where('is_online',1)->get();
-        return view('artists.ediArtWork',compact('product','sections'));
+        $picture = Picture::where('product_id',$product->id)->first();
+        $images = [];
+        if(isset($picture) && isset($picture->images)){
+
+            $images= json_decode($picture->images);
+        }
+        
+        return view('artists.ediArtWork',compact('product','sections','images'));
 
     }
 
     public function updateArtWork(Request $request ,$id){
+     //   dd($request->deletedImages);
         $product = Product::findOrFail($id);
         $product->creation_date= $request->input('creation_date');
         $product->artwork_type = $request->input('artwork_type');
@@ -489,6 +538,62 @@ class ArtistController extends Controller
         $final = array_merge($data,$additional);
 
         $product->update($final);
+
+        $picture = Picture::where('product_id',$product->id)->first();
+        if($picture){
+
+            $existingImages = isset($picture->images) ? json_decode($picture->images) : [];
+            $deletedImages = json_decode($request->input('deletedImages', '[]'));
+
+            // Remove deleted images from the existing images array
+            $existingImages = array_filter($existingImages, function($image) use ($deletedImages) {
+                return !in_array($image, $deletedImages);
+            });
+                
+                // Handle the new images
+                if ($request->hasFile('images')) {
+                    foreach ($request->file('images') as $index => $file) {
+                        if ($file) {
+                            $filename = time() . '_' . $file->getClientOriginalName();
+                            $file->move(public_path('productImages'), $filename);
+                            // Replace the image at the specific index
+                            $existingImages[$index] = $filename;
+                        }
+                    }
+                }
+            
+                $picture->images = json_encode($existingImages);
+                $picture->save();
+                $picture->save();
+        }
+
+        else{
+
+            $images = [];
+                
+            if($request->hasFile('images')) {
+                foreach($request->file('images') as $file) {
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $file->move(public_path('productImages'), $filename);
+                    $images[] = $filename;
+                }
+            }
+        
+           $jsonImages = json_encode($images);
+           
+        
+            // Save to the database
+            $picture = new Picture();
+            $picture->product_id = $product->id;
+            $picture->images = $jsonImages;
+            $picture->save();  
+
+
+
+        }
+
+
+
         return redirect()->route('artists.profile',auth()->user()->id)->with('success','art work was updated successfully');
 
 
@@ -503,6 +608,29 @@ class ArtistController extends Controller
 
 
 
+    }
+
+    // show artworks of a specific collection
+
+    public function showCollectionArtwork($id){
+        $collection = Collection::findOrFail($id);
+        $products = $collection->products;
+        return view('artists.collectionArtworks',compact('products','collection'));
+    }
+
+    // show a single artowrk
+
+    public function artwork($id){
+        $product = Product::findOrFail($id);
+        $picture = Picture::where('product_id',$product->id)->first();
+        $randomProducts = Product::inRandomOrder()->take(4)->get();
+        $images = [];
+        if(isset($picture) && isset($picture->images)){
+
+            $images= json_decode($picture->images);
+        }
+
+        return view('artists.artwork',compact('product','images','randomProducts'));
     }
 
 

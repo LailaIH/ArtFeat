@@ -36,7 +36,7 @@
     <h5 class="mt-4 mb-4" style="color: #35ace8;">No Paid Invoices</h5>      
     @else              
     
-    <table class="table table-hover">
+    <table class="table table-hover table-sm">
       <thead>
         <tr>
 

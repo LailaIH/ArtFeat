@@ -148,4 +148,8 @@ class User extends Authenticatable
     public function notification(){
         return $this->hasMany(Notification::class);
     }
+    
+    public function favorites(){
+        return $this->hasMany(Favorite::class);
+    }
 }

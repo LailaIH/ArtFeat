@@ -16,7 +16,12 @@
             $('.modal').modal('hide');
         });
 });
+
+
 </script>
+
+
+
 
 <div class="liveStream">
   <div class="innerLive">
@@ -58,13 +63,20 @@
                         @endif
         <img src="/assets/img/kofia.svg" />
         <div class="title">
-        <h1 class="card-title">{{ __('mycustom.shopPaintings')}}</h1>
-        <h1>{{ __('mycustom.paintingsNow')}}</h1>
-        </div>
-        <p class="card-text"><span>+100,000</span> {{ __('mycustom.pricesDesc')}}</p>
-        <button href=""><span>{{ __('mycustom.discover')}}</span></button>
+        @if(isset($slideTitles[0]))
+            <h1 class="card-title">{{$slideTitles[0]->value}}</h1>@endif
+          </div>
+           @if(isset($slideBodies[0]))
+          <p class="card-text">{{$slideBodies[0]->value}}</p>@endif        @guest
+        <form method="get" action="/landing/signup">
+          @csrf
+        <button type="submit"><span>{{ __('mycustom.discover')}}</span></button></form>@endguest
       </div>
+      @if(isset($slidePictures[0]->img))
+      <img src="{{asset('optionImages/'.$slidePictures[0]->img)}}" height="372" width="390"/>
+      @else 
       <img src="/assets/img/discover2.png"/>
+      @endif
     </div>
   </div>
     <div class="carousel-item">
@@ -72,13 +84,19 @@
         <div class="card-body">
           <img src="/assets/img/kofia.svg" />
           <div class="title">
-          <h1 class="card-title">{{ __('mycustom.shopPaintings')}}</h1>
-          <h1>{{ __('mycustom.paintingsNow')}}</h1>
+          @if(isset($slideTitles[1]))
+            <h1 class="card-title">{{$slideTitles[1]->value}}</h1>@endif
           </div>
-          <p class="card-text"><span>+100,000</span>{{ __('mycustom.pricesDesc')}}</p>
-          <button href=""><span>{{ __('mycustom.discover')}}</span></button>
+           @if(isset($slideBodies[1]))
+          <p class="card-text">{{$slideBodies[1]->value}}</p>@endif          @guest
+          <form method="get" action="/landing/signup">
+          @csrf
+          <button type="submit"><span>{{ __('mycustom.discover')}}</span></button></form>@endguest
         </div>
-        <img src="/assets/img/discover.png"/>
+        @if(isset($slidePictures[1]->img))
+        <img src="{{asset('optionImages/'.$slidePictures[1]->img)}}" height="372" width="390"/>
+        @else
+        <img src="/assets/img/discover.png"/>@endif
       </div>
     </div>
     <div class="carousel-item">
@@ -86,13 +104,21 @@
         <div class="card-body">
           <img src="/assets/img/kofia.svg" />
           <div class="title">
-          <h1 class="card-title">{{ __('mycustom.shopPaintings')}}</h1>
-          <h1>{{ __('mycustom.paintingsNow')}}</h1>
+        
+           @if(isset($slideTitles[2]))
+            <h1 class="card-title">{{$slideTitles[2]->value}}</h1>@endif
           </div>
-          <p class="card-text"><span>+100,000</span>{{ __('mycustom.pricesDesc')}}</p>
-          <button href=""><span>{{ __('mycustom.discover')}}</span></button>
+           @if(isset($slideBodies[2]))
+          <p id="slideBody" class="card-text">{{$slideBodies[2]->value}}</p>@endif
+          @guest
+          <form method="get" action="/landing/signup">
+          @csrf
+          <button type="submit"><span>{{ __('mycustom.discover')}}</span></button></form>@endguest
         </div>
-        <img src="/assets/img/discover3.png"/>
+        @if(isset($slidePictures[2]->img))
+        <img src="{{asset('optionImages/'.$slidePictures[2]->img)}}" height="372" width="390"/>
+        @else
+        <img src="/assets/img/discover3.png"/>@endif
       </div>
     </div>
   </div>
@@ -378,27 +404,28 @@
             text-align: center; /* Center the text */
         }
     </style>
-   @foreach($sections as $section)
-    <div class="card" data-bs-toggle="modal" data-bs-target="#sectionModal{{ $section->id }}">
+@for($i=0;$i<4;$i++)
+  @if(isset($sections[$i]))     
+    <div class="card" data-bs-toggle="modal" data-bs-target="#sectionModal{{ $sections[$i]->id }}">
       <div class="overlay">
-        @if($section->img)
+        @if($sections[$i]->img)
         <div class="image-container">
-          <img src="{{ asset('sectionImages/' . $section->img) }}" alt="section pic"/>
-          <p class="Content text-white">{{ $section->name }}</p>
+          <img src="{{ asset('sectionImages/' . $sections[$i]->img) }}" alt="section pic"/>
+          <p class="Content text-white">{{ $sections[$i]->name }}</p>
         </div>
         @else
         <div class="image-container">
           <img src="{{asset('\assets\img\sculptures.jpg')}}" alt="artist pic"/>
-          <p class="Content text-white">{{ $section->name }}</p>
+          <p class="Content text-white">{{ $sections[$i]->name }}</p>
           </div>
           @endif
        <div class="OverLay2">
-         <p class="Content">{{$section->name}}</p>
+         <p class="Content">{{$sections[$i]->name}}</p>
          </div>
       </div>
       </div>
  <!-- Modal -->
- <div class="modal fade" id="sectionModal{{ $section->id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{$section->id}}" aria-hidden="true">
+ <div class="modal fade" id="sectionModal{{ $sections[$i]->id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{$sections[$i]->id}}" aria-hidden="true">
                             <style>
                         .image-container {
                             width: 100%; /* Ensures the container takes full width */
@@ -440,19 +467,19 @@
 
                 <div class="col mb-3">
                     <div class="image-container">
-                    <img src="{{ asset('sectionImages/' . $section->img) }}" class="section-img" />
+                    <img src="{{ asset('sectionImages/' . $sections[$i]->img) }}" class="section-img" />
                     </div>
                 </div>
                 <div class="col mt-4 text-container text-align-dynamic">
                     <div>
                         <label for="recipient-name">{{__('mycustom.name')}}:</label>
-                       {{$section->name}}
+                       {{$sections[$i]->name}}
                        
                     </div>
                     <div>
                         <label for="message-text">{{__('mycustom.description')}}:</label>
                         @php
-                        $words = explode(' ', $section->description);
+                        $words = explode(' ', $sections[$i]->description);
                        $sectionDes = implode(' ', array_slice($words, 0, 14)).'...';
                          @endphp
                         {{$sectionDes}}
@@ -463,7 +490,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('mycustom.close')}}</button>
-                <a href="{{route('singleSection',$section->id)}}" style="text-decoration: none;" class="btn btn-primary">{{__('mycustom.seeDetails')}}</a>
+                <a href="{{route('singleSection',$sections[$i]->id)}}" style="text-decoration: none;" class="btn btn-primary">{{__('mycustom.seeDetails')}}</a>
 
             </div>
         </div>
@@ -471,7 +498,28 @@
 </div>
 
 
-        @endforeach  
+
+
+
+        @else
+            <div class="card" >
+                  <div class="overlay">
+                  
+                   
+                    <div class="image-container">
+                      <img src="\assets\img\a3.png" alt="artist pic"/>
+                      <p class="Content text-white">{{__('mycustom.section')}}</p>
+                      </div>
+                    
+                  <div class="OverLay2">
+                    <p class="Content">{{__('mycustom.section')}}</p>
+                    </div>
+                  </div>
+                  </div>
+      @endif
+
+
+@endfor  
    
   </div>
   <div class="footerButton">
@@ -566,7 +614,7 @@
   </section>
 
   <!-- Seller -->
-   <section class="SellerSection">
+   <!-- <section class="SellerSection">
     <div class="outer">
         <div class="row">
             <div class="col-6">
@@ -769,7 +817,7 @@
             </div>
         </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Artist -->
 <section class="ArtistSection">
@@ -913,32 +961,82 @@
   <p data-aos="fade-down">{{ __('mycustom.theMostBeatifulpaintings')}}</p>
 <div class="image-grid">
   <div class="image-grid-col-2" style="position: relative;">
+    @if(isset($sections[0]))
+    <img style="background-size: cover; z-index: 0;"   src="{{ asset('sectionImages/' . $sections[0]->img) }}" alt="Image 1">
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{$sections[0]->name}}</span>
+    @else                                                       
     <img style="background-size: cover; z-index: 0;"   src="/assets/img/a1.png" alt="Image 1">
-    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">Paint Name</span>
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{__('mycustom.paintName')}}</span>
+    @endif                                                        
+ 
   </div>
   <div style="position: relative;">
+
+    @if(isset($sections[1]))
+    <img  src="{{ asset('sectionImages/' . $sections[1]->img) }}" alt="Image 2" >
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%);  padding: 8px; left:48px; bottom: 0px;">{{$sections[1]->name}}</span>
+    @else
     <img  src="/assets/img/a2.png" alt="Image 2" >
-    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%);  padding: 8px; left:48px; bottom: 0px;">Paint Name </span>
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%);  padding: 8px; left:48px; bottom: 0px;">{{__('mycustom.paintName')}}</span>
+     @endif                                                       
+  
   </div>
   <div class=" image-grid-row-2" style="position: relative;">
+
+  @if(isset($sections[2]))
+    <img  src="{{ asset('sectionImages/' . $sections[2]->img) }}" alt="Image 3">
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{$sections[2]->name}}</span>
+   
+    @else                                                       
     <img  src="/assets/img/a3.png" alt="Image 3">
-    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">Paint Name</span>
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{__('mycustom.paintName')}}</span>
+    @endif
+ 
   </div>
   <div style="position: relative;">
+
+
+   @if(isset($sections[3]))                                                         
+    <img  src="{{ asset('sectionImages/' . $sections[3]->img) }}" alt="Image 4">
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{$sections[3]->name}}</span>
+  
+    @else
     <img  src="/assets/img/a4.png" alt="Image 4">
-    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">Paint Name</span>
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{__('mycustom.paintName')}}</span>
+    @endif
+  
   </div>
    <div style="position: relative;">
+
+    @if(isset($sections[4]))
+    <img  src="{{ asset('sectionImages/' . $sections[4]->img) }}" alt="Image 5">
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{$sections[4]->name}}</span>
+ 
+    @else
     <img  src="/assets/img/a5.png" alt="Image 5">
-    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">Paint Name</span>
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{__('mycustom.paintName')}}</span>
+     @endif                                                       
   </div>
   <div style="position: relative;">
+
+
+    @if(isset($sections[5]))
+    <img   src="{{ asset('sectionImages/' . $sections[5]->img) }}" alt="Image 6">
+    <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">{{$sections[5]->name}}</span>
+   
+   
+    @else
     <img   src="/assets/img/a6.png" alt="Image 6">
     <span style="z-index: 100; color: rgb(0, 0, 0); background-color: rgba(253, 253, 255, 0.588); font-size:1rem; position: absolute;  transform: translateX(-50%); left:48px; bottom: 0px; padding: 8px;">Paint Name</span>
+    @endif
+ 
+ 
   </div>
    </div>
    <div class="footerButton">
-    <button>{{ __('mycustom.viewAll')}}</button>
+   <form method="get" action="{{route('allSections')}}">
+   @csrf
+    <button>{{ __('mycustom.viewAll')}}</button></form>
     </div>
   </section>
   
@@ -957,7 +1055,10 @@
                 @endif
             </div>
             <div class="learnMore">
+              <form method="get" action="/who/we/are">
+                @csrf
               <button class="botton" type="submit" onclick="">{{ __('mycustom.learnMore')}}</button>
+              </form>
             </div>
         </div>
         <div class="LeftImages col-lg-6">
@@ -976,7 +1077,13 @@
   <div class="info">
             <h1>{{ __('mycustom.joinOur')}}</h1>
             <h1>{{ __('mycustom.listCreators')}}</h1>
-            <button><span>{{ __('mycustom.registerNow')}}</span></button>
+            @auth 
+            @else
+            <form method="get" action="/landing/signup">
+              @csrf
+            <button type="submit"><span>{{ __('mycustom.registerNow')}}</span></button>
+            </form>
+            @endauth
   </div>
   </div>
   <div class="users">
@@ -1024,6 +1131,7 @@
                                                 </div>
                                             
                                             </div>
+                                            <!-- end modal -->
 
             @else
             <div class="user{{$i+1}}" data-bs-target="#exampleModalLong" data-bs-toggle="modal">

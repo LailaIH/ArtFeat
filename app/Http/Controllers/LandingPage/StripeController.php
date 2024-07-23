@@ -424,14 +424,16 @@ class StripeController extends Controller
             
         }
 
+            // destroy session  so if any refresh or unexpected behaviour will not cause orders and invoices duplicates
+            session()->forget('session_id');
 
-        return response()->json([
+            return response()->json([
             'session_id' => $session_id,
             'total' => $total,
         ]);            
             
             
-                      
+                   
         
         }
 
@@ -461,6 +463,7 @@ class StripeController extends Controller
 
             if($userFunds < $total){
                 return redirect()->route('logged_user_cart',$user->id)->withErrors(['fail'=>'your funds don\'t cover product prices , please add funds to your wallet']);
+                // destroy session or make the status canceld
             }
 
             $remaining_funds = $userFunds - $total ;

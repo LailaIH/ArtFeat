@@ -21,19 +21,31 @@ class LandingController extends Controller
 {
     public function welcome()
     {
-        $sections = Section::where('is_online',1)->take(4)->get(); // get the first 5 sections
+        $sections = Section::where('is_online',1)->take(6)->get(); // get the first 5 sections
         $products = Product::where('is_online',1)->orderBy('created_at', 'desc')->take(40)->get(); // get the last 40 products
         $artists = User::where('is_artist', true)->get();
         $whyArtfeatText = Option::where('key', 'why_artfeat_text')->value('value');
         $events = Event::where('is_online',1)->take(4)->get(); // get the first 4 events
         $creators = Creator::where('is_online',1)->take(5)->get();
-
+        $slidePictures = Option::whereIn('key',['main page first image','main page second image','main page third image'])->get();
+       
+        if( app()->getLocale() == 'en' ){
+        $slideTitles = Option::whereIn('key',['first slide title','second slide title','third slide title'])->get();
+        $slideBodies = Option::whereIn('key',['first slide body','second slide body','third slide body'])->get();
+        }
+        else{
+            $slideTitles = Option::whereIn('key',['first slide title arabic','second slide title arabic','third slide title arabic'])->get();
+            $slideBodies = Option::whereIn('key',['first slide body arabic','second slide body arabic','third slide body arabic'])->get();
+        }
         return view('welcome2',['sections'=>$sections ,
         'products'=>$products,
         'artists'=>$artists,
         'whyArtfeatText'=>$whyArtfeatText,
         'events'=>$events,
         'creators'=>$creators,
+        'slidePictures'=>$slidePictures,
+        'slideTitles'=>$slideTitles,
+        'slideBodies'=>$slideBodies,
     ]);
     }
 
@@ -261,6 +273,16 @@ class LandingController extends Controller
         else{
             throw new NotFoundHttpException();
         }
+
+
+   
     }
+
+         // display all artworks 
+
+         public function allArtworks(){
+            $products = Product::where('is_online',1)->get();
+            return view('landing.allArtworks',compact('products'));
+         }
 
 }

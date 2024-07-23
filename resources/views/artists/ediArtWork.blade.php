@@ -10,7 +10,7 @@
         <img src="{{asset('assets/img/shadowBlue.svg')}}" />
       </div>
       <div class="header">
-        <h1>{{__('mycustom.addArtwork')}}</h1>
+        <h1>{{__('mycustom.EditArtwork')}}</h1>
       </div>
     </div>
     <div class="EditProfileSection" >
@@ -203,66 +203,118 @@
          
             <div class="imagesSection">
               <div class="file-upload-wrapper file-upload-wrapper2 " data-text="{{__('mycustom.addNewImage')}}">
-                <input
+              <input
                   name="img"
                   id="img"
                   type="file"
                   class="file-upload-field"
                   value=""
                   placeholder="Add Image"
-                 onchange="updateProfileImage(event);"
+                  onchange="previewImage(event)"
                 />
               
               </div>
               <div class="container">
-                 <div class="image-wrapper big">
-                    @if(isset($product->img))
-                    <img src="{{asset('productImages/'.$product->img)}}" alt="Big Image" id="product-image">
-                    @else
-                    <img src="/assets/img/a1.png" alt="Big Image" id="product-image">@endif
+                 <div class="image-wrapper big" id="uploadedImageContainer">
+                   
+                    <img src="{{asset('productImages/'.$product->img)}}"  id="bigImage">
+
+                    </div>
                     
-                  </div>
+                   
+                    
+                 
 
-                
 
-                @error('img')
-                {{$message}}
-                @enderror
+                    @for($i=1;$i<=3;$i++)
+                            <input
+                                name="images[]"
+                                id="img{{$i}}"
+                                type="file"
+                                class="file-upload-field"
+                                style="display:none"
+                                onchange="previewNewImage(event, {{$i}})"
+                            />
+                            <!-- new img -->
+                            <div class="image-wrapper myImg" id="uploadedNewImageContainer{{$i}}">
+                              
+                                @if(isset($images[$i-1]))
+                                <img src="{{asset('productImages/'.$images[$i-1])}}" id="new-img{{$i}}" />
+                                <button type="button" class="delete-button" data-index="{{$i}}" onclick="deleteExistingImage(this)">Delete</button>
+                                <button type="button" class="add-button" style="display: none;" data-index="{{$i}}" onclick="triggerFileInput(this)">Add</button>
 
-              
+                                @else
+                                <img  id="new-img{{$i}}" />
+                                <button type="button" class="add-button" data-index="{{$i}}" onclick="triggerFileInput(this)">Add</button>
+                                <button type="button" class="delete-button" style="display: none;" data-index="{{$i}}" onclick="deleteNewImage(this)">Delete</button>
+
+                                @endif
+                            </div>
+
+
+                    @endfor
+                    <input type="hidden" id="deletedImages" name="deletedImages" value="[]">
+
+
+
+
+            
+
+       
 
               </div>
-                      <style>
-                        .container {
-                          padding-top: 20px;
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    grid-gap: 10px;
-                }
-                .image-wrapper {
-                    position: relative;
-                }
-                .image-wrapper img {
-                    width: 100%;
-                    height: auto;
-                }
-                .image-wrapper .delete-button {
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    background: red;
-                    color: white;
-                    border: none;
-                    padding: 5px;
-                    cursor: pointer;
-                    border-radius: 100px;
-                    font-weight: lighter;
-                }
-                .big {
-                    grid-column: span 2;
-                }
-                      
-                    </style>
+              <style>
+                .container {
+                  padding-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+        }
+        .image-wrapper {
+            position: relative;
+        }
+        .image-wrapper img  {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .image-wrapper .delete-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 100px;
+            font-weight: lighter;
+            
+        }
+
+        .image-wrapper .add-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #43494a;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 100px;
+            font-weight: lighter;
+        }
+        .big {
+            grid-column: span 2;
+            border: 2px solid #ccc;
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+ 
+        }
+        
+               
+            </style>
 
             </div>
           </form>
@@ -289,17 +341,84 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script>
-    function updateProfileImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var output = document.getElementById('product-image');
-            output.src = reader.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
 
-        // Submit form after selecting image
-    }
-</script>
+
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('bigImage');
+                var buttonElement = document.querySelector('#uploadedImageContainer #deleteBigImage');
+
+                output.src = reader.result;
+               
+                buttonElement.style.display = 'inline-block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function deleteImage() {
+            var output = document.getElementById('bigImage');
+            var buttonElement = document.querySelector('#uploadedImageContainer #deleteBigImage');
+
+            output.src = '';
+            buttonElement.style.display = 'none';
+
+            // Clear the file input field
+            document.getElementById('img').value = '';
+        }
+
+        function triggerFileInput(button) {
+        var index = button.getAttribute('data-index');
+        document.getElementById('img' + index).click();
+}
+
+function previewNewImage(event, index) {
+    var input = event.target;
+    var reader = new FileReader();
+    reader.onload = function() {
+        var imgElement = document.getElementById('new-img' + index);
+        imgElement.src = reader.result;
+        imgElement.style.display = 'block';
+
+        document.querySelector('#uploadedNewImageContainer' + index + ' .add-button').style.display = 'none';
+        document.querySelector('#uploadedNewImageContainer' + index + ' .delete-button').style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+
+function deleteNewImage(button) {
+    var index = button.getAttribute('data-index');
+    var imgElement = document.getElementById('new-img' + index);
+    imgElement.src = '';
+    imgElement.style.display = 'none';
+
+    document.querySelector('#uploadedNewImageContainer' + index + ' .add-button').style.display = 'block';
+    document.querySelector('#uploadedNewImageContainer' + index + ' .delete-button').style.display = 'none';
+}
+
+function deleteExistingImage(button){
+  var deletedImages = [];
+  var index = button.getAttribute('data-index');
+    var imgElement = document.getElementById('new-img' + index);
+    var imgSrc = imgElement.getAttribute('src').split('/').pop();
+    imgElement.src = '';
+    imgElement.style.display = 'none';
+
+    // Add the image to the deletedImages array
+    
+    deletedImages.push(imgSrc);
+
+    // Update the hidden input field
+    document.getElementById('deletedImages').value = JSON.stringify(deletedImages);
+
+    document.querySelector('#uploadedNewImageContainer' + index + ' .add-button').style.display = 'block';
+    button.style.display = 'none'; // Hide the delete button
+}
+
+
+
+    </script>
+
 
 
 @endsection

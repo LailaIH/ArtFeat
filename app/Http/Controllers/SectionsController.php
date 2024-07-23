@@ -44,6 +44,7 @@ class SectionsController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description'=>'required',
+            'img'=>'required',
             
         ]);
 
@@ -99,6 +100,7 @@ class SectionsController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+           
             
             
         ]);

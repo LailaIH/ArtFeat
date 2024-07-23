@@ -409,7 +409,7 @@ return [
     'showConfirmPayment'=>'ادفع باستخدام المحفظة',
     'payNow'=>'ادفع الآن',
     'totalPay' => 'المجموع: $',
-    'addToAuctions'=>'أضف العمل الفني للمزادات',
+    'addToAuctions'=>'أضف الى المزادات',
     'ifYouWant'=>'*إذا أردت إضافة هذا العمل الفني الى المزاد ، قم بتحديد التواريخ',
     'startsAt'=>'يبدأ من ',
     'endsAt'=>'ينتهي في',
@@ -434,6 +434,34 @@ return [
     'emailUser'=>'الايميل',
     'points'=>'النقاط',
     'fundsInYourWallet'=>'مقدار الرصيد في محفظتك',
+    'auctions'=>'المزادات',
+    'collectionArtwork'=>'الأعمال الفنية الخاصة بالمجموعة',
+    'noArtwork'=>'لا يوجد أعمال فنية خاصة بهذه المجموعة',
+    'artworkDetails'=>'تفاصيل العمل الفني',
+    'productCategory'=>'قسم العمل الفني',
+    'regularPrice'=>'السعرالمنتظم',
+    'off'=>'خصم',
+    'saleEnds'=>'تنتهي التخفيضات في ',
+    'productDetails'=>'تفاصيل المنتج',
+    'sizeOfArtwork'=>'حجم العمل الفني',
+    'creationDate'=>'تاريخ الانشاء',
+    'productDescription'=>'وصف المنتج',
+    'addToFavorites'=>'أضف إلى المفضلات',
+    'waitingForApproval'=>'بانتظار موافقة الطلب من الادمن',
+    'followingList'=>'قائمة المتابعة',
+    'noFollowings'=>'لا يوجد متابعة',
+    'followersList'=>'قائمة المتابعين',
+    'noFollowers'=>'لا يوجد متابعين',
+    'section'=>'القسم',
+    'paintName'=>'اسم اللوحة',
+    'donate'=>'تبرع',
+    'Favorites'=>'المفضلات',
+    'myFavorites'=>'المفضلات الخاصة بي',
+    'removeFromFav'=>'إزالة من المفضلات',
+    'noArtworkYet'=>'لا يوجد لوحات فنية بعد',
+
+
+  
 
 
     // support tickets
@@ -458,6 +486,13 @@ return [
     'wallet'=>'محفظة المستخدم',
     'unknown'=>'غير معروف',
     'confirmPayment'=>'تأكيد الدفع',
+    'DiscoverArtwork'=>'اكتشف العمل الفني',
+    'searchArtwork'=>'ابحث عن عمل فني',
+    'noArtworkFound'=>'لم يتم العثور على العمل الفني',
+
+
+
+    
     
     
 

@@ -66,7 +66,7 @@ nav ul .links {
 }
 nav ul li {
   transition: 500ms;
-  margin: 0px 35px;
+  margin: 0px 10px;
 }
 nav ul li a {
   color: var(--secondary-color);
@@ -401,10 +401,21 @@ nav input[type="checkbox"] {
   align-items: center;
   gap: 42px;
   justify-content: flex-end;
+  flex-wrap: wrap; /* Allow wrapping */
 }
 .outerProfile .innerProfile .header .actions span {
   margin: 0px 4px;
 }
+
+@media (max-width: 768px) {
+  .outerProfile .innerProfile .header .actions {
+      justify-content: center; /* Center items on smaller screens */
+      gap: 20px; /* Reduce gap */
+      margin-top: 20px;
+  }}
+
+
+
 .outerProfile .innerProfile .header .actions button {
   width: 151px;
   height: 44.675px;

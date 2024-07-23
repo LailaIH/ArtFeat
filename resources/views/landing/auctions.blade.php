@@ -1,11 +1,8 @@
 @extends('commonlanding2')
+@section('content') 
 
 
-
-    <meta charset="UTF-8"/>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/index3.css')}}">
-
+   
     <link rel="stylesheet" href="{{asset('assets/css/sale.css')}}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -16,13 +13,12 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
-    <link rel="stylesheet" href="{{asset('assets/css/event.css')}}"/>
     <title>ArtFeat</title>
 
 
 
 
-@section('content') 
+
 
 
 <section class="hero">

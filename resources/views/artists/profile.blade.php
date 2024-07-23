@@ -74,8 +74,24 @@
                 <div><span>0</span>{{__('mycustom.artworks')}}</div>
                 @else
                 <div><span>{{count($products)}}</span>{{__('mycustom.artworks')}}</div>@endif -->
-                <div><span>{{$artist->followers}}</span>{{__('mycustom.followers')}}</div>
-                <div>{{__('mycustom.following')}}<span>{{$user->following}}</span></div>
+              
+                @php
+                    $funds = $artist->user->funds;
+                    $locale = app()->getLocale();
+                @endphp
+
+                <div style="color: green; font-weight:bold;">
+                    @if($locale == 'ar')
+                        الرصيد: {{ $funds }}$
+                    @else
+                        Funds: ${{ $funds }}
+                    @endif
+                </div>
+               
+               
+               
+                <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#FollowersList"><span>{{$artist->followers}}</span>{{__('mycustom.followers')}}</div>
+                <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#FollowingList">{{__('mycustom.following')}}<span>{{$user->following}}</span></div>
                 <a href="{{route('artists.edit_profile',['id'=>$user['id']] )}}">
                 <button>{{__('mycustom.editAccount')}}</button></a>
               </div>
@@ -203,18 +219,18 @@
                       </style>
                   @if(!$products->isEmpty())
                   @foreach($products as $product)
-                    <div class="outerImage">
+                    <div class="outerImage"    >
                     <button class="editIcon">
                         <a style="text-decoration: none; color: inherit;" href="{{route('artists.showEditArtwork',$product->id)}}">
                         <i class="fa fa-pencil" aria-hidden="true"></i></a>
                       </button>
-                      <button class="fav-btn">
+                      <!-- <button class="fav-btn">
                         <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                      </button>
+                      </button> -->
 
                       <!-- add product to a collection if it doesn't belong to one -->
                      @if(!$product->collection)
-                      <button class="editIcon addToCollection" style="margin-top: 68px;" data-bs-toggle="modal" data-bs-target="#addToCollection-{{$product->id}}">
+                      <button class="editIcon addToCollection" style="margin-top: 30px;" data-bs-toggle="modal" data-bs-target="#addToCollection-{{$product->id}}">
                         {{__('mycustom.collectionn')}}
                       </button>@endif
                       <!-- Modal -->
@@ -266,7 +282,7 @@
 
 
 
-                    <img src="{{ asset('productImages/'.$product->img) }}" height="100%;" />
+                    <img class="oneArt" data-id="{{ $product->id }}" style=" cursor: pointer;" src="{{ asset('productImages/'.$product->img) }}" height="100%;" />
                       <div class="select">
                         <select name="cars" id="cars">
                           <option value="A">A</option>
@@ -475,8 +491,9 @@
                   @foreach($collections as $collection)
                  
                 
-                
-                  <div class="outerCard ">
+
+                  <div class="outerCard">
+
                     <form method="POST" action="{{route('artists.collectionsDisable',['collection'=>$collection])}}" onsubmit="return confirmDisable()">
                     @csrf
                       <button type="submit" class="delete" style="margin-top: 34px;">
@@ -565,10 +582,13 @@
 
                       
                       <div class="text">{{$collection->name}}</div>
+                      <a style="text-decoration: none;" href="{{ route('artists.collectionsArtworks', $collection->id) }}">
+
                     
-                      <div class="overLay"></div>
+                      <div class="overLay"></div></a>
                      
                       </div> 
+                   
                     
                     
 
@@ -592,16 +612,16 @@
                 >
                   
 
-                  @if(count($carts)>0)
+                  @if(count($Favproducts)>0)
                     <div class="outerFav">
                     <div class="innerFav">
-                      @foreach($carts as $cart)
+                      @foreach($Favproducts as $Favproduct)
                       <div class="FavCard">
-                        <img class="bg" src="{{ asset('productImages/'.$cart->product->img) }}" />
+                        <img class="bg" src="{{ asset('productImages/'.$Favproduct->img) }}" />
                         <div class="info">
                           <div>
-                            <div class="title">{{$cart->product->name}}</div>
-                            <div class="name">{{$cart->product->artist->name}}</div>
+                            <div class="title">{{$Favproduct->name}}</div>
+                            <div class="name">{{$Favproduct->artist->name}}</div>
                           </div>
                           <div class="saves">
                             <div class="num">512</div>
@@ -803,6 +823,129 @@
 
 
 
+@php
+$followings = \App\Models\Following::where('user_id', auth()->user()->id)->get();
+$followers = \App\Models\Following::where('artist_id', auth()->user()->artist->id)->get();
+
+@endphp
+
+<!-- following list modal -->
+<div class="modal fade" id="FollowingList" tabindex="-1" aria-labelledby="followingLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="followingLabel">{{__('mycustom.followingList')}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @if(count($followings) > 0)
+          @foreach($followings as $following)
+            <div class="following-item d-flex align-items-center mb-3">
+             @if(isset($following->artist->user->img))
+              <img src="{{asset('userImages/'.$following->artist->user->img)}}" alt="{{ $following->artist->name }}" class="rounded-circle custom-margin" style="width: 50px; height: 47px;">
+             @else 
+             <img src="/assets/img/artist.png" alt="{{ $following->artist->name }}" class="rounded-circle custom-margin" style="width: 50px; height: 47px;">
+             @endif
+             
+              <div class="flex-grow-1">
+                <p class="mb-0">{{ $following->artist->name }}</p>
+              </div>
+              <form method="post" action="{{route('unfollow',$following->artist->id)}}">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger btn-sm">{{__('mycustom.unfollow')}}</button>
+              </form>
+            </div>
+          @endforeach
+        @else
+          <p>{{__('mycustom.noFollowings')}}</p>
+        @endif
+      </div>
+   
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
+<!-- followers modal list -->
+
+<div class="modal fade" id="FollowersList" tabindex="-1" aria-labelledby="followersLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="followersLabel">{{__('mycustom.followersList')}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @if(count($followers) > 0)
+          @foreach($followers as $follower)
+            <div class="following-item d-flex align-items-center mb-3">
+             @if(isset($follower->user->img))
+              <img src="{{asset('userImages/'.$follower->user->img)}}" alt="{{ $follower->artist->name }}" class="rounded-circle  custom-margin" style="width: 50px; height: 47px;">
+             @else 
+             <img src="/assets/img/artist.png" alt="{{ $follower->user->name }}" class="rounded-circle custom-margin" style="width: 50px; height: 47px;">
+             @endif
+             
+              <div class="flex-grow-1">
+                <p class="mb-0">{{ $follower->user->name }}</p>
+              </div>
+           @if($follower->user->is_artist)
+              @php 
+                $follow = DB::table('followings')->where('artist_id',$follower->user->artist->id)->where('user_id',auth()->user()->id)->first();
+              @endphp
+              @if($follow) 
+              <form method="post" action="{{route('unfollow',$follower->user->artist->id)}}">
+              @csrf 
+              @method('DELETE')
+                 <button type="submit" class="btn btn-success btn-sm">{{__('mycustom.following')}}</button>
+              </form>
+              @else
+             
+              <form method="get" action="{{route('follow',$follower->user->artist->id)}}">
+                @csrf
+               
+                <button type="submit" class="btn btn-primary btn-sm">{{__('mycustom.follow')}}</button>
+              </form>
+              @endif
+            @endif  
+            </div>
+          @endforeach
+        @else
+          <p>{{__('mycustom.noFollowers')}}</p>
+        @endif
+      </div>
+   
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
+<style>
+.modal-dialog-scrollable {
+    max-width: 600px; /* Adjust the width of the modal */
+}
+
+.custom-margin {
+    margin-right: 15px; /* Adjust the value as needed */
+  }
+
+  html[dir='rtl'] .custom-margin {
+    margin-left: 15px; /* Adjust the value as needed */
+  }
+
+.following-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.following-item img {
+    border-radius: 50%;
+}
+
+.following-item .btn {
+    margin-left: 10px;
+}
+</style>
 
 <script>
     function submitForm() {
@@ -903,7 +1046,18 @@ document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
 
 </script> -->
 
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const outerImages = document.querySelectorAll('.oneArt');
+        
+        outerImages.forEach(outerImage => {
+            outerImage.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                window.location.href = '/artwork/' + id;
+            });
+        });
+    });
+</script>
 
 
 @endsection

@@ -44,7 +44,7 @@
                     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
                     
                     <div class="card">
-                    <div class="card-header">Notifications</div>
+                    <div class="card-header">Become Artist Notifications</div>
                     @if (session('success'))
 
                     <div class="alert alert-success m-3" role="alert">{{ session('success') }}</div>
@@ -67,7 +67,7 @@
 
                                         
                                         <th>User</th>
-                                        <th>Notification Type</th>
+                                        
                                        
                                         <th>Status</th>
                                        
@@ -81,15 +81,15 @@
                                         <tr style="white-space: nowrap; font-size: 14px;">
 
                                             <td class=" text-black"><b>{{ $notification->user->name }}</b></td>
-                                            <td>{{ $notification->type }}</td>
+                                           
                                             <td class="@if($notification->status === 'approved') text-green 
-           @elseif($notification->status === 'pending') text-black 
-           @else text-red 
-           @endif"><b>
+                                                                @elseif($notification->status === 'pending') text-black 
+                                                                @else text-red 
+                                                                @endif"><b>
                                                 {{$notification->status}}</b>
                                             </td>
                   
-                                          
+                                          @if($notification->status==='pending')
                                             <td>
                                                 <form method="post" action="{{route('notifications.approve',$notification->id)}}">
                                                     @csrf 
@@ -105,6 +105,7 @@
                                                     <button type="submit" class="btn btn-danger btn-xs">Reject</button>
                                                 </form>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>

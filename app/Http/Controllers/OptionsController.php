@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class OptionsController extends Controller
 {
@@ -19,7 +21,7 @@ class OptionsController extends Controller
      }
     public function index()
     {
-        $options = Option::all(); // Assuming there's only one row in the options table
+        $options = Option::whereNotIn('key',['main page first image','main page second image','main page third image'])->get(); // Assuming there's only one row in the options table
 
         return view('options.index', ['options'=>$options]);
     }
@@ -113,5 +115,40 @@ class OptionsController extends Controller
     {
         Option::destroy($id);
         return redirect()->route('options.index')->withErrors(['fail' => 'Option has been deleted']);
+    }
+
+
+    // for main page slider's images
+
+    public function showImagesOptions(){
+
+        $options = Option::whereIn('key', ['main page first image', 'main page second image','main page third image'])->get();
+        return view('options.mainImages',compact('options'));
+    
+    }
+
+    public function editImageOption($id){
+        $option = Option::findOrFail($id);
+        return view ('options.editImage',compact('option'));
+    }
+
+    public function updateImageOption(Request $request , $id){
+        $option = Option::findOrFail($id);
+
+        if($request->hasFile('img')){
+            $image = $request->file('img');
+            $imageName = time().'.'.$image->getClientOriginalName();
+           
+            $image->move(public_path('optionImages'), $imageName);
+            $option->img = $imageName;
+            $option->save();
+  
+        }
+
+        return redirect()->route('options.showImages')->with('success','image was updated successfully');
+
+        
+
+
     }
 }

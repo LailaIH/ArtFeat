@@ -30,6 +30,8 @@
     <div class="Categories">
         @if(count($section->products)>0)
              @foreach($section->products as $product)
+             <a style="text-decoration: none;" href="{{route('artists.artwork',$product->id)}}">
+
             <div class="card">
                 <div class="overlay">
                         @if($product->img)
@@ -42,7 +44,7 @@
                         <p class="Content">{{$product->name}}</p>
                     </div>
                 </div>
-            </div>
+            </div></a>
 
             @endforeach
 

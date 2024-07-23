@@ -88,7 +88,7 @@ nav ul .links {
 }
 nav ul li {
   transition: 500ms;
-  margin: 0px 35px;
+  margin: 0px 10px;
 }
 nav ul li a {
   color: var(--secondary-color);
@@ -469,7 +469,23 @@ html[dir="rtl"] .supportArtist {
   color: var(--secondary-color);
   font-size: 20px;
   font-weight: 500;
+
+  display: inline-block;
+  word-wrap: break-word; /* Ensure long words break appropriately */
+
+
 }
+
+.card-text span:nth-child(1) {
+  display: inline-block;
+  white-space: nowrap; /* Prevent breaking of the first 11 words */
+}
+
+.card-text span:nth-child(2) {
+  display: block;
+  white-space: normal; /* Allow the rest of the words to wrap normally */
+}
+
 .Discover .carousel-item .card-body p span {
   color: var(--primary-color);
   font-size: 25px;
@@ -1675,13 +1691,54 @@ html[dir="rtl"] .ArtistSection {
 .cartInfoSection .moreDetails p {
   margin: 0px !important;
 }
-.cartInfoSection .moreDetails .header {
-  color: #999;
-  text-align: end;
-  font-size: 14px;
+.cartInfoSection .moreDetails .header  {
+ color: #999;
+ display: flex;
+ font-size: 14px;
 
-  font-weight: 400;
+ font-weight: 400;
+ align-items: center;
+ justify-content: center;
+ gap: 10px;
+  
 }
+/* my adding */
+.cartInfoSection .moreDetails .header .detailsButton {
+
+  font-size: 14px;
+  font-weight: 400;
+
+  border-radius: 8px;
+  background: #ff00c6;
+  height: 48px;
+  padding: 10px 26px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: #fafafa;
+  border: none !important;
+
+}
+
+ .removeButton {
+  color: #ff00c6; /* Text color */
+  background: none; /* No background color */
+  border: 2px solid #ff00c6; /* Border color */
+  padding: 10px 26px;
+  border-radius: 8px;
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background 0.3s, color 0.3s;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.removeButton:hover {
+  background: #ff00c6; /* Background color on hover */
+  color: #fafafa; /* Text color on hover */
+}
+
 .cartInfoSection .moreDetails .primaryInfo h1 {
   color: #444;
   font-size: 20px;
@@ -2378,9 +2435,9 @@ html[dir="rtl"] .ArtistSection {
   height: 158px;
   width: 158px;
 } 
-.EditProfileSection .imagesSection .outerImg .myImg {
+ .myImg {
   height: 158px;
-  width: 158px;
+  width:100%;
   object-fit: cover;
   padding: 6px;
   border-radius: 2px;
@@ -3958,6 +4015,9 @@ html[dir="rtl"] .ArtistSection {
     /* Example: */
     color: #000000; /* Change the color of the title */
   }
+
+
+ 
 
 
 

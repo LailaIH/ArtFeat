@@ -109,20 +109,38 @@
                                
                                    
           
-                                  
-
+                                    <div class="row gx-3 mb-3">
+                                    
                                     <!-- Submit button-->
+                            <div class="col-md-6">
                                    
                                     <button class="btn btn-primary" type="submit">{{__('mycustom.saveChanges')}}</button>
                                     @php
-                                        $notification1 = DB::table('notifications')->where('user_id',auth()->user()->id)->where('type','become artist')->first();
-                                        $notification2 = DB::table('notifications')->where('user_id',auth()->user()->id)->where('type','become artist')->where('status','rejected')->first();
-
+                                        $notification1 = DB::table('notifications')->where('user_id',auth()->user()->id)->where('type','become artist')                     
+                                        ->orderBy('created_at', 'desc')->first();
+                                        $notification2 = DB::table('notifications')->where('user_id',auth()->user()->id)->where('type','become artist')->where('status','rejected')
+                                        ->orderBy('created_at', 'desc')->first();
                                      @endphp
-                                     @if(!$notification1 || $notification2)
+                                     @if($notification1 && $notification1->status==='pending')
+                                     
+                                     @elseif(!$notification1 || $notification2)
                                     <a class="btn btn-secondary" href="{{route('artists.becomeArtist')}}">{{__('mycustom.becomeArtist')}}</a>
                                     @endif
                                 </form>
+                             </div>
+
+                             <div class="col-md-6 mt-1">
+                             @php
+                                $followings = \App\Models\Following::where('user_id', $user->id)->get();
+
+                             @endphp 
+                             <p style="color:green; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#FollowingList">
+                                <b>{{count($followings)}} {{__('mycustom.following')}}</b></p>
+                             </div>
+                        </div>
+
+           
+                                
                             </div>
                         </div>
                     </div>
@@ -130,6 +148,82 @@
 
 
 </div>
+
+
+
+
+
+
+
+
+<!-- following list modal -->
+<div class="modal fade" id="FollowingList" tabindex="-1" aria-labelledby="followingLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="followingLabel">{{__('mycustom.followingList')}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @if(count($followings) > 0)
+          @foreach($followings as $following)
+            <div class="following-item d-flex align-items-center mb-3">
+             @if(isset($following->artist->user->img))
+              <img src="{{asset('userImages/'.$following->artist->user->img)}}" alt="{{ $following->artist->name }}" class="rounded-circle custom-margin" style="width: 50px; height: 47px;">
+             @else 
+             <img src="/assets/img/artist.png" alt="{{ $following->artist->name }}" class="rounded-circle custom-margin" style="width: 50px; height: 47px;">
+             @endif
+             
+              <div class="flex-grow-1">
+                <p class="mb-0">{{ $following->artist->name }}</p>
+              </div>
+              <form method="post" action="{{route('unfollow',$following->artist->id)}}">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger btn-sm">{{__('mycustom.unfollow')}}</button>
+              </form>
+            </div>
+          @endforeach
+        @else
+          <p>{{__('mycustom.noFollowings')}}</p>
+        @endif
+      </div>
+   
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
+
+<style>
+.modal-dialog-scrollable {
+    max-width: 600px; /* Adjust the width of the modal */
+}
+
+.custom-margin {
+    margin-right: 15px; /* Adjust the value as needed */
+  }
+
+  html[dir='rtl'] .custom-margin {
+    margin-left: 15px; /* Adjust the value as needed */
+  }
+
+.following-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.following-item img {
+    border-radius: 50%;
+}
+
+.following-item .btn {
+    margin-left: 10px;
+}
+</style>
+
+
+
 <script>
 function updateProfileImage(event) {
 var reader = new FileReader();
@@ -142,5 +236,9 @@ reader.readAsDataURL(event.target.files[0]);
 // Submit form after selecting image
 }
 </script>
+
+
+
+
 
 @endsection

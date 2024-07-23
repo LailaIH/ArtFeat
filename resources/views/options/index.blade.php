@@ -77,23 +77,20 @@
                                             <td>{{ $option->key }}</td>
                                             <td>
                                             @php
-                                                $words = str_word_count($option->value, 1);
-                                                $first5Words = implode(' ', array_slice($words, 0, 5));
+                                            $value = $option->value;
+                                            $first5Words = mb_strimwidth($value, 0, 50, '...');
                                             @endphp
 
                                             {{ $first5Words }}
 
-                                            @if (count($words) > 5)
-                                                ...
-                                            @endif
                                         </td>                                         
 
                                   
                            
                                             <td>
-                                                <a href="{{ route('options.edit',  ['id'=>$option['id']]) }}" class="btn btn-primary btn-xs">Edit</a>
+                                                <a href="{{ route('options.edit',  ['id'=>$option->id]) }}" class="btn btn-primary btn-xs">Edit</a>
                                                 <!-- Add delete form with CSRF token for deleting a section -->
-                                                <form action="{{ route('options.destroy', ['id'=>$option['id']]) }}" method="POST" class="d-inline">
+                                                <form action="{{ route('options.destroy', ['id'=>$option->id]) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this section?')">Delete</button>

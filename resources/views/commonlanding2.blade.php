@@ -88,6 +88,12 @@
             <li><a href="/landing/login">{{__('mycustom.addFund')}}</a></li>
             @endauth
 
+            <li><a href="/landing/auctions">{{__('mycustom.auctions')}}</a></li>
+            <li><a href="#">{{__('mycustom.donate')}}</a></li>
+            <li><a href="{{route('allArtworks')}}">{{ __('mycustom.allArtworks')}}</a></li>
+
+
+
 
     </div>
       <div class="headerButtons">
@@ -132,7 +138,8 @@
 
         <div class="innerContent">
           <div class="line"></div>
-          <button>
+          
+          <button id="favbutton" type="submit">
             <style>
               .hoverE:hover{
                 background-color: aqua;
@@ -143,6 +150,8 @@
             </style>
             <img src="/assets/img/Heart (1).svg" class="hoverE" />
           </button>
+
+         
 
  @auth
 
@@ -257,14 +266,14 @@
   <div class="inner">
    <div class="links">
    @php 
-            $sections = App\Models\Section::where('is_online',1)->take(6)->get();
+            $sections = App\Models\Section::where('is_online',1)->take(5)->get();
             @endphp
             @foreach($sections as $section)
             <a style="text-decoration: none;" href="{{route('singleSection',$section->id)}}">{{$section->name}}</a>
             @endforeach
      <a style="text-decoration: none;" href="/landing/events">Events</a>
    </div>
-   <input />
+   
   </div>
  </div>
 
@@ -292,16 +301,19 @@
            </div>
               <div class="innerContent">
                 <h2>{{ __('mycustom.about')}}</h2>
-                <a>{{ __('mycustom.allArtworks')}}</a>
-                <a>{{ __('mycustom.virtualWorld')}}</a>
-                <a>{{ __('mycustom.artists')}}</a>
+                <a style="text-decoration:none;" href="{{route('allArtworks')}}">{{ __('mycustom.allArtworks')}}</a>
+                
+                <a style="text-decoration:none;" href="{{route('discover')}}">{{ __('mycustom.artists')}}</a>
+                <a style="text-decoration:none;" href="/landing/auctions">{{ __('mycustom.auctions')}}</a>
+
               </div>
               <div class="innerContent">
                 <h2>{{ __('mycustom.moreInfo')}}</h2>
-                <a>{{ __('mycustom.becomeAPartners')}}</a>
-                <a>{{ __('mycustom.faq')}}</a>
+                
+               <a>{{ __('mycustom.donate')}}</a>
                 <a style="text-decoration:none;" href="{{route('showTickets')}}">{{ __('mycustom.support')}}</a>
                 <a style="text-decoration:none;" href="{{route('privacyPolicy')}}">{{ __('mycustom.privacyPolicy')}}</a>
+                <a style="text-decoration:none;" href="/terms/conditions">{{ __('mycustom.termsAndConditions')}}</a>
 
               </div>
               <div class="followus">
@@ -346,12 +358,26 @@
 @csrf
 </form>
 
+<!-- fav products form -->
+<form  id="favform" method="get" action="{{route('myFav')}}">
+@csrf
+</form>
+
 
 <!-- JavaScript to submit the logout form -->
 <script>
     document.getElementById('logout-link').addEventListener('click', function(event) {
         event.preventDefault();
         document.getElementById('logout-form').submit();
+    });
+</script>
+
+
+<!-- JavaScript to submit the favorite form -->
+<script>
+    document.getElementById('favbutton').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('favform').submit();
     });
 </script>
 

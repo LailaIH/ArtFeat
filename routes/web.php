@@ -14,6 +14,7 @@ use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CreatorsController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\FollowingsController;
 use App\Http\Controllers\ShippingCompanyController;
 use App\Http\Controllers\TicketsController;
@@ -25,7 +26,9 @@ use App\Http\Controllers\LandingPage\StripeController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\SupportsController;
 use App\Models\Auction;
+use App\Models\Creator;
 use App\Models\Invoice;
+use App\Models\Picture;
 use App\Models\User;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -75,25 +78,33 @@ Route::get('/discover', [DiscoverController::class, 'discover'])->name('discover
 Route::get('/one/card/{artist}', [DiscoverController::class, 'oneCard'])->name('one_card');
 
 Route::get('/artists/search', [DiscoverController::class, 'search'])->name('artists.search');
+Route::get('/art-work/search', [DiscoverController::class, 'searchArtwork'])->name('artists.searchArtwork');
 
 
 Route::get('/live/join', function () {
     return view('livejoin');
 });
 
-Route::get('/dis', function () {
-    return view('landing.editprofile');
-});
+// Route::get('/dis', function () {
+//     return view('landing.editprofile');
+// });
 
 
 // Route::get('/test', function () {
-//     return view('landing.supportTickets');
+//    $pic = Picture::findOrFail(4);
+
+//    $images = json_decode($pic->images);
+  
+//    foreach($images as $image){
+//     echo $image ;
+//    }
 // });
 
 
 
 Route::get('/who/we/are', function () {
-    return view('who-we-are');
+    $creators = Creator::where('is_online',1)->take(5)->get();
+    return view('who-we-are',compact('creators'));
 });
 
 
@@ -180,7 +191,14 @@ Route::post('/collections/disable/{collection}', [ArtistController::class, 'disa
 ->name('artists.collectionsDisable');
 
 Route::put('/artists/collections/edit/{id}', [ArtistController::class, 'updateCollection'])->name('artists.collectionUpdate');
+Route::get('/collections/artworks/{collection}', [ArtistController::class, 'showCollectionArtwork'])
+->name('artists.collectionsArtworks');
 
+Route::get('/artwork/{id}', [ArtistController::class, 'artwork'])
+->name('artists.artwork');
+
+Route::get('/product/to/auction/{id}', [ArtistController::class, 'askToAddToAuctions'])
+->name('artists.askToAddToAuction');
 
 Route::get('/follow/{id}', [FollowingsController::class, 'follow'])->name('follow')->middleware(['auth']);
 Route::delete('/unfollow/{id}', [FollowingsController::class, 'unfollow'])->name('unfollow')->middleware(['auth']);
@@ -191,6 +209,7 @@ Route::get('/landing/login', [LandingController::class, 'landingLogin'])->name('
 Route::get('/landing/signup', [LandingController::class, 'landingSignup'])->name('landingSignup')->middleware('capture.intended.url');
 Route::get('/landing/user/profile', [LandingController::class, 'userProfile'])->name('userProfile')->middleware(['auth','userOnly']);
 Route::put('/landing/user/update/profile/{id}', [LandingController::class, 'updateUser'])->name('userUpdateProfile')->middleware(['auth','userOnly']);
+Route::get('/landing/all/artworks', [LandingController::class, 'allArtworks'])->name('allArtworks');
 
 // landing tickets
 Route::get('/landing/user/tickets', [LandingController::class, 'showTickets'])->name('showTickets')->middleware(['auth']);
@@ -198,6 +217,11 @@ Route::post('/landing/user/add/ticket', [LandingController::class, 'addTicket'])
 Route::get('/landing/user/ticket/{id}/replies', [LandingController::class, 'showReplies'])->name('showRepliesOfTicket')->middleware(['auth']);
 Route::post('/landing/user/reply/to/ticket', [LandingController::class, 'replyToTicket'])->name('replyToTicket')->middleware(['auth']);
 Route::put('/landing/close/ticket/{id}', [LandingController::class, 'closeTicket'])->name('closeTicket')->middleware(['auth']);
+
+// Favorites
+Route::get('/fav/artwork', [FavoritesController::class, 'myFav'])->name('myFav')->middleware(['auth']);
+Route::post('/add/art/to/fav/{id}', [FavoritesController::class, 'addToFavorites'])->name('addToFavorites')->middleware(['auth']);
+Route::delete('/remove/art/from/fav/{id}', [FavoritesController::class, 'removeFromFavorites'])->name('removeFromFavorites')->middleware(['auth']);
 
 
 
@@ -311,6 +335,11 @@ Route::get('/options/edit/{id}', [OptionsController::class, 'edit'])->name('opti
 Route::put('/options/update/{id}', [OptionsController::class, 'update'])->name('options.update');
 Route::delete('/options/destroy/{id}', [OptionsController::class, 'destroy'])->name('options.destroy');
 
+Route::get('/options/images', [OptionsController::class, 'showImagesOptions'])->name('options.showImages');
+Route::get('/options/image/edit/{id}', [OptionsController::class, 'editImageOption'])->name('options.editImageOption');
+Route::put('/options/image/update/{id}', [OptionsController::class, 'updateImageOption'])->name('options.updateImageOption');
+
+
 
 
 
@@ -422,9 +451,13 @@ Route::post('/creators/store', [CreatorsController::class, 'store'])->name('crea
 Route::put('/creators/update/{id}', [CreatorsController::class, 'update'])->name('creators.update');
 
 // notifications routes
-Route::get('/notifications', [NotificationsController::class, 'index'])->name('notifications.index');
-Route::put('/notifications/approve/{id}', [NotificationsController::class, 'approve'])->name('notifications.approve');
-Route::put('/notifications/reject/{id}', [NotificationsController::class, 'reject'])->name('notifications.reject');
+Route::get('/notifications/beomeArtist', [NotificationsController::class, 'becomeArtistNotifications'])->name('notifications.becomeArtist');
+Route::put('/notifications/approve/becomeArtist/{id}', [NotificationsController::class, 'approve'])->name('notifications.approve');
+Route::put('/notifications/reject/becomeArtist/{id}', [NotificationsController::class, 'reject'])->name('notifications.reject');
+
+Route::get('/notifications/addToAuctions', [NotificationsController::class, 'AddToAuctionsNotifications'])->name('notifications.addToAuctions');
+Route::put('/notifications/approve/Auction/{productId}/{notificationId}', [NotificationsController::class, 'approveAuction'])->name('notifications.approveAuction');
+Route::put('/notifications/reject/Auction/{id}', [NotificationsController::class, 'rejectAuction'])->name('notifications.rejectAuction');
 
 
 });

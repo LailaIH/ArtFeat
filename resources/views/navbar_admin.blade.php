@@ -241,6 +241,10 @@
                                 All Options
 
                             </a>
+                            <a class="nav-link" href="{{route('options.showImages')}}">
+                               Main Images Options
+
+                            </a>
                             <a class="nav-link" href="/options/create">
                                 New Option
 
@@ -253,11 +257,24 @@
 
                   
 
-                    <a class="nav-link" href="{{route('notifications.index')}}">
+                    <a class="nav-link collapsed" href="/!#" data-toggle="collapse" data-target="#collapseDashboards551" aria-expanded="false" aria-controls="collapseDashboards551">
                         <div class="nav-link-icon"><i class="fas fa-exclamation text-gray-200"></i></div>
-                       Notifications
+                        Notifications
+                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
+                    <div class="collapse" id="collapseDashboards551" data-parent="#accordionSidenav">
+                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                            <a class="nav-link" href="{{route('notifications.becomeArtist')}}">
+                               Become Artist Notifications
 
+                            </a>
+                            <a class="nav-link" href="{{route('notifications.addToAuctions')}}">
+                               Add Artwork To Auctions Notifications 
+
+                            </a>
+
+                        </nav>
+                    </div>
 
 
 

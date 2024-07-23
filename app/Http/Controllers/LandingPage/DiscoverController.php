@@ -41,4 +41,16 @@ class DiscoverController extends Controller
     }
 
 
+    public function searchArtwork(Request $request)
+    {
+        
+        $product = Product::where('name', 'LIKE', "%{$request->input('name')}%")->first();
+        
+
+       return view('landing.oneProduct', ['product'=>$product]);
+
+    }
+
+
+
 }

@@ -151,13 +151,21 @@
 
 
 
-                                           <div class="col-md-6" style="margin-top:35px;">
+                                           <div class="col-md-3" style="margin-top:35px;">
 
 
                                             <label class="form-check-label small mb-1 " for="is_online">Is Online</label>
                                             <input class="form-check-input ml-3" type="checkbox" name="is_online"  @if ($product->is_online) checked @endif>
 
                                             </div>
+                                            <div class="col-md-3" style="margin-top:35px;">
+
+                                            <label class="form-check-label small mb-1 " for="best_seller">Best Seller</label>
+                                            <input class="form-check-input ml-3" type="checkbox" name="best_seller"  @if ($product->best_seller) checked @endif>
+
+
+                                            </div>
+
                                         </div> 
                                             <!-- Submit button-->
                                             <div class="row gx-3 mb-3">

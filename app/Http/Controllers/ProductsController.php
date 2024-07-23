@@ -145,6 +145,8 @@ class ProductsController extends Controller
         }
 
         $product->is_online = $request->has('is_online')?1:0;
+        $product->best_seller = $request->has('best_seller')?1:0;
+
 
         if($request->filled('collection_id')){
             $product->collection_id = $request->input('collection_id');

@@ -57,8 +57,8 @@
                 <div><span>0</span>{{__('mycustom.artworks')}}</div>
                 @else
                 <div><span>{{count($products)}}</span>{{__('mycustom.artworks')}}</div>@endif -->
-                <div><span>{{$artist->followers}}</span>{{__('mycustom.followers')}}</div>
-                <div>{{__('mycustom.following')}}<span>{{$user->following}}</span></div>
+                <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#FollowersList"><span>{{$artist->followers}}</span>{{__('mycustom.followers')}}</div>
+                <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#FollowingList">{{__('mycustom.following')}}<span>{{$user->following}}</span></div>
                 
               @auth
                 @php 
@@ -171,7 +171,9 @@
 
                   @if(!$products->isEmpty())
                   @foreach($products as $product)
-                    <div class="outerImage">
+
+                    <div class="outerImage" data-id="{{ $product->id }}" style=" cursor: pointer;">
+                      
                       <img src="{{ asset('productImages/'.$product->img) }}" height="100%;" />
                       <div class="select">
                         <select name="cars" id="cars">
@@ -183,6 +185,7 @@
                       </div>
                       <div class="title">{{$product->name}}</div>
                     </div>
+                  
                     @endforeach
                     @else
                     
@@ -209,7 +212,8 @@
                   @foreach($collections as $collection)
                  
                  
-                
+                  <a style="text-decoration: none;" href="{{ route('artists.collectionsArtworks', $collection->id) }}">
+
                   <div class="outerCard ">
                    
                   
@@ -246,6 +250,7 @@
                       <div class="overLay"></div>
                      
                       </div> 
+                  </a>
                     
                   
 
@@ -390,7 +395,120 @@
 
 
 
+@php
+$followings = \App\Models\Following::where('user_id', $artist->user->id)->get();
+$followers = \App\Models\Following::where('artist_id', $artist->id)->get();
 
+@endphp  
+
+
+<!-- following list modal -->
+<div class="modal fade" id="FollowingList" tabindex="-1" aria-labelledby="followingLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 300px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="followingLabel">{{__('mycustom.followingList')}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @if(count($followings) > 0)
+          @foreach($followings as $following)
+            <div class="following-item d-flex align-items-center mb-3">
+             @if(isset($following->artist->user->img))
+              <img src="{{asset('userImages/'.$following->artist->user->img)}}" alt="{{ $following->artist->name }}" class="rounded-circle custom-margin" style="width: 50px; height: 47px;">
+             @else 
+             <img src="/assets/img/artist.png" alt="{{ $following->artist->name }}" class="rounded-circle custom-margin" style="width: 50px; height: 47px;">
+             @endif
+             
+              <div class="flex-grow-1">
+                <p class="mb-0">{{ $following->artist->name }}</p>
+              </div>
+             
+            </div>
+          @endforeach
+        @else
+          <p>{{__('mycustom.noFollowings')}}</p>
+        @endif
+      </div>
+   
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+ 
+<!-- followers modal list -->
+
+<div class="modal fade" id="FollowersList" tabindex="-1" aria-labelledby="followersLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" style="max-width: 300px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="followersLabel">{{__('mycustom.followersList')}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @if(count($followers) > 0)
+          @foreach($followers as $follower)
+            <div class="following-item d-flex align-items-center mb-3">
+             @if(isset($follower->user->img))
+              <img src="{{asset('userImages/'.$follower->user->img)}}" alt="{{ $follower->artist->name }}" class="rounded-circle  custom-margin" style="width: 50px; height: 47px;">
+             @else 
+             <img src="/assets/img/artist.png" alt="{{ $follower->user->name }}" class="rounded-circle custom-margin" style="width: 50px; height: 47px;">
+             @endif
+             
+              <div class="flex-grow-1">
+                <p class="mb-0">{{ $follower->user->name }}</p>
+              </div>
+  
+            </div>
+          @endforeach
+        @else
+          <p>{{__('mycustom.noFollowers')}}</p>
+        @endif
+      </div>
+   
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+<style>
+.modal-dialog-scrollable {
+    max-width: 600px; /* Adjust the width of the modal */
+}
+
+.custom-margin {
+    margin-right: 15px; /* Adjust the value as needed */
+  }
+
+  html[dir='rtl'] .custom-margin {
+    margin-left: 15px; /* Adjust the value as needed */
+  }
+
+.following-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.following-item img {
+    border-radius: 50%;
+}
+
+.following-item .btn {
+    margin-left: 10px;
+}
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const outerImages = document.querySelectorAll('.outerImage');
+        
+        outerImages.forEach(outerImage => {
+            outerImage.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                window.location.href = '/artwork/' + id;
+            });
+        });
+    });
+</script>
 
 
 @endsection

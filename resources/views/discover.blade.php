@@ -1,39 +1,39 @@
 @extends('commonlanding2')
 @section('content')
 <style>
-    .custom-search {
-  position: relative;
-  width: 100%;
-}
-.custom-search-input {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 100px;
-  padding: 10px 100px 10px 20px; 
-  line-height: 1;
-  box-sizing: border-box;
-  outline: none;
-}
-.custom-search-botton {
-  position: absolute;
-  right: 3px; 
-  top: 3px;
-  bottom: 3px;
-  border: 0;
-  background:#00a5f2;
-  color: #fff;
-  outline: none;
-  margin: 0;
-  padding: 0 10px;
-  border-radius: 12px;
-  z-index: 2;
-}
-
-html[dir="rtl"] .custom-search-botton {
-  right: auto;
+  .custom-search {
+    position: relative;
+    width: 100%;
+  }
+  .custom-search-input {
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+    padding: 10px 100px 10px 20px; 
+    line-height: 1;
+    box-sizing: border-box;
+    outline: none;
+  }
+  .custom-search-botton {
+    position: absolute;
+    right: 4rem; 
+    top: 3px;
+    bottom: 3px;
+    border: 0;
+    background:#00a5f2;
+    color: #fff;
+    outline: none;
+    margin: 0;
+    padding: 0 10px;
+    border-radius: 12px;
+    z-index: 2;
+  }
   
-  left: 3px;
-}
+  html[dir="rtl"] .custom-search-botton {
+    right: auto;
+    
+    left: 3px;
+  }
 </style>
 
 <div class="discoverSection">
@@ -182,7 +182,7 @@ html[dir="rtl"] .custom-search-botton {
 
 </div>
 
-</div>
+
 
 
 

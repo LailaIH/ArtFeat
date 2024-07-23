@@ -70,7 +70,7 @@
                                         <th>Name</th>
                                         <th>Created By Admin</th>
                                         <th>Section Name</th>
-                                        <th>Description</th>
+                                       
                                         <th>Price</th>
                                         <th>Is Online</th>
                                         <th>Image</th>
@@ -85,7 +85,7 @@
                                             <td class=" text-black"><b>{{ $product->name }}</b></td>
                                             <td>{{ $product->user->name }}</td>
                                             <td>{{ $product->section->name }}</td>
-                                            <td>{{ $product->description }}</td>
+                                       
                                             <td class="text-primary">{{ $product->price }}</td>
                                             <td class="text-{{ $product->is_online? 'green' : 'red'}}">
                                                 {{$product->is_online?'YES':'NO'}}

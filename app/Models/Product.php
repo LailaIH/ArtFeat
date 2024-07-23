@@ -59,6 +59,18 @@ class Product extends Model
         return $this->hasOne(Auction::class);
     }
 
+    public function notification(){
+        return $this->hasMany(Notification::class);
+    }
+
+    public function favorites(){
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function pictures(){
+        return $this->hasMany(Picture::class);
+    }
+
     
 
 }
